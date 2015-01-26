@@ -1,0 +1,138 @@
+{% extends 'public_interface/base.html' %}
+
+
+{% block additional_css %}
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}">
+{% endblock additional_css %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Create dataset:</h3>
+
+    <div class="alert alert-info" role="alert">
+      <b>Select sequences you want for a dataset by entering the voucher codes and gene codes.</b>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
+
+        <form action="/genbank_fasta/results/" method="post">
+        <div class="panel panel-primary" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Enter the required info to make yourself a ready-to-run dataset</b></h3>
+          </div>
+
+
+
+          {{ form.as_p }}
+<i class="fa fa-exclamation-triangle"></i> Warning! your dataset will not necessarily be properly aligned!
+<a title="You need to be sure that your data is aligned!" href="#"><i class="fa fa-question-circle"></i></a>
+              {% csrf_token %}
+
+          {% for i in form.non_field_errors %}
+          <div class="alert alert-warning">{{ i }}</div>
+          {% endfor %}
+        <table class="table table-bordered"><!-- big -->
+            <tr>
+                <td>
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>
+                        <label for="id_taxonset">Choose taxonset: </label>
+                      </td>
+                      <td>
+                        {% for i in form.taxonset.errors %}
+                        <div class="alert alert-warning">{{ i }}</div>
+                        {% endfor %}
+                        {{ form.taxonset }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="id_voucher_codes">... and/or a list of voucher codes: </label>
+                      </td>
+                      <td>
+                        {% for i in form.voucher_codes.errors %}
+                        <div class="alert alert-warning">{{ i }}</div>
+                        {% endfor %}
+                        {{ form.voucher_codes }}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+
+                <td>
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>
+                        <label for="id_geneset">Choose geneset: </label>
+                      </td>
+                      <td>
+                        {% for i in form.geneset.errors %}
+                        <div class="alert alert-warning">{{ i }}</div>
+                        {% endfor %}
+                        {{ form.geneset }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Check to select your alignment/gene:<br />
+                        <br />
+                        (if geneset chosen, adds extra genes)
+                      </td>
+                      <td>
+                        <table class="table table-condensed table-striped">
+                          <tr>
+                            {% for i in form.gene_codes %}
+                            <td>
+                              {{ i }}
+                            </td>
+                            {% endfor %}
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+
+            </tr>
+        </table><!-- big -->
+
+        </div><!-- panel -->
+
+            <button type="submit" class="btn btn-info" id="submit_button">
+                Make GenBank FASTA1
+            </button>
+        </form>
+
+
+
+
+
+
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block additional_javascript_footer %}
+<script>
+  $(function() {
+    $( document ).tooltip();
+  });
+</script>
+{% endblock additional_javascript_footer %}

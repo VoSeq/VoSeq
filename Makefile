@@ -1,5 +1,5 @@
 help:
-	@echo "serve - remove build artifacts"
+	@echo "serve - runserver for development"
 	@echo "test - use testing settings and SQlite3 database"
 
 serve: index stats
@@ -16,7 +16,7 @@ import:
 	python voseq/manage.py migrate_db --dumpfile=test_db_dump.xml --settings=voseq.settings.local
 
 index:
-	python voseq/manage.py rebuild_index
+	python voseq/manage.py rebuild_index --settings=voseq.settings.local
 
 stats:
 	python voseq/manage.py create_stats --settings=voseq.settings.local

@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     # my apps
     'core',
     'public_interface',
+    'create_dataset',
     'blast_local',
     'blast_local_full',
     'blast_ncbi',
