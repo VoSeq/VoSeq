@@ -26,6 +26,8 @@ coverage: test
 	coverage html
 
 test:
+	python voseq/manage.py makemigrations --settings=voseq.settings.testing
+	python voseq/manage.py migrate --settings=voseq.settings.testing
 	rm -rf htmlcov .coverage
 	coverage run --source voseq voseq/manage.py test -v 2 core public_interface \
 	    blast_local blast_local_full blast_ncbi blast_new stats view_genes      \
