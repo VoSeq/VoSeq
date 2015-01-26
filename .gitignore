@@ -20,3 +20,4 @@ conf.php
 
 # avoid including migrations files
 voseq/public_interface/migrations/*
+voseq/stats/migrations/*
