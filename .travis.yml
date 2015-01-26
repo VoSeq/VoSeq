@@ -6,7 +6,7 @@ python:
 services:
     - elasticsearch
 
-install: pip install -r requirements/dev.txt
+install: pip install -r requirements/testing.txt
 
 before_install:
     - echo "Fetching and installing BLAST"
@@ -14,6 +14,6 @@ before_install:
     - tar -zxvf ncbi-blast-2.2.30+-x64-linux.tar.gz | tail
     - export PATH="${TRAVIS_BUILD_DIR}/ncbi-blast-2.2.30+/bin:$PATH"
 
-script: coverage run --source voseq voseq/manage.py test -v 2 public_interface blast_local blast_local_full blast_ncbi stats view_genes --settings=voseq.settings.base
+script: coverage run --source voseq voseq/manage.py test -v 2 core public_interface blast_local blast_local_full blast_ncbi blast_new stats view_genes genbank_fasta --settings=voseq.settings.testing
 
 after_success: coveralls

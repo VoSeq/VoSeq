@@ -2,36 +2,28 @@ from django.http import Http404
 from django.shortcuts import render
 from django.conf import settings
 
+from core.utils import get_version_stats
 from .models import Vouchers
 from .models import FlickrImages
 from .models import Sequences
 from .models import Primers
 from .forms import AdvancedSearchForm
-from stats.models import Stats
 
 
 def index(request):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     return render(request,
                   'public_interface/index.html',
                   {
-                      'version': VERSION,
-                      'stats': STATS,
+                      'version': version,
+                      'stats': stats,
                   },
                   )
 
 
 def browse(request):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     queryset = Vouchers.objects.order_by('-timestamp')[:10]
 
@@ -46,18 +38,14 @@ def browse(request):
                   {
                       'results': queryset,
                       'vouchers_with_images': vouchers_with_images,
-                      'version': VERSION,
-                      'stats': STATS,
+                      'version': version,
+                      'stats': stats,
                   },
                   )
 
 
 def search(request):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     if request.method == 'GET' and bool(request.GET) is not False:
         form = AdvancedSearchForm(request.GET)
@@ -69,16 +57,16 @@ def search(request):
                               {
                                   'form': form,
                                   'results': results,
-                                  'version': VERSION,
-                                  'stats': STATS,
+                                  'version': version,
+                                  'stats': stats,
                               })
             else:
                 return render(request, 'public_interface/search.html',
                               {
                                   'form': form,
                                   'results': 'No results',
-                                  'version': VERSION,
-                                  'stats': STATS,
+                                  'version': version,
+                                  'stats': stats,
                               })
     else:
         form = AdvancedSearchForm()
@@ -86,17 +74,13 @@ def search(request):
     return render(request, 'public_interface/search.html',
                   {
                       'form': form,
-                      'version': VERSION,
-                      'stats': STATS,
+                      'version': version,
+                      'stats': stats,
                   })
 
 
 def show_voucher(request, voucher_code):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     try:
         voucher_queryset = Vouchers.objects.get(code__iexact=voucher_code)
@@ -118,18 +102,14 @@ def show_voucher(request, voucher_code):
                    'images': images_queryset,
                    'sequences': seqs_queryset,
                    'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
-                   'version': VERSION,
-                   'stats': STATS,
+                   'version': version,
+                   'stats': stats,
                    },
                   )
 
 
 def show_sequence(request, voucher_code, gene_code):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     try:
         queryset = Vouchers.objects.get(code__iexact=voucher_code)
@@ -146,6 +126,6 @@ def show_sequence(request, voucher_code, gene_code):
                       'sequence': seqs_queryset,
                       'images': images_queryset,
                       'primers': primers_queryset,
-                      'version': VERSION,
-                      'stats': STATS,
+                      'version': version,
+                      'stats': stats,
                   },)

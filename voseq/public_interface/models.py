@@ -1,9 +1,15 @@
+import json
+
 from django.db import models
 
 
 class Genes(models.Model):
     gene_code = models.CharField(max_length=100)
-    genetic_code = models.PositiveSmallIntegerField(blank=True, null=True)
+    genetic_code = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        help_text='Translation table',
+    )
     length = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.CharField(max_length=255, blank=True)
     reading_frame = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -28,12 +34,22 @@ class Genes(models.Model):
     gene_type = models.CharField(max_length=255, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.gene_code
+
 
 class GeneSets(models.Model):
-    geneset_name = models.CharField(max_length=75, default=None)
-    geneset_creator = models.CharField(max_length=75, default=None)
-    geneset_description = models.CharField(max_length=100, default=None, blank=True)
-    geneset_list = models.TextField(default=None)
+    geneset_name = models.CharField(max_length=75, blank=False)
+    geneset_creator = models.CharField(max_length=75, blank=False)
+    geneset_description = models.CharField(max_length=140, blank=True)
+    geneset_list = models.TextField(blank=False)
+
+    def save(self, *args, **kwargs):
+        self.geneset_list = json.dumps(self.geneset_list)
+        super(GeneSets, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.geneset_name
 
 
 class Members(models.Model):
@@ -45,10 +61,17 @@ class Members(models.Model):
 
 
 class TaxonSets(models.Model):
-    taxonset_name = models.CharField(max_length=50)
-    taxonset_creator = models.CharField(max_length=75)
-    taxonset_description = models.CharField(max_length=100)
+    taxonset_name = models.CharField(max_length=75, blank=False)
+    taxonset_creator = models.CharField(max_length=75, blank=False)
+    taxonset_description = models.CharField(max_length=140, blank=True)
     taxonset_list = models.TextField()
+
+    def save(self, *args, **kwargs):
+        self.taxonset_list = json.dumps(self.taxonset_list)
+        super(TaxonSets, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.taxonset_name
 
 
 class Vouchers(models.Model):

@@ -56,26 +56,53 @@
                 </td>
               </tr>
               <tr>
-                <td><b>Gene code:</b></td>
-                <td>{{ item.gene_code }}</td>
-                <td><b>Aligned or not?:</b></td>
-                <td>{{ item.aligned }}</td>
-                <td><b>Length (if aligned):</b></td>
-                <td>{{ item.length|intcomma }} bp</td>
+                <td><b>Protein coding:</b></td>
+                <td>{{ item.prot_code }}</td>
+                <td><b>Reading frame:</b></td>
+                <td>{{ item.reading_frame }}</td>
               </tr>
 
               <tr>
-                <td><b>Description:</b></td>
-                <td colspan="5">{{ item.description }}</td>
+                <td><b>Translation table:</b></td>
+                <td colspan="3">
+                  {% if item.genetic_code == 1 %}
+                    Standard
+                  {% elif item.genetic_code == 2 %}
+                    Vertebrate Mitochondrial
+                  {% elif item.genetic_code == 3 %}
+                    Yeast Mitochondrial
+                  {% elif item.genetic_code == 4 %}
+                    Mold, Protozoan and Coelenerate Mitochondrial. Mycoplasma,
+                    Spiroplasma
+                  {% elif item.genetic_code == 5 %}
+                    Invertebrate Mitochondrial
+                  {% elif item.genetic_code == 6 %}
+                    Ciliate Nuclear; Dasycladacean Nuclear; Hexamita Nuclear
+                  {% elif item.genetic_code == 9 %}
+                    Echinoderm Mitochondrial
+                  {% elif item.genetic_code == 10 %}
+                    Euplotid Nuclear
+                  {% elif item.genetic_code == 11 %}
+                    Bacterial and Plant Plastid
+                  {% elif item.genetic_code == 12 %}
+                    Alternative Yeast Nuclear
+                  {% elif item.genetic_code == 13 %}
+                    Ascidian Mitochondrial
+                  {% elif item.genetic_code == 14 %}
+                    Flatowrm Mitochondrial
+                  {% elif item.genetic_code == 15 %}
+                    Blepharisma Mitochondrial
+                  {% elif item.genetic_code == 16 %}
+                    Chlorophycean Mitochondrial
+                  {% elif item.genetic_code == 21 %}
+                    Trematode Mitochondrial
+                  {% elif item.genetic_code == 22 %}
+                    Scenedesmus obliquus Mitochondrial
+                  {% elif item.genetic_code == 23 %}
+                    Thraustochytrium Mitochondrial code
+                  {% endif %}
+                </td>
               </tr>
-              <tr>
-                <td><b>Notes:</b></td>
-                <td colspan="5">{{ item.notes }}</td>
-              <tr>
-              <tr>
-                <td><b>Gene type:</b></td>
-                <td colspan="5">{{ item.gene_type }}</td>
-              <tr>
             </table>
           </div><!-- panel -->
 

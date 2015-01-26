@@ -1,0 +1,86 @@
+{% extends 'public_interface/base.html' %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Enter query sequence for local blast:</h3>
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-10  col-md-8 col-md-offset-1 col-lg-8 ">
+
+        <form action="/blast_new/results/" method="post">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Paste a sequence for local blast</b></h3>
+          </div>
+
+              {% csrf_token %}
+
+          <table class="table table-bordered">
+            <tr>
+              <td>
+                  <label for="id_name">Name: </label>
+              </td>
+              <td>
+                  {% for i in form.name.errors %}
+                    <div class="alert alert-warning">{{ i }}</div>
+                  {% endfor %}
+                  {{ form.name }}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <label for="id_sequence">Sequence: </label>
+              </td>
+              <td>
+                  {% for i in form.sequence.errors %}
+                    <div class="alert alert-warning">{{ i }}</div>
+                  {% endfor %}
+                  {{ form.sequence }}
+              </td>
+            </tr>
+              <tr>
+                  <td>
+                      <label for="id_gene_codes">Genes: </label>
+                  </td>
+                  <td>
+                      {{ form.gene_codes.errors }}
+                      <table class="table table-condensed table-striped">
+                          <tr>
+                              {% for i in form.gene_codes %}
+                              <td>
+                              {{ i }}
+                              </td>
+                              {% endfor %}
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+          </table>
+        </div><!-- panel -->
+
+            <button type="submit" class="btn btn-info" id="submit_button">
+                <i class="fa fa-bomb"></i>
+                Blast this
+            </button>
+        </form>
+
+
+
+
+
+
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}

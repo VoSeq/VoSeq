@@ -38,12 +38,15 @@ INSTALLED_APPS = (
     'haystack',
 
     # my apps
+    'core',
     'public_interface',
     'blast_local',
     'blast_local_full',
     'blast_ncbi',
+    'blast_new',
     'stats',
     'view_genes',
+    'genbank_fasta',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,12 +77,6 @@ HAYSTACK_CONNECTIONS = {
 }
 HAYSTACK_DEFAULT_OPERATOR = 'AND'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test_voseq',
-    }
-}
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

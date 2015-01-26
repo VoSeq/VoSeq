@@ -1,0 +1,53 @@
+# appveyor file:
+# http://www.appveyor.com/docs/appveyor-yml
+
+# version: {branch}
+
+# branches to build
+branches:
+  # whitelist
+  only:
+    - master
+
+  except:
+    - gh-pages
+
+# Do not build on tags (GitHub only)
+skip_tags: true
+
+build: false
+
+# environment variables
+environment:
+  matrix:
+    - PYTHON: "C:/Python34"
+
+# enable service required for build/tests
+services:
+  - postgresql          # start PostgreSQL 9.3 service
+  - elasticsearch
+
+init:
+  - "ECHO %PYTHON%"
+  - ps: "ls C:/Python*"
+
+# scripts that run after cloning repository
+install:
+  - ps: (new-object net.webclient).DownloadFile('https://raw.github.com/pypa/pip/master/contrib/get-pip.py', 'C:/get-pip.py')
+  - "%PYTHON%/python.exe C:/get-pip.py"
+  - "%PYTHON%/Scripts/pip.exe install -r requirements/dev-win.txt"
+  - echo "Fetching psycopg2-win"
+  - ps: (new-object net.webclient).DownloadFile('http://www.stickpeople.com/projects/python/win-psycopg/2.5.4/psycopg2-2.5.4.win32-py3.4-pg9.3.5-release.exe', 'C:/get-psycopg2.py')
+  - "%PYTHON%/python.exe C:/get-psycopg2.py"
+
+# scripts to run before build
+before_build:
+  - echo "Fetching and installing BLAST"
+  - wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.2.30/ncbi-blast-2.2.30+-x64-linux.tar.gz
+  - tar -zxvf ncbi-blast-2.2.30+-x64-linux.tar.gz | tail
+  - export PATH="${TRAVIS_BUILD_DIR}/ncbi-blast-2.2.30+/bin:$PATH"
+
+# to run your custom scripts instead of automatic tests
+test_script:
+  - coverage run --source voseq voseq/manage.py test -v 2 core public_interface blast_local blast_local_full blast_ncbi blast_new stats view_genes genbank_fasta --settings=voseq.settings.base
+

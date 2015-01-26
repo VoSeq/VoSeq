@@ -1,0 +1,99 @@
+{% extends 'public_interface/base.html' %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Results:</h3>
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
+
+        <div class="panel panel-primary" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Sequences that already have GenBank accession numbers:
+              <span class="badge"><b>{{ items_with_accession|length }}</b></span>
+              <br />
+              These will be ignored</b></h3>
+          </div>
+
+          <ul class="list-group">
+            {% for i in items_with_accession %}
+              <li class="list-group-item">{{ i.voucher_code }} for {{ i.gene_code }} = {{ i.accession }}</li>
+            {% endfor %}
+          </ul>
+        </div><!-- panel -->
+
+
+        <h3>
+          This is your nucleotide FASTA file to import into Sequin
+          (<a href="http://www.ncbi.nlm.nih.gov/Sequin/">http://www.ncbi.nlm.nih.gov/Sequin/</a>)
+        </h3>
+
+        <a href="/genbank_fasta/results/{{ fasta_file }}">
+          <button class="btn btn-info">
+            <i class="fa fa-download"></i>
+            Download nucleotide file
+           </button></a>
+        <br />
+        <br />
+        <div class="panel panel-primary" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Your nucleotide file:</b></h3>
+          </div>
+
+          <table class="table table-bordered">
+            <tr>
+              <td>
+                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control">{{ fasta }}</textarea>
+              </td>
+            </tr>
+          </table>
+
+        </div><!-- panel -->
+
+
+
+        <h3>
+          This is your protein file to use in case you have introns.
+          Load it in Sequin after your nucleotide file to link nucleotides to
+          protein and identify the introns.
+        </h3>
+
+        <a href="/genbank_fasta/results/{{ protein_file }}">
+        <button class="btn btn-info">
+          <i class="fa fa-download"></i>
+          Download protein file
+        </button></a>
+        <br />
+        <br />
+        <div class="panel panel-primary" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Your protein file:</b></h3>
+          </div>
+
+          <table class="table table-bordered">
+            <tr>
+              <td>
+                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control">{{ protein }}</textarea>
+              </td>
+            </tr>
+          </table>
+
+        </div><!-- panel -->
+
+
+
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}

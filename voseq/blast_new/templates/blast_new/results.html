@@ -1,0 +1,54 @@
+{% extends 'public_interface/base.html' %}
+
+
+{% block content %}
+
+{% if result %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="panel-title">
+     <h3 class="panel-title">Blast results:</h3>
+    </div>
+  </div>
+
+    <table class="table table-condensed table-striped">
+      <tr>
+        <td><b>Description</b></td>
+        <td><b>Ident</b></td>
+        <td><b>Query cover</b></td>
+        <td><b>Max score</b></td>
+        <td><b>Bit score</b></td>
+        <td><b>E value</b></td>
+        <td><b>Accession</b></td>
+      </tr>
+    {% for item in result %}
+      <tr>
+        <td>
+          {% if item.voucher_code %}
+            <a href="/p/{{ item.voucher_code }}">{{ item.voucher_code }}</a>
+            <a href="/s/{{ item.voucher_code }}/{{ item.gene_code }}">{{ item.gene_code }}</a>
+          {% else %}
+            {{ item.description }}
+          {% endif %}
+        </td>
+        <td>{{ item.ident }}%</td>
+        <td>{{ item.query_cover }}%</td>
+        <td>{{ item.score }}</td>
+        <td>{{ item.bits }}</td>
+        <td>{{ item.e_value }}</td>
+        <td>
+          {% if item.accession %}
+            <a href="http://www.ncbi.nlm.nih.gov/nuccore/{{ item.accession }}">{{ item.accession }}</a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+</div>
+{% else %}
+<div class="container">
+    <h3>Blasting that sequence could retrieve any close match.</h3>
+</div>
+{% endif %}
+
+{% endblock content %}

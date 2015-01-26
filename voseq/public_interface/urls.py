@@ -1,14 +1,7 @@
 from django.conf.urls import patterns
 from django.conf.urls import url
-from django.conf.urls import include
-
-from haystack.query import SearchQuerySet
-from haystack.views import SearchView
-from haystack.views import search_view_factory
-from haystack.forms import ModelSearchForm
 
 from . import views
-from .forms import AdvancedSearchForm
 
 
 urlpatterns = patterns(

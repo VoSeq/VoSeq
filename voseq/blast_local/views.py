@@ -1,16 +1,11 @@
-from django.conf import settings
 from django.shortcuts import render
 
+from core.utils import get_version_stats
 from .utils import BLAST
-from stats.models import Stats
 
 
 def index(request, voucher_code, gene_code):
-    VERSION = settings.VERSION
-    try:
-        STATS = Stats.objects.get(pk=1)
-    except Stats.DoesNotExist:
-        STATS = ''
+    version, stats = get_version_stats()
 
     blast = BLAST('local', voucher_code, gene_code)
     blast.save_seqs_to_file()
@@ -25,7 +20,7 @@ def index(request, voucher_code, gene_code):
     return render(request, 'blast_local/index.html',
                   {
                       'result': result,
-                      'version': VERSION,
-                      'stats': STATS,
+                      'version': version,
+                      'stats': stats,
                   },
                   )

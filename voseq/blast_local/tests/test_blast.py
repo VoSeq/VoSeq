@@ -135,7 +135,7 @@ class BlastLocalTest(TestCase):
         self.blast.save_query_to_file()
         self.blast.do_blast()
         result = self.blast.parse_blast_output()
-        self.assertTrue(1057 in [i['query_length'] for i in result])
+        self.assertTrue(611 in [i['query_length'] for i in result])
         self.remove_blast_data_files()
 
     def test_strip_question_marks(self):

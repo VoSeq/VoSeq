@@ -7,6 +7,7 @@ config.json
 *xml
 *pdf
 *bak
+*.fasta
 
 # coverage
 .coverage

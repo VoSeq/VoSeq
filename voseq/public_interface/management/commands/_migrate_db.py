@@ -17,6 +17,8 @@ from public_interface.models import FlickrImages
 from public_interface.models import Sequences
 from public_interface.models import Primers
 from public_interface.models import Genes
+from public_interface.models import GeneSets
+from public_interface.models import TaxonSets
 
 
 class ParseXML(object):
@@ -137,8 +139,22 @@ class ParseXML(object):
             item['geneset_creator'] = row.find("./field/[@name='geneset_creator']").text
             item['geneset_description'] = row.find("./field/[@name='geneset_description']").text
             item['geneset_list'] = row.find("./field/[@name='geneset_list']").text
-            item['geneset_id'] = row.find("./field/[@name='geneset_id']").text
+            # item['geneset_id'] = row.find("./field/[@name='geneset_id']").text
             self.table_genesets_items.append(item)
+
+    def import_table_genesets(self):
+        if self.table_genesets_items is None:
+            self.parse_table_genesets(self.dump_string)
+
+    def save_table_genesets_to_db(self):
+        if self.table_genesets_items is None:
+            self.import_table_genesets()
+
+        for item in self.table_genesets_items:
+            if item['geneset_description'] is None:
+                item['geneset_description'] = ''
+            item['geneset_list'] = item['geneset_list'].split(',')
+            GeneSets.objects.create(**item)
 
     def parse_table_members(self, xml_string):
         our_data = False
@@ -355,8 +371,25 @@ class ParseXML(object):
             item['taxonset_creator'] = row.find("./field/[@name='taxonset_creator']").text
             item['taxonset_description'] = row.find("./field/[@name='taxonset_description']").text
             item['taxonset_list'] = row.find("./field/[@name='taxonset_list']").text
-            item['taxonset_id'] = row.find("./field/[@name='taxonset_id']").text
+            # item['taxonset_id'] = row.find("./field/[@name='taxonset_id']").text
             self.table_taxonsets_items.append(item)
+
+    def import_table_taxonsets(self):
+        if self.table_taxonsets_items is None:
+            self.parse_table_taxonsets(self.dump_string)
+
+        for item in self.table_taxonsets_items:
+            if item['taxonset_description'] is None:
+                item['taxonset_description'] = ''
+            if item['taxonset_list'] is not None:
+                item['taxonset_list'] = item['taxonset_list'].split(',')
+
+    def save_table_taxonsets_to_db(self):
+        if self.table_taxonsets_items is None:
+            self.import_table_taxonsets()
+
+        for item in self.table_taxonsets_items:
+            TaxonSets.objects.create(**item)
 
     def parse_table_vouchers(self, xml_string):
         our_data = False
