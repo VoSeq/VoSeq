@@ -1,3 +1,7 @@
+help:
+	@echo "serve - remove build artifacts"
+	@echo "test - use testing settings and SQlite3 database"
+
 serve: index stats
 	python voseq/manage.py runserver --settings=voseq.settings.local
 
