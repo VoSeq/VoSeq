@@ -5,7 +5,7 @@ from public_interface.models import GeneSets
 from public_interface.models import TaxonSets
 
 
-class GenBankFastaForm(forms.Form):
+class BaseDatasetForm(forms.Form):
     taxonset = forms.ModelChoiceField(
         TaxonSets.objects.all(),
         label='Choose taxonset',
