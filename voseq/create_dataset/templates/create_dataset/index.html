@@ -63,6 +63,11 @@
                 {{ form.translations }}
                 {{ form.translations.label }}
                 <i id="translations-tooltip" class="fa fa-question-circle"></i>
+                <i class="fa fa-arrow-right"></i>&nbsp;&nbsp;as:
+                  {% for i in form.degen_translations %}
+                    &nbsp;{{ i }}
+                    <i title="{% cycle 'Normal' 'Degen S: alternative degen encoding of Serin 1 to Serin 2' 'Degen Z: alternative degen encoding of Serin 2 to Serin 1' 'Degen SZ: alternative degen encoding of Serin 1 and Serin 2 to NNN' %}" class="fa fa-question-circle"></i>
+                  {% endfor %}
               </td>
             </tr>
 

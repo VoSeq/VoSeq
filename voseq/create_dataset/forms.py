@@ -47,3 +47,14 @@ class CreateDatasetForm(BaseDatasetForm):
         label='Degen(erated)',
         widget=forms.CheckboxInput(),
     )
+
+    degen_translations = forms.ChoiceField(
+        label='Degenerated translations)',
+        widget=forms.RadioSelect(),
+        choices=[
+            ('NORMAL', 'normal'),
+            ('S', 'S'),
+            ('Z', 'Z'),
+            ('SZ', 'SZ'),
+        ]
+    )
