@@ -41,3 +41,8 @@ body {
     display: inline-block;
     padding-right: 15px;
 }
+
+#id_taxon_names li {
+    display: inline-block;
+    padding-right: 15px;
+}

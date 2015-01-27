@@ -48,6 +48,11 @@ class CreateDatasetForm(BaseDatasetForm):
         widget=forms.CheckboxInput(),
     )
 
+    aminoacids = forms.ChoiceField(
+        label='Amino acids',
+        widget=forms.CheckboxInput(),
+    )
+
     degen_translations = forms.ChoiceField(
         label='Degenerated translations)',
         widget=forms.RadioSelect(),
@@ -57,4 +62,28 @@ class CreateDatasetForm(BaseDatasetForm):
             ('Z', 'Z'),
             ('SZ', 'SZ'),
         ]
+    )
+
+    special = forms.ChoiceField(
+        label='Special',
+        widget=forms.CheckboxInput(),
+    )
+
+    taxon_names = forms.ChoiceField(
+        label='What info do you want in the taxon names?',
+        choices=[
+            ('CODE', 'Code'),
+            ('ORDER', 'Order'),
+            ('FAMILY', 'Family'),
+            ('SUBFAMILY', 'Subfamily'),
+            ('TRIBE', 'Tribe'),
+            ('SUBTRIBE', 'Subtribe'),
+            ('GENUS', 'Genus'),
+            ('SPECIES', 'Species'),
+            ('SUBSPECIES', 'Subspecies'),
+            ('AUCTOR', 'Auctor'),
+            ('HOSTORG', 'Host org.'),
+            ('GENECODE', 'Gene code'),
+        ],
+        widget=forms.CheckboxSelectMultiple(),
     )

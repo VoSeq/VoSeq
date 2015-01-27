@@ -53,13 +53,13 @@
                 Amino Acids->Special->Degen->All->1st—2nd,3rd):
               </td>
               <td>
-                {{ form.positions.label }}
+                <b>{{ form.positions.label }}</b>
                 {{ form.positions }}
 
-                {{ form.partition_by_positions.label }}
+                <b>{{ form.partition_by_positions.label }}</b>
                 {{ form.partition_by_positions }}
 
-                Translations <br />
+                <b>Translations</b> <br />
                 {{ form.translations }}
                 {{ form.translations.label }}
                 <i id="translations-tooltip" class="fa fa-question-circle"></i>
@@ -68,7 +68,24 @@
                     &nbsp;{{ i }}
                     <i title="{% cycle 'Normal' 'Degen S: alternative degen encoding of Serin 1 to Serin 2' 'Degen Z: alternative degen encoding of Serin 2 to Serin 1' 'Degen SZ: alternative degen encoding of Serin 1 and Serin 2 to NNN' %}" class="fa fa-question-circle"></i>
                   {% endfor %}
+
+                <br />
+
+                {{ form.aminoacids }}
+                {{ form.aminoacids.label }}
+
+                <br />
+
+                <b>{{ form.special.label }}</b><br />
+                {{ form.special }}
+                {{ form.special.label }}
+                <i class="fa fa-question-circle" title="Will enable you to specify different translations, positions and partitions for each gene/alignment"></i>
               </td>
+            </tr>
+
+            <tr>
+              <td>{{ form.taxon_names.label }}</td>
+              <td>{{ form.taxon_names }}</td>
             </tr>
 
           </table>
