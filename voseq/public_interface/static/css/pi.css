@@ -31,3 +31,7 @@ body {
     display: inline-block;
     padding-right: 15px;
 }
+#id_partition_by_positions li {
+    display: inline-block;
+    padding-right: 15px;
+}

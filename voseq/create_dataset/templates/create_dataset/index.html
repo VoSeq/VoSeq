@@ -30,10 +30,37 @@
           </div>
 
 
+          <table class="table table-bordered">
 
-          {{ form.as_p }}
-<i class="fa fa-exclamation-triangle"></i> Warning! your dataset will not necessarily be properly aligned!
-<a title="You need to be sure that your data is aligned!" href="#"><i class="fa fa-question-circle"></i></a>
+            <tr>
+              <td>
+                {{ form.file_format.label }}
+              </td>
+              <td>
+                {{ form.file_format }}
+
+                {{ form.outgroup.label }} {{ form.outgroup }}<br />
+                <i class="fa fa-exclamation-triangle"></i> Warning! your dataset will not necessarily be properly aligned!
+                <a title="You need to be sure that your data is aligned!" href="#"><i class="fa fa-question-circle"></i></a>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+              </td>
+              <td>
+                {{ form.positions.label }}
+                {{ form.positions }}
+
+                {{ form.partition_by_positions.label }}
+                {{ form.partition_by_positions }}
+              </td>
+            </tr>
+
+          </table>
+
+
+
               {% csrf_token %}
 
           {% for i in form.non_field_errors %}
