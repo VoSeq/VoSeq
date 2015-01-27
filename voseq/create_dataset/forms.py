@@ -42,3 +42,8 @@ class CreateDatasetForm(BaseDatasetForm):
         ],
         widget=forms.CheckboxSelectMultiple(),
     )
+
+    translations = forms.ChoiceField(
+        label='Degen(erated)',
+        widget=forms.CheckboxInput(),
+    )

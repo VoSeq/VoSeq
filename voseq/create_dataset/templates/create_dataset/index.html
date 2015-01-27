@@ -3,9 +3,7 @@
 
 {% block additional_css %}
   {% load staticfiles %}
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.structure.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/jquery-ui.theme.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tooltipster.css' %}" />
 {% endblock additional_css %}
 
 
@@ -41,7 +39,7 @@
 
                 {{ form.outgroup.label }} {{ form.outgroup }}<br />
                 <i class="fa fa-exclamation-triangle"></i> Warning! your dataset will not necessarily be properly aligned!
-                <a title="You need to be sure that your data is aligned!" href="#"><i class="fa fa-question-circle"></i></a>
+                <i class="fa fa-question-circle" title="You need to be sure that your data is aligned!"></i>
               </td>
             </tr>
 
@@ -60,6 +58,11 @@
 
                 {{ form.partition_by_positions.label }}
                 {{ form.partition_by_positions }}
+
+                Translations <br />
+                {{ form.translations }}
+                {{ form.translations.label }}
+                <i id="translations-tooltip" class="fa fa-question-circle"></i>
               </td>
             </tr>
 
@@ -163,9 +166,27 @@
 
 
 {% block additional_javascript_footer %}
+  {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'js/jquery.tooltipster.min.js' %}"></script>
 <script>
-  $(function() {
-    $( document ).tooltip();
-  });
+$(document).ready(function() {
+    $("i.fa").tooltipster({'trigger':'hover'});
+
+    $('#translations-tooltip').tooltipster({
+        content: $('<span>Degenerating nucleotides to IUPAC ambiguity codes at all sites that can potentially undergo<br />' +
+									 'synonymous change in any and all pairwise comparisons of sequences in the data matrix,<br />' +
+ 									 'thereby making synonymous change largely invisible and reducing the effect of<br />' +
+									 'compositional heterogeneity but leaving the inference of non-synonymous change largely intact.<br /><br />' +
+									 'From: "degen_v1_4.pl"; author: A. Zwick &amp; A. Hussey; www.phylotools.com<br /><br />Cite:<br />' +
+									 'Zwick, A., Regier, J.C. & Zwickl, D.J. (2012). "Resolving Discrepancy between Nucleotides and<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+									 'Amino Acids in Deep-Level Arthropod Phylogenomics:Differentiating Serine Codons in 21-<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+								   'Amino-Acid Models". PLoS ONE 7(11): e47450.<br />' +
+									 'Regier, J.C., Shultz, J.W., Zwick, A., Hussey, A., Ball, B., Wetzer, R. Martin, J.W. &<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+								   'Cunningham, C.W. (2010). "Arthropod relationships revealed by phylogenomic analysis of<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +
+				           'nuclear protein-coding sequences". Nature 463: 1079-1083.' +
+                   '</span>'),
+        multiple: true
+    });
+});
 </script>
 {% endblock additional_javascript_footer %}
