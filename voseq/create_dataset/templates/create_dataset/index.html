@@ -52,6 +52,9 @@
                 {{ form.file_format.label }}
               </td>
               <td>
+                {% for error in form.file_format.errors %}
+                  <p class="text-danger">{{ error }}</p>
+                {% endfor %}
                 {{ form.file_format }}
 
                 {{ form.outgroup.label }} {{ form.outgroup }}<br />
