@@ -13,6 +13,7 @@ class CreateDatasetForm(BaseDatasetForm):
             ('FASTA', 'Unaligned FASTA format'),
         ],
         widget=forms.RadioSelect(),
+        required=True,
     )
 
     outgroup = forms.CharField(

@@ -32,7 +32,7 @@ class BaseDatasetForm(forms.Form):
 
     def clean(self):
         """Overwriting validator method of class form."""
-        cleaned_data = super(GenBankFastaForm, self).clean()
+        cleaned_data = super(BaseDatasetForm, self).clean()
         taxonset = cleaned_data.get("taxonset")
         voucher_codes = cleaned_data.get("voucher_codes")
 

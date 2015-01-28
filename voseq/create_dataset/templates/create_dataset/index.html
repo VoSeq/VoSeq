@@ -16,12 +16,29 @@
       <b>Select sequences you want for a dataset by entering the voucher codes and gene codes.</b>
     </div>
 
+    {% if form.non_field_errors %}
+      <div class="alert alert-warning" role="alert">
+        {% for i in form.non_field_errors %}
+          <b>{{ i }}</b>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if form.errors %}
+    <div class="alert alert-warning" role="alert">
+      <b>Some fields are required.</b>
+    </div>
+    {% endif %}
+
+    {{ form.errors }}
+
+
     <div class="container">
       <div class="row">
 
         <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
 
-        <form action="/genbank_fasta/results/" method="post">
+        <form action="/create_dataset/results/" method="post">
         <div class="panel panel-primary" style="min-width: 790px;">
           <div class="panel-heading">
             <h3 class="panel-title"><b>Enter the required info to make yourself a ready-to-run dataset</b></h3>
@@ -118,9 +135,6 @@
 
               {% csrf_token %}
 
-          {% for i in form.non_field_errors %}
-          <div class="alert alert-warning">{{ i }}</div>
-          {% endfor %}
         <table class="table table-bordered"><!-- big -->
             <tr>
                 <td>
