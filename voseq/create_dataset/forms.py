@@ -20,6 +20,7 @@ class CreateDatasetForm(BaseDatasetForm):
         label='Outgroup (code, for NEXUS and TNT)',
         help_text='Voucher code for using that specimen\'s sequence as '
                   'outgroup in NEXUS and TNT datasets.',
+        required=False,
     )
 
     positions = forms.ChoiceField(
@@ -65,9 +66,10 @@ class CreateDatasetForm(BaseDatasetForm):
         ]
     )
 
-    special = forms.ChoiceField(
+    special = forms.BooleanField(
         label='Special',
         widget=forms.CheckboxInput(),
+        required=False,
     )
 
     taxon_names = forms.ChoiceField(
