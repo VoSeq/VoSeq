@@ -46,3 +46,13 @@ body {
     display: inline-block;
     padding-right: 15px;
 }
+
+#id_exclude li {
+    display: inline-block;
+    padding-right: 15px;
+}
+
+#id_introns li {
+    display: inline-block;
+    padding-right: 15px;
+}

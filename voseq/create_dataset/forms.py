@@ -87,3 +87,25 @@ class CreateDatasetForm(BaseDatasetForm):
         ],
         widget=forms.CheckboxSelectMultiple(),
     )
+
+    exclude = forms.ChoiceField(
+        help_text='If dataset is for single gene, exclude taxa missing this gene? '
+                  'Otherwise include taxon with ? as sequences.',
+        choices=[
+            ('YES', 'yes'),
+            ('NO', 'no'),
+        ],
+        widget=forms.RadioSelect(),
+    )
+
+    number_genes = forms.IntegerField(
+        label='Minimum number of genes',
+    )
+
+    introns = forms.ChoiceField(
+        choices=[
+            ('YES', 'yes'),
+            ('NO', 'no'),
+        ],
+        widget=forms.RadioSelect(),
+    )

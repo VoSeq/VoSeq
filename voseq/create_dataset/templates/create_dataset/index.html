@@ -88,9 +88,33 @@
               <td>{{ form.taxon_names }}</td>
             </tr>
 
+            <tr>
+              <td>
+                For single gene datasets, <br />
+                exclude taxa missing this gene?
+              </td>
+              <td>{{ form.exclude }}</td>
+            </tr>
+
+            <tr>
+              <td>
+                For multigene datasets, <br />
+                exclude taxa with less than X genes?
+              </td>
+              <td>
+                {{ form.number_genes.label }}
+                {{ form.number_genes }}
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                Ignore introns? <br />
+                ('yes' will not use them in the data set)
+              </td>
+              <td>{{ form.introns }}</td>
+            </tr>
           </table>
-
-
 
               {% csrf_token %}
 
@@ -117,6 +141,16 @@
                         <label for="id_voucher_codes">... and/or a list of voucher codes: </label>
                       </td>
                       <td>
+                        Enter one code per line<br />
+                        in the box below.<br />
+                        (with a -- sign before taxon<br />
+                        names to disable them from<br />
+                        the taxon set)<br />
+                        For example:<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-10<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-11<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;--S078-21<br />
+                        and so on...<br />
                         {% for i in form.voucher_codes.errors %}
                         <div class="alert alert-warning">{{ i }}</div>
                         {% endfor %}
@@ -166,7 +200,7 @@
         </div><!-- panel -->
 
             <button type="submit" class="btn btn-info" id="submit_button">
-                Make GenBank FASTA1
+              Create dataset
             </button>
         </form>
 
