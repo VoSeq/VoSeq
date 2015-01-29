@@ -33,7 +33,9 @@ class CreateDatasetForm(BaseDatasetForm):
             ('2nd', '2nd'),
             ('3rd', '3rd'),
         ],
-        widget=forms.CheckboxSelectMultiple(),
+        widget=forms.RadioSelect(),
+        initial='ALL',
+        required=True,
     )
 
     partition_by_positions = forms.ChoiceField(
