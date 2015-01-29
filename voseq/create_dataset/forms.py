@@ -50,9 +50,10 @@ class CreateDatasetForm(BaseDatasetForm):
         required=True,
     )
 
-    translations = forms.ChoiceField(
+    translations = forms.BooleanField(
         label='Degen(erated)',
         widget=forms.CheckboxInput(),
+        required=False,
     )
 
     aminoacids = forms.BooleanField(
@@ -127,4 +128,5 @@ class CreateDatasetForm(BaseDatasetForm):
         widget=forms.RadioSelect(),
         initial='YES',
         required=True,
+        help_text='Ignore introns?',
     )
