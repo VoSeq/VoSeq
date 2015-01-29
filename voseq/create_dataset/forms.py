@@ -81,7 +81,7 @@ class CreateDatasetForm(BaseDatasetForm):
         required=False,
     )
 
-    taxon_names = forms.ChoiceField(
+    taxon_names = forms.MultipleChoiceField(
         label='What info do you want in the taxon names?',
         choices=[
             ('CODE', 'Code'),
