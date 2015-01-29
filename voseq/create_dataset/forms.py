@@ -55,9 +55,10 @@ class CreateDatasetForm(BaseDatasetForm):
         widget=forms.CheckboxInput(),
     )
 
-    aminoacids = forms.ChoiceField(
+    aminoacids = forms.BooleanField(
         label='Amino acids',
         widget=forms.CheckboxInput(),
+        required=False,
     )
 
     degen_translations = forms.ChoiceField(
