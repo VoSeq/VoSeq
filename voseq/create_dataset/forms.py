@@ -45,7 +45,9 @@ class CreateDatasetForm(BaseDatasetForm):
             ('EACH', 'each'),
             ('1st-3rd', '1st-2nd, 3rd'),
         ],
-        widget=forms.CheckboxSelectMultiple(),
+        widget=forms.RadioSelect(),
+        initial='ONE',
+        required=True,
     )
 
     translations = forms.ChoiceField(
