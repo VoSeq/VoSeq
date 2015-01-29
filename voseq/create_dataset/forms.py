@@ -125,4 +125,6 @@ class CreateDatasetForm(BaseDatasetForm):
             ('NO', 'no'),
         ],
         widget=forms.RadioSelect(),
+        initial='YES',
+        required=True,
     )
