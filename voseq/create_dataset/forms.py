@@ -14,6 +14,7 @@ class CreateDatasetForm(BaseDatasetForm):
         ],
         widget=forms.RadioSelect(),
         required=True,
+        initial='FASTA',
     )
 
     outgroup = forms.CharField(
