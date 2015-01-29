@@ -116,6 +116,7 @@ class CreateDatasetForm(BaseDatasetForm):
 
     number_genes = forms.IntegerField(
         label='Minimum number of genes',
+        required=False,
     )
 
     introns = forms.ChoiceField(
