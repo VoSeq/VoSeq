@@ -97,6 +97,9 @@ class CreateDatasetForm(BaseDatasetForm):
             ('GENECODE', 'Gene code'),
         ],
         widget=forms.CheckboxSelectMultiple(),
+        initial=['CODE', 'GENUS', 'SPECIES'],
+        required=False,
+        help_text='If taxon_names is None, use standart code_genus_species',
     )
 
     exclude = forms.ChoiceField(
