@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.management import call_command
 
+from core.utils import get_gene_codes
 from public_interface.models import GeneSets
 from public_interface.models import Genes
 from genbank_fasta import utils
@@ -24,7 +25,7 @@ class TestGenBankFastaUtils(TestCase):
 
     def test_get_gene_codes(self):
         expected = 4
-        result = utils.get_gene_codes(self.cleaned_data)
+        result = get_gene_codes(self.cleaned_data)
         self.assertEqual(expected, len(result))
 
     def test_dataset_reading_frame_2(self):
