@@ -1,8 +1,51 @@
+import json
 import re
 
 from django.conf import settings
 
 from stats.models import Stats
+
+
+def get_voucher_codes(cleaned_data):
+    """Processes list of voucher codes entered by users.
+
+    It receives data from a **Form class** (`cleaned_data`) and makes sure that
+    there are not duplicated voucher codes passed to the dataset builder.
+    It also drops voucher codes if specified by users using the double dash:
+    `--CP100-10`.
+
+    Args:
+        * `form.cleaned_data`: taken from a Form class
+
+    Returns:
+        set of voucher codes, no dupes, dropped unwanted.
+    """
+    voucher_codes = []
+    if cleaned_data['taxonset'] is not None:
+        voucher_codes = json.loads(cleaned_data['taxonset'].taxonset_list)
+    if cleaned_data['voucher_codes'] != '':
+        voucher_codes += cleaned_data['voucher_codes'].splitlines()
+    return set(voucher_codes)
+
+
+def get_gene_codes(cleaned_data):
+    """Processes list of gene codes entered by users.
+
+    It receives data from a **Form class** (`cleaned_data`) and makes sure that
+    there are not duplicated gene codes passed to the dataset builder.
+
+    Args:
+        * `form.cleaned_data`: taken from a Form class
+
+    Returns:
+        set of gene codes, no dupes.
+    """
+    gene_codes = []
+    if cleaned_data['geneset'] is not None:
+        gene_codes = json.loads(cleaned_data['geneset'].geneset_list)
+    if len(cleaned_data['gene_codes']) > 0:
+        gene_codes += [i.gene_code for i in cleaned_data['gene_codes']]
+    return set(gene_codes)
 
 
 def get_version_stats():

@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
 from core.utils import get_version_stats
+from core.utils import get_gene_codes
+from core.utils import get_voucher_codes
 from .forms import GenBankFastaForm
 from . import utils
 
@@ -34,8 +36,8 @@ def results(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
 
-            voucher_codes = utils.get_voucher_codes(cleaned_data)
-            gene_codes = utils.get_gene_codes(cleaned_data)
+            voucher_codes = get_voucher_codes(cleaned_data)
+            gene_codes = get_gene_codes(cleaned_data)
 
             res = utils.Results(voucher_codes, gene_codes)
             res.get_datasets()
