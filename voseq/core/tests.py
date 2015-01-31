@@ -11,6 +11,8 @@ class TestCore(TestCase):
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
 
+        self.client = Client()
+
     def test_strip_question_marks_n(self):
         seq = '?NNNNNACTACGATGCRGCAST'
         result = strip_question_marks(seq)
