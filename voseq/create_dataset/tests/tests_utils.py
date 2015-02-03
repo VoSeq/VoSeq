@@ -27,7 +27,7 @@ class CreateDatasetUtilsTest(TestCase):
         self.dataset_creator = CreateDataset(cleaned_data)
 
     def test_create_dataset(self):
-        expected = '>CP100-11_Lepidoptera\n??TGAGCCGGTATAATTGGTACATCCCTAAGTCTTATTATTC'
+        expected = '>CP100-10_Papilionoidea_Melitaea_diamina'
         result = self.dataset_creator.dataset_str
         self.assertTrue(expected in result)
 
