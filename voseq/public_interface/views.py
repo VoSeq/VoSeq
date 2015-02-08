@@ -1,4 +1,5 @@
-from django.http import Http404
+from django.http import HttpResponseRedirect, Http404
+from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.conf import settings
 
@@ -7,7 +8,7 @@ from .models import Vouchers
 from .models import FlickrImages
 from .models import Sequences
 from .models import Primers
-from .forms import AdvancedSearchForm
+from .forms import AdvancedSearchForm, BatchChangesForm
 
 
 def index(request):
@@ -129,3 +130,71 @@ def show_sequence(request, voucher_code, gene_code):
                       'version': version,
                       'stats': stats,
                   },)
+
+
+def batch_changes(request, queryset):
+    '''
+        Instantiates a batch_changes form
+    '''
+    if request.method == 'POST':
+        form = BatchChangesForm(request.POST)
+        if form.is_valid():
+            # do changes
+            for field, value in form.cleaned_data.items():
+                if value:
+                    temp = {field : value}
+                    queryset.update(**temp)
+            
+            return HttpResponseRedirect('/admin/public_interface/vouchers/')
+
+    else:
+        form = BatchChangesForm()
+    
+    return render(request, 'public_interface/batch_changes.html', {'form': form})
+
+
+
+@csrf_protect
+def change_selected(request, selected):
+    """
+        Default action which changes the values of the fields from selected objects.
+        
+        This action first displays a change form page whichs shows all the
+        fields of the object type. The action that calls this fucntion
+        should raise a PermissionDenied if the user has no rights for changes.
+        
+        Next, it changes all selected objects and redirects back to the changed list.
+        """
+
+    # The user has already proposed the changes.
+    # Apply the changes and return a None to display the changed list.
+    
+    if request.method == 'POST':
+        form = BatchChangesForm(request.POST)
+        ids = selected.split(",")
+        queryset = Vouchers.objects.filter(pk__in=ids)
+        n = queryset.count()
+        
+        if n and form.is_valid():
+            # do changes
+            keywords = {}
+            for field, value in form.cleaned_data.items():
+                if value:
+                    keywords[field] = value
+        
+            queryset.update(**keywords)
+
+            return HttpResponseRedirect('/admin/public_interface/vouchers/')
+
+    else:
+        form = BatchChangesForm()
+
+    # Display the changes page
+    context = {'form': form, 'selected': selected}
+    return render(request, 'public_interface/batch_changes.html', context)
+
+
+
+
+
+

@@ -23,8 +23,8 @@ being deposited in GenBank (hence public).
               <li>
                 <b><a href="/p/{{ i.code }}">{{ i.code }}</a></b>
                 <i>{{ i.genus }} {{ i.species }}</i>
-                {% if i.auctor != None %}
-                  {{ auctor }}
+                {% if i.author != None %}
+                  {{ author }}
                 {% endif %}
 
                 {% load staticfiles %}
