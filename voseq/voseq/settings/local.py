@@ -8,6 +8,11 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = True
 
+TEMPLATE_DIRS = (
+                 os.path.join(BASE_DIR, '..', 'templates'),
+                 )
+
+
 SECRETS_FILE = os.path.join(BASE_DIR, '..', '..', 'config.json')
 
 with open(SECRETS_FILE) as f:
