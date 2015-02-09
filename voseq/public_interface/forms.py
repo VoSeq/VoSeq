@@ -1,5 +1,4 @@
 from django import forms
-from public_interface.models import Vouchers
 from haystack.forms import ModelSearchForm
 from haystack.query import SearchQuerySet
 from haystack.query import EmptySearchQuerySet
