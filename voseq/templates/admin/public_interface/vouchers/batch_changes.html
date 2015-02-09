@@ -1,0 +1,157 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<h1>Batch Changes</h1>
+<form action="/admin/public_interface/vouchers/batch_changes/ids={{ selected }}/" method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <h3>Specify the values for the fields you want to change</h3>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="column">
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <td><b>Order:</b></td>
+                            <td>{{ form.orden }}</td>
+                            
+                            <td><b>Subtribe:</b></td>
+                            <td>{{ form.subtribe }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Superfamily:</b></td>
+                            <td>{{ form.superfamily }}</td>
+                            
+                            <td><b>Genus:</b></td>
+                            <td>{{ form.genus }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Family:</b></td>
+                            <td>{{ form.family }}</td>
+                            
+                            <td><b>Species:</b></td>
+                            <td>{{ form.species }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Subfamily:</b></td>
+                            <td>{{ form.subfamily }}</td>
+                            
+                            <td><b>Subspecies:</b></td>
+                            <td>{{ form.subspecies }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tribe:</b></td>
+                            <td>{{ form.tribe }}</td>
+                        </tr>
+                        <tr>
+                            
+                            <td><b>Type species?</b></td>
+                            <td>{{ form.typeSpecies }}</td>
+                            
+                            <td><b>Sex:</b></td>
+                            <td>{{ form.sex }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Author:</b></td>
+                            <td>{{ form.auctor }}</td>
+                            
+                            <td><b>Determined by:</b></td>
+                            <td>{{ form.determinedBy }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Published in:</b></td>
+                            <td>{{ form.publishedIn }}</td>
+                        </tr>
+                        <tr>
+                    </table>
+                </div>
+                
+                <div class="panel panel-primary">
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <td><b>Country:</b></td>
+                            <td>{{ form.country }}</td>
+                            
+                            <td><b>Longitude:</b></td>
+                            <td>{{ form.longitude }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Specific Locality:</b></td>
+                            <td>{{ form.specificLocality }}</td>
+                            
+                            <td><b>Max. altitude:</b></td>
+                            <td>{{ form.max_altitude }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Latitude:</b></td>
+                            <td>{{ form.latitude }}</td>
+                            
+                            <td><b>Min. altitude:</b></td>
+                            <td>{{ form.min_altitude }}</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="panel panel-primary">
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <td><b>Collector:</b></td>
+                            <td>{{ form.collector }}</td>
+                            
+                            <td><b>Extraction date:</b></td>
+                            <td>{{ form.dateExtraction }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Collection date:</b></td>
+                            <td>{{ form.dateCollection }}</td>
+                            
+                            <td><b>Extraction:</b></td>
+                            <td>{{ form.extraction }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Extractor:</b></td>
+                            <td>{{ form.extractor }}</td>
+                            
+                            <td><b>Tube:</b></td>
+                            <td>{{ form.extractionTube }}</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="panel panel-primary">
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <td><b>Host org.:</b></td>
+                            <td>{{ form.hostorg }}</td>
+                            
+                            <td><b>Voucher locality:</b></td>
+                            <td>{{ form.voucherLocality }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Voucher state:</b></td>
+                            <td>{{ form.voucher }}</td>
+                            
+                            <td><b>Latest editor:</b></td>
+                            <td>{{ form.latesteditor }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Edits:</b></td>
+                            <td>{{ form.edits }}</td>
+                            
+                            <td><b>Notes:</b></td>
+                            <td>{{ form.notes }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="submit" value="Change">
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock content %}
