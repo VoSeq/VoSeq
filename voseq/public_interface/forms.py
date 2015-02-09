@@ -124,6 +124,9 @@ class AdvancedSearchForm(ModelSearchForm):
 
 
 
+# The following form is for the admin site bacth_changes action
+# It would be nice not to repeat the lines from the previous
+# model, but...
 class BatchChangesForm(forms.Form): #forms.ModelForm):
     '''
     class Meta:

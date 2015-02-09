@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from public_interface.models import Vouchers
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
 from public_interface.views import change_selected
 from django.core.exceptions import PermissionDenied
 
@@ -57,7 +57,12 @@ class VouchersAdmin(admin.ModelAdmin):
             new_request = HttpRequest()
             new_request.method = 'GET'
             return change_selected(new_request, ",".join(selected))
-                #return HttpResponseRedirect("/admin/public_interface/vouchers/batch_changes/ids=%s" % ",".join(selected))
+
+    batch_changes.short_description = "Change selected in batch"
+
 
 # Register your models here.
 admin.site.register(Vouchers, VouchersAdmin)
+
+
+
