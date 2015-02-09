@@ -370,7 +370,7 @@
 		<field Field="voucherCode" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
 		<field Field="flickr_id" Type="text" Null="YES" Key="" Extra="" Comment="" />
 		<field Field="determinedBy" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
-		<field Field="auctor" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
+		<field Field="author" Type="varchar(255)" Null="YES" Key="" Extra="" Comment="" />
 		<field Field="timestamp" Type="datetime" Null="NO" Key="" Default="0000-00-00 00:00:00" Extra="" Comment="" />
 		<field Field="id" Type="int(10) unsigned" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
 		<key Table="vouchers" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="11103" Null="" Index_type="BTREE" Comment="" Index_comment="" />
@@ -414,7 +414,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id">|15728978251|15110967254</field>
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">1</field>
         </row>
@@ -454,7 +454,7 @@
 		<field name="voucherCode"></field>
 		<field name="flickr_id" xsi:nil="true" />
 		<field name="determinedBy" xsi:nil="true" />
-		<field name="auctor" xsi:nil="true" />
+		<field name="author" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
 		<field name="id">2</field>
 	</row>
@@ -493,7 +493,7 @@
 		<field name="voucherCode"></field>
 		<field name="flickr_id" xsi:nil="true" />
 		<field name="determinedBy" xsi:nil="true" />
-		<field name="auctor" xsi:nil="true" />
+		<field name="author" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
 		<field name="id">3</field>
 	</row>
@@ -532,7 +532,7 @@
         <field name="voucherCode"></field>
         <field name="flickr_id" xsi:nil="true" />
         <field name="determinedBy" xsi:nil="true" />
-        <field name="auctor" xsi:nil="true" />
+        <field name="author" xsi:nil="true" />
         <field name="timestamp">2007-08-27 07:51:24</field>
         <field name="id">4</field>
     </row>
@@ -571,7 +571,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">5</field>
         </row>
@@ -610,7 +610,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">6</field>
         </row>
@@ -649,7 +649,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">7</field>
         </row>
@@ -688,7 +688,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">8</field>
         </row>
@@ -727,7 +727,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">9</field>
         </row>
@@ -766,7 +766,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">10</field>
         </row>

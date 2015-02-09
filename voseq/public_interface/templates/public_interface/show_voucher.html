@@ -48,8 +48,8 @@
 
       <div class="col-sm-6 col-md-5 col-lg-6">
         <h3>{{ voucher.code }} <i>{{ voucher.genus }} {{ voucher.species }}</i>
-            {% if voucher.auctor != None %}
-              {{ voucher.auctor }}
+            {% if voucher.author != None %}
+              {{ voucher.author }}
             {% endif %}
         </h3>
 
@@ -92,7 +92,7 @@
               <td>{{ voucher.tribe }}</td>
 
               <td><b>Author:</b></td>
-              <td>{{ voucher.auctor }}</td>
+              <td>{{ voucher.author }}</td>
             </tr>
             <tr>
               <td><b>Subtribe:</b></td>

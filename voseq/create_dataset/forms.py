@@ -94,7 +94,7 @@ class CreateDatasetForm(BaseDatasetForm):
             ('GENUS', 'Genus'),
             ('SPECIES', 'Species'),
             ('SUBSPECIES', 'Subspecies'),
-            ('AUCTOR', 'Auctor'),
+            ('AUTHOR', 'Author'),
             ('HOSTORG', 'Host org.'),
             ('GENECODE', 'Gene code'),
         ],

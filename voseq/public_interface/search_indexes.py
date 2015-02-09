@@ -16,7 +16,7 @@ class VouchersIndex(indexes.SearchIndex, indexes.Indexable):
     species = indexes.EdgeNgramField(model_attr='species', null=True)
     subspecies = indexes.EdgeNgramField(model_attr='subspecies', null=True)
     hostorg = indexes.EdgeNgramField(model_attr='hostorg', null=True)
-    auctor = indexes.EdgeNgramField(model_attr='auctor', null=True)
+    author = indexes.EdgeNgramField(model_attr='author', null=True)
 
     country = indexes.EdgeNgramField(model_attr='country', null=True)
     specificLocality = indexes.EdgeNgramField(model_attr='specificLocality', null=True)

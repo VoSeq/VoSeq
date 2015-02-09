@@ -29,7 +29,7 @@ serve: index stats
 	python voseq/manage.py runserver --settings=voseq.settings.local
 
 admin:
-	python voseq/manage.py createsuperuser
+	python voseq/manage.py createsuperuser --settings=voseq.settings.local
 
 migrations:
 	python voseq/manage.py makemigrations --settings=voseq.settings.local
