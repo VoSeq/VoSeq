@@ -381,6 +381,7 @@
         <row>
             <field name="code">CP100-09</field>
             <field name="orden"></field>
+            <field name="superfamily">Papilionoidea</field>
             <field name="family">Nymphalidae</field>
             <field name="subfamily">Nymphalinae</field>
             <field name="tribe">NULL </field>
@@ -420,6 +421,7 @@
    	<row>
 		<field name="code">CP100-10</field>
 		<field name="orden">NULL</field>
+        <field name="superfamily">Papilionoidea</field>
 		<field name="family"></field>
 		<field name="subfamily"></field>
 		<field name="tribe">Melitaeini</field>

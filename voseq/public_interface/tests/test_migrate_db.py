@@ -39,7 +39,7 @@ class TestCustomCommand(TestCase):
 
     def test_superfamily(self):
         b = Vouchers.objects.get(code='CP100-10')
-        self.assertEqual('', b.superfamily)
+        self.assertEqual('Papilionoidea', b.superfamily)
 
     def test_family(self):
         b = Vouchers.objects.get(code='CP100-09')

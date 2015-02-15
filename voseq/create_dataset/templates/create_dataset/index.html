@@ -65,6 +65,9 @@
                 Amino Acids->Special->Degen->All->1st—2nd,3rd):
               </td>
               <td>
+                {% for error in form.positions.errors %}
+                <p class="text-danger">{{ error }}</p>
+                {% endfor %}
                 <b>{{ form.positions.label }}</b>
                 {{ form.positions }}
 
@@ -186,11 +189,11 @@
                       <td>
                         <table class="table table-condensed table-striped">
                           <tr>
-                            {% for i in form.gene_codes %}
                             <td>
-                              {{ i }}
-                            </td>
+                            {% for i in form.gene_codes %}
+                              {{ i }}&nbsp;&nbsp;&nbsp;&nbsp;
                             {% endfor %}
+                            </td>
                           </tr>
                         </table>
                       </td>

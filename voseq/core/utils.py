@@ -1,7 +1,10 @@
+import itertools
 import json
 import re
 
 from django.conf import settings
+
+from Bio.Seq import Seq
 
 from stats.models import Stats
 
@@ -30,15 +33,15 @@ def get_voucher_codes(cleaned_data):
     for i in voucher_codes:
         if re.search('^--', i):
             i_clean = re.sub('^--', '', i)
-            voucher_codes_clean.append(i_clean)
+            voucher_codes_clean.append(i_clean.lower())
         else:
-            voucher_codes_clean.append(i)
+            voucher_codes_clean.append(i.lower())
     voucher_codes_set = set(voucher_codes_clean)
 
     vouchers_to_drop = []
     for i in voucher_codes:
         if re.search('^--', i):
-            vouchers_to_drop.append(re.sub('^--', '', i))
+            vouchers_to_drop.append(re.sub('^--', '', i).lower())
 
     voucher_codes_filtered = []
     for i in voucher_codes_set:
@@ -64,7 +67,9 @@ def get_gene_codes(cleaned_data):
         gene_codes = json.loads(cleaned_data['geneset'].geneset_list)
     if len(cleaned_data['gene_codes']) > 0:
         gene_codes += [i.gene_code for i in cleaned_data['gene_codes']]
-    return set(gene_codes)
+
+    gene_codes_lower_case = [i.lower() for i in gene_codes]
+    return set(gene_codes_lower_case)
 
 
 def get_version_stats():
@@ -101,3 +106,96 @@ def strip_question_marks(seq):
     seq = re.sub('\?+$', '', seq)
     seq = re.sub('N+$', '', seq)
     return seq, removed
+
+
+def flatten_taxon_names_dict(dictionary):
+    """Converts a dict to string suitable for FASTA object id
+
+    Args:
+        ``dictionary``: {'code': 'CP100-10', 'orden': 'Lepidoptera'. 'genus': 'Danaus'}
+
+    Returns:
+        Flattened as string: 'CP100-10_Lepidoptera_Danaus'
+
+    """
+    out = ''
+    try:
+        out += dictionary['code'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['orden'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['superfamily'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['family'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['subfamily'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['tribe'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['subtribe'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['genus'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['species'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['subspecies'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['author'] + "_"
+    except KeyError:
+        pass
+
+    try:
+        out += dictionary['hostorg'] + "_"
+    except KeyError:
+        pass
+
+    out_striped = re.sub('_+', '_', out)
+    out_clean = re.sub('_$', '', out_striped)
+    return out_clean
+
+
+def chain_and_flatten(seq1, seq2):
+    """Takes seq objects which only contain certain codon positions.
+
+    Combines the two seq objects and returns another seq object.
+
+    """
+    out = []
+    append = out.append
+
+    my_chain = itertools.zip_longest(seq1, seq2)
+    for i in itertools.chain.from_iterable(my_chain):
+        if i is not None:
+            append(i)
+
+    return Seq(''.join(out))

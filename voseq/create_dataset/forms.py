@@ -24,17 +24,17 @@ class CreateDatasetForm(BaseDatasetForm):
         required=False,
     )
 
-    positions = forms.ChoiceField(
-        label='Positions',
-        help_text='codon positions',
+    positions = forms.MultipleChoiceField(
+        label='Codon Positions',
+        help_text='Codon positions to keep and write into datasets',
         choices=[
             ('ALL', 'all'),
             ('1st', '1st'),
             ('2nd', '2nd'),
             ('3rd', '3rd'),
         ],
-        widget=forms.RadioSelect(),
-        initial='ALL',
+        widget=forms.CheckboxSelectMultiple(),
+        initial=['ALL'],
         required=True,
     )
 
@@ -85,7 +85,8 @@ class CreateDatasetForm(BaseDatasetForm):
         label='What info do you want in the taxon names?',
         choices=[
             ('CODE', 'Code'),
-            ('ORDER', 'Order'),
+            ('ORDEN', 'Order'),
+            ('SUPERFAMILY', 'Superfamily'),
             ('FAMILY', 'Family'),
             ('SUBFAMILY', 'Subfamily'),
             ('TRIBE', 'Tribe'),

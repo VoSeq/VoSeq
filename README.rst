@@ -1,4 +1,4 @@
-|Dependency Status| |Coverage Status|
+|Dependency Status| |Coverage Status| |Landscape|
 
 +------------------+------------------+
 | Windows          | Linux            |
@@ -209,3 +209,6 @@ following command and provide the requested information:
    :target: https://ci.appveyor.com/project/carlosp420/voseq/branch/master
 .. |Build Status| image:: https://travis-ci.org/carlosp420/VoSeq.svg
    :target: https://travis-ci.org/carlosp420/VoSeq
+.. |Landscape| image:: https://landscape.io/github/carlosp420/VoSeq/master/landscape.svg
+   :target: https://landscape.io/github/carlosp420/VoSeq/master
+   :alt: Code Health

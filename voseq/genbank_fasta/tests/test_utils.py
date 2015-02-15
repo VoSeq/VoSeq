@@ -16,18 +16,19 @@ class TestGenBankFastaUtils(TestCase):
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
 
-        gs = GeneSets.objects.get(geneset_name='4genes')
+        gs = GeneSets.objects.get(geneset_name='2genes')
         g = Genes.objects.get(gene_code='COI')
+        g2 = Genes.objects.get(gene_code='16S')
         ts = TaxonSets.objects.get(taxonset_name='Erebia')
         self.cleaned_data = {
-            'gene_codes': [g],
+            'gene_codes': [g, g2],
             'taxonset': ts,
-            'voucher_codes': 'CP100-10\r\nCP100-11',
+            'voucher_codes': 'CP200-10\r\nCP100-11',
             'geneset': gs,
         }
 
     def test_get_gene_codes(self):
-        expected = 4
+        expected = 3
         result = get_gene_codes(self.cleaned_data)
         self.assertEqual(expected, len(result))
 
@@ -37,7 +38,7 @@ class TestGenBankFastaUtils(TestCase):
         self.assertEqual('WAGMIGTSLSLIIRTELGNP', res.protein.splitlines()[1][0:20])
 
     def test_get_voucher_codes(self):
-        expected = 2
+        expected = 3
         result = get_voucher_codes(self.cleaned_data)
         self.assertEqual(expected, len(result))
 

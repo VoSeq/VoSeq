@@ -9,6 +9,12 @@ config.json
 *bak
 *.fasta
 
+# package builds
+VoSeq.egg-info
+build
+dist
+voseq.egg-info
+
 # coverage
 .coverage
 voseq/htmlcov

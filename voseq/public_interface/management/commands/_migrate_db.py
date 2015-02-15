@@ -4,13 +4,13 @@ Needs an XML file with the database dump from MySQL:
 
 > mysqldump --xml database > dump.xml
 """
-import codecs
 import datetime
-import dataset
-import json
+import pytz
 import re
-import sys
 import xml.etree.ElementTree as ET
+
+import pyprind
+from django.conf import settings
 
 from public_interface.models import Vouchers
 from public_interface.models import FlickrImages
@@ -19,6 +19,14 @@ from public_interface.models import Primers
 from public_interface.models import Genes
 from public_interface.models import GeneSets
 from public_interface.models import TaxonSets
+
+
+TZINFO = pytz.utc
+
+if settings.TESTING is True:
+    TESTING = True
+else:
+    TESTING = False
 
 
 class ParseXML(object):
@@ -78,7 +86,7 @@ class ParseXML(object):
 
         for item in self.table_genes_items:
             try:
-                date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S')
+                date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZINFO)
             except ValueError as e:
                 date_obj = None
                 if self.verbosity != 0:
@@ -225,11 +233,12 @@ class ParseXML(object):
         if self.table_primers_items is None:
             self.import_table_primers()
 
+        primers_queryset = Sequences.objects.all().values('code', 'gene_code')
+        primers_objs = []
         for item in self.table_primers_items:
-            try:
-                b = Sequences.objects.get(code=item['code'], gene_code=item['gene_code'])
-                item['for_sequence'] = b
-            except Sequences.DoesNotExist:
+            if {'gene_code': item['gene_code'], 'code': item['code']} in primers_queryset:
+                item['for_sequence'] = Sequences.objects.get(code=item['code'], gene_code=item['gene_code'])
+            else:
                 print("Could not save primers for sequence: %s %s" % (item['code'], item['gene_code']))
                 continue
 
@@ -240,7 +249,8 @@ class ParseXML(object):
             for i in primers:
                 item['primer_f'] = i[0]
                 item['primer_r'] = i[1]
-                Primers.objects.create(**item)
+                primers_objs.append(Primers(**item))
+        Primers.objects.bulk_create(primers_objs)
 
         if self.verbosity != 0:
             print("Uploading table `public_interface_primers`")
@@ -292,7 +302,7 @@ class ParseXML(object):
             del item['geneCode']
 
             try:
-                date_obj = datetime.datetime.strptime(item['time_created'], '%Y-%m-%d')
+                date_obj = datetime.datetime.strptime(item['time_created'], '%Y-%m-%d').replace(tzinfo=TZINFO)
             except ValueError as e:
                 date_obj = None
                 if self.verbosity != 0:
@@ -309,7 +319,7 @@ class ParseXML(object):
             item['time_created'] = date_obj
 
             try:
-                date_obj = datetime.datetime.strptime(item['time_edited'], '%Y-%m-%d')
+                date_obj = datetime.datetime.strptime(item['time_edited'], '%Y-%m-%d').replace(tzinfo=TZINFO)
             except ValueError:
                 date_obj = None
                 if self.verbosity != 0:
@@ -334,15 +344,26 @@ class ParseXML(object):
                 seqs_to_insert.append(i)
             else:
                 seqs_not_to_insert.append(i)
-        for item in seqs_to_insert:
+
+        print("Uploading table `public_interface_sequences`")
+        n = len(seqs_to_insert)
+        if TESTING is False:
+            bar = pyprind.ProgBar(n, width=70)
+
+        seqs_objects = []
+        for i in range(n):
+            item = seqs_to_insert[i]
             item = self.clean_value(item, 'labPerson')
             item = self.clean_value(item, 'notes')
             item = self.clean_value(item, 'sequences')
             item = self.clean_value(item, 'accession')
-            Sequences.objects.create(**item)
+            seqs_objects.append(Sequences(**item))
+            if TESTING is False:
+                bar.update()
 
         if self.verbosity != 0:
             print("Uploading table `public_interface_sequences`")
+        Sequences.objects.bulk_create(seqs_objects)
 
         if len(seqs_not_to_insert) > 0:
             if self.verbosity != 0:
@@ -381,6 +402,8 @@ class ParseXML(object):
         for item in self.table_taxonsets_items:
             if item['taxonset_description'] is None:
                 item['taxonset_description'] = ''
+            if item['taxonset_creator'] is None:
+                item['taxonset_creator'] = ''
             if item['taxonset_list'] is not None:
                 item['taxonset_list'] = item['taxonset_list'].split(',')
 
@@ -409,6 +432,10 @@ class ParseXML(object):
             item = dict()
             item['code'] = row.find("./field/[@name='code']").text
             item['orden'] = row.find("./field/[@name='orden']").text
+            try:
+                item['superfamily'] = row.find("./field/[@name='superfamily']").text
+            except AttributeError:
+                item['superfamily'] = ''
             item['family'] = row.find("./field/[@name='family']").text
             item['subfamily'] = row.find("./field/[@name='subfamily']").text
             item['tribe'] = row.find("./field/[@name='tribe']").text
@@ -441,7 +468,7 @@ class ParseXML(object):
             item['voucherCode'] = row.find("./field/[@name='voucherCode']").text
             item['flickr_id'] = row.find("./field/[@name='flickr_id']").text
             item['determinedBy'] = row.find("./field/[@name='determinedBy']").text
-            item['author'] = row.find("./field/[@name='author']").text
+            item['author'] = row.find("./field/[@name='auctor']").text
             item['timestamp'] = row.find("./field/[@name='timestamp']").text
             self.table_vouchers_items.append(item)
 
@@ -499,7 +526,7 @@ class ParseXML(object):
 
             if item['timestamp'] is not None:
                 try:
-                    date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S')
+                    date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZINFO)
                 except ValueError:
                     date_obj = None
                 item['timestamp'] = date_obj
@@ -561,7 +588,14 @@ class ParseXML(object):
         if self.table_vouchers_items is None:
             self.parse_table_vouchers(self.dump_string)
 
-        for item in self.table_vouchers_items:
+        print("Uploading table `public_interface_vouchers`")
+
+        voucher_objs = []
+        n = len(self.table_vouchers_items)
+        if TESTING is False:
+            bar = pyprind.ProgBar(n, width=70)
+        for i in range(n):
+            item = self.table_vouchers_items[i]
             item = self.clean_value(item, 'orden')
             item = self.clean_value(item, 'superfamily')
             item = self.clean_value(item, 'family')
@@ -589,12 +623,17 @@ class ParseXML(object):
             item = self.clean_value(item, 'extractionTube')
             item = self.clean_value(item, 'extractor')
 
-            Vouchers.objects.create(**item)
-        if self.verbosity != 0:
-            print("Uploading table `public_interface_vouchers`")
+            voucher_objs.append(Vouchers(**item))
 
+            if TESTING is False:
+                bar.update()
+        Vouchers.objects.bulk_create(voucher_objs)
+
+        flickr_objs = []
         for item in self.table_flickr_images_items:
-            FlickrImages.objects.create(**item)
+            flickr_objs.append(FlickrImages(**item))
+        FlickrImages.objects.bulk_create(flickr_objs)
+
         if self.verbosity != 0:
             print("Uploading table `public_interface_flickrimages`")
 
@@ -659,25 +698,3 @@ class ParseXML(object):
         except ValueError:
             string = None
         return string
-
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Enter name of database dump file as argument.")
-        print("This file can be obtained from your MySQL database using this command")
-        print("\t> mysqdump --xml database > dump.xml")
-        sys.exit(1)
-
-    dump_file = sys.argv[1].strip()
-    with codecs.open(dump_file, "r") as handle:
-        dump = handle.read()
-
-    # tables_prefix = 'voseq_'
-    tables_prefix = ''
-    parser = ParseXML(dump, tables_prefix)
-
-    parser.import_table_vouchers()
-    parser.save_table_vouchers_to_db()
-
-    parser.import_table_sequences()
-    parser.save_table_sequences_to_db()

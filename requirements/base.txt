@@ -1,1 +1,10 @@
-Django==1.7.3
+biopython==1.65
+Django==1.7.4
+pyprind==2.9.1
+elasticsearch==1.4
+Unipath==1.0
+psycopg2==2.6
+dataset==0.5.5
+django-haystack==2.3.1
+django-debug-toolbar==1.2.2
+pytz==2014.10

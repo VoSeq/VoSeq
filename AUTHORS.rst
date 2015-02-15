@@ -6,7 +6,8 @@ Development Lead
 ----------------
 
 * Carlos Peña <mycalesis@gmail.com>
-* Victor Solis <<vm_solism@yahoo.es>
+* Tobias Malm <tobemalm@gmail.com>
+* Victor Solis <vm_solism@yahoo.es>
 
 Contributors
 ------------

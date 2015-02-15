@@ -9,7 +9,7 @@
 {{ object.species }}
 {{ object.subspecies }}
 {{ object.hostorg }}
-{{ object.auctor }}
+{{ object.author }}
 
 {{ object.country }}
 {{ object.specificLocality }}

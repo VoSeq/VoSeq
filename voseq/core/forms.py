@@ -1,11 +1,21 @@
 from django import forms
 
+from core.utils import get_voucher_codes
+from core.utils import get_gene_codes
 from public_interface.models import Genes
 from public_interface.models import GeneSets
 from public_interface.models import TaxonSets
 
 
 class BaseDatasetForm(forms.Form):
+    """Base class for datasets.
+
+    * Handles list of voucher codes including those from taxonsets.
+    * Handles list of gene codes including those from genesets.
+
+    Other dataset classes should inherit from this one.
+
+    """
     taxonset = forms.ModelChoiceField(
         TaxonSets.objects.all(),
         label='Choose taxonset',
@@ -31,14 +41,21 @@ class BaseDatasetForm(forms.Form):
     )
 
     def clean(self):
-        """Overwriting validator method of class form."""
+        """Overwriting validator method of class form.
+
+        Drops vouchers if their codes have been flagged by users with two
+            consecutive dashes ``--``.
+
+        Returns:
+            Sets of voucher and genes codes.
+
+        """
         cleaned_data = super(BaseDatasetForm, self).clean()
         taxonset = cleaned_data.get("taxonset")
         voucher_codes = cleaned_data.get("voucher_codes")
 
         geneset = cleaned_data.get("geneset")
         gene_codes = cleaned_data.get("gene_codes")
-        print(gene_codes)
 
         if taxonset is None and voucher_codes.strip() == '':
             raise forms.ValidationError("You need to enter at least some "

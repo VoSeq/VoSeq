@@ -112,3 +112,5 @@ GOOGLE_MAPS_API_KEY = 'fake api key'
 
 # This VoSeq version
 VERSION = '2.0.0'
+
+TESTING = False
