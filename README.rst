@@ -1,3 +1,6 @@
+.. image:: https://badge.waffle.io/carlosp420/voseq.png?label=ready&title=Ready 
+ :target: https://waffle.io/carlosp420/voseq
+ :alt: 'Stories in Ready'
 |Dependency Status| |Coverage Status| |Landscape| |Docs|
 
 +------------------+------------------+
