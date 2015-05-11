@@ -18,12 +18,46 @@ class TestCore(TestCase):
 
     def test_translation_to_protein(self):
         gene_model = Genes.objects.filter(gene_code='COI').values()[0]
-        sequence_model = Sequences.objects.get(gene_code='COI', code='CP100-10')
-        seq_description = 'seq_description'
-        seq_id = 'seq_id'
+        sequence = '?????????????????????????TGAGCCGGTATAATTGGTACATCCCTAAGTCTTATTATTCGAACCGAATTAGGAAATCCTAGTTTTTTAATTGGAGATGATCAAATTTATAATACCATTGTAACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATGCCAATTATAATTGGAGGATTTGGTAATTGACTTGTACCATTAATATTGGGAGCCCCAGATATAGCTTTCCCCCGAATAAATTATATAAGATTTTGATTATTGCCTCCATCCTTAATTCTTTTAATTTCAAGTAGAATTGTAGAAAATGGGGCAGGAACTGGATGAACAGTTTACCCCCCACTTTCATCTAATATTGCCCATAGAGGAGCTTCAGTGGATTTAGCTATTTTTTCTTTACATTTAGCTGGGATTTCCTCTATCTTAGGAGCTATTAATTTTATTACTACAATTATTAATATACGAATTAATAATATATCTTATGATCAAATACCTTTATTTGTATGAGCAGTAGGAATTACAGCATTACTTCTCTTATTATCTTTACCAGTTTTAGCTGGAGCTATTACTATACTTTTAACGGATCGAAATCTTAATACCTCATTTTTTGATTCCTGCGGAGGAGGAGATCC?????????????????????????????????'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
         expected = "XXXXXXXXWAGMIGTSLS"
-        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences, seq_description, seq_id)
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
         self.assertTrue(expected in results)
+
+    def test_translation_to_protein_return_empty1(self):
+        gene_model = Genes.objects.filter(gene_code='COI').values()[0]
+        sequence = '1234'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
+        expected = ''
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
+        self.assertEqual(expected, results)
+
+    def test_translation_to_protein_return_empty2(self):
+        gene_model = Genes.objects.filter(gene_code='COI').values()[0]
+        sequence = '123---4'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
+        expected = ''
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
+        self.assertEqual(expected, results)
+
+    def test_translation_ambiguous_leucine(self):
+        """We are assuming only one symbol for leucine or isoleucine as RaXML rejects the symbol for
+        aminoacid J.
+        """
+        gene_model = Genes.objects.filter(gene_code='COI').values()[0]
+        sequence = 'AMTTCCC'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
+        expected = 'XP'
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
+        self.assertEqual(expected, results)
 
     def test_translation_to_protein_invalid_codons(self):
         """Catch exceptions when input has invalid codons due to ?"""
@@ -41,7 +75,8 @@ class TestCore(TestCase):
         seq_description = 'seq_description'
         seq_id = 'seq_id'
         expected = 'GMXGTSXSLXIRTELGXPSXLIGDDQXYNXIVTAHAXIMXFF'
-        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences, seq_description, seq_id)
+        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences,
+                                                      seq_description, seq_id)
         self.assertTrue(expected in results)
 
     def test_translate_to_protein_missing_with_nucleotides(self):

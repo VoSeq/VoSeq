@@ -1,14 +1,17 @@
 from django.test import TestCase
 from django.core.management import call_command
 
+from core import exceptions
 from core.utils import get_gene_codes
 from core.utils import get_voucher_codes
+from core.utils import get_start_translation_index
+from core.utils import strip_question_marks
 from public_interface.models import TaxonSets
 from public_interface.models import GeneSets
 from public_interface.models import Genes
 
 
-class TestGenBankFastaUtils(TestCase):
+class TestCoreUtils(TestCase):
     def setUp(self):
         args = []
         opts = {'dumpfile': 'test_db_dump.xml', 'verbosity': 0}
@@ -49,3 +52,56 @@ class TestGenBankFastaUtils(TestCase):
         expected = 2
         result = get_voucher_codes(self.cleaned_data)
         self.assertEqual(expected, len(result))
+
+    def test_get_start_translation_index_case_2(self):
+        removed = 10
+        gene_model = {'reading_frame': 1}
+        expected = 2
+        result = get_start_translation_index(gene_model, removed)
+        self.assertEqual(expected, result)
+
+    def test_get_start_translation_index_case_3(self):
+        removed = 11
+        gene_model = {'reading_frame': 1}
+        expected = 1
+        result = get_start_translation_index(gene_model, removed)
+        self.assertEqual(expected, result)
+
+    def test_get_start_translation_index_case_7(self):
+        removed = 9
+        gene_model = {'reading_frame': 3}
+        expected = 2
+        result = get_start_translation_index(gene_model, removed)
+        self.assertEqual(expected, result)
+
+    def test_get_start_translation_index_case_8(self):
+        removed = 10
+        gene_model = {'reading_frame': 3}
+        expected = 1
+        result = get_start_translation_index(gene_model, removed)
+        self.assertEqual(expected, result)
+
+    def test_get_start_translation_index_case_9(self):
+        removed = 11
+        gene_model = {'reading_frame': 3}
+        expected = 0
+        result = get_start_translation_index(gene_model, removed)
+        self.assertEqual(expected, result)
+
+    def test_get_start_translation_index_missing_reading_frame(self):
+        removed = 11
+        gene_model = {'reading_frame': 0, 'gene_code': 'test_gene'}
+        self.assertRaises(exceptions.MissingReadingFrameForGene,
+                          get_start_translation_index, gene_model, removed)
+
+    def test_strip_question_marks1(self):
+        seq = '???ATC'
+        result = strip_question_marks(seq)
+        expected = ('ATC', 3)
+        self.assertEqual(expected, result)
+
+    def test_strip_question_marks2(self):
+        seq = '???NNNATC'
+        result = strip_question_marks(seq)
+        expected = ('ATC', 6)
+        self.assertEqual(expected, result)
