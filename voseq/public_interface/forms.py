@@ -77,8 +77,10 @@ class AdvancedSearchForm(ModelSearchForm):
     sex = forms.ChoiceField(label="Sex", choices=SEX_CHOICES, required=False)
     voucher = forms.ChoiceField(label="Voucher", choices=VOUCHER_CHOICES, required=False)
     voucherCode = forms.CharField(label="Alternative voucher code", max_length=100, help_text="Original code of voucher specimen.", required=False)
-    code_bold = forms.CharField(label="Code in BOLD database", max_length=100, help_text="Optional code for specimens kept in the BOLD database.", required=False)
-    determinedBy = forms.CharField(label="Determined by", max_length=100, help_text="Person that identified the taxon for this specimen.", required=False)
+    code_bold = forms.CharField(label="Code in BOLD database", max_length=100, help_text="Optional code for specimens kept in the BOLD database.",
+                                required=False)
+    determinedBy = forms.CharField(label="Determined by", max_length=100, help_text="Person that identified the taxon for this specimen.",
+                                   required=False)
     author = forms.CharField(label="Author", max_length=100, help_text="Person that described this taxon.", required=False)
 
     # Sequences model
@@ -232,6 +234,8 @@ class BatchChangesForm(forms.Form):
     sex = forms.ChoiceField(label="Sex", choices=SEX_CHOICES, required=False)
     voucher = forms.ChoiceField(label="Voucher", choices=VOUCHER_CHOICES, required=False)
     voucherCode = forms.CharField(label="Alternative voucher code", max_length=100, help_text="Original code of voucher specimen.", required=False)
-    code_bold = forms.CharField(label="Code in BOLD database", max_length=100, help_text="Optional code for specimens kept in the BOLD database.", required=False)
-    determinedBy = forms.CharField(label="Determined by", max_length=100, help_text="Person that identified the taxon for this specimen.", required=False)
+    code_bold = forms.CharField(label="Code in BOLD database", max_length=100, help_text="Optional code for specimens kept in the BOLD database.",
+                                required=False)
+    determinedBy = forms.CharField(label="Determined by", max_length=100, help_text="Person that identified the taxon for this specimen.",
+                                   required=False)
     author = forms.CharField(label="Author", max_length=100, help_text="Person that described this taxon.", required=False)

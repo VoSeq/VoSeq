@@ -82,7 +82,7 @@ class VoSeqSearchView(SearchView):
     def __init__(self, url_encoded_query, *args, **kwargs):
         self.url_encoded_query = self.get_correct_url_query(url_encoded_query)
         self.simple_query = self.recover_keyword(url_encoded_query)
-        super().__init__(*args, **kwargs)
+        super(VoSeqSearchView, self).__init__(*args, **kwargs)
 
     def get_correct_url_query(self, url_encoded_query):
         this_query = self.strip_page(url_encoded_query)
