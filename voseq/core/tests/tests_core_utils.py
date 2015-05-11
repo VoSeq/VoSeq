@@ -90,7 +90,7 @@ class TestCoreUtils(TestCase):
 
     def test_get_start_translation_index_missing_reading_frame(self):
         removed = 11
-        gene_model = {'reading_frame': 1, 'gene_code': 'test_gene'}
+        gene_model = {'reading_frame': 0, 'gene_code': 'test_gene'}
         self.assertRaises(exceptions.MissingReadingFrameForGene,
                           get_start_translation_index, gene_model, removed)
 
