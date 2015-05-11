@@ -17,7 +17,8 @@ class TestViews(TestCase):
         sequence_model = Sequences(
             code=voucher_model,
             sequences='???---NNNATCTACTA',
-            gene_code='COI'
+            gene_code='COI',
+            genbank=False,
         )
         sequence_model.save()
 
