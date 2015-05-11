@@ -98,9 +98,6 @@ class AdvancedSearchForm(ModelSearchForm):
         return sqs
 
     def search(self):
-        if not self.is_valid():
-            return self.no_query_found()
-
         keywords = {}
         sequence_keywords = {}
         for k, v in self.cleaned_data.items():
