@@ -108,7 +108,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 # remove after adding this to index
                 if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models' or k == 'genbank':
                     continue
-                if k == 'labPerson':
+                if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
                 else:
                     keywords[k] = v
@@ -141,11 +141,6 @@ def filter_results_from_sequence_table(sqs):
         return filtered_sqs
     else:
         return sqs
-
-
-class SimpleClass(object):
-    def __init__(self, item):
-        self.item = item
 
 
 # The following form is for the admin site bacth_changes action
