@@ -115,7 +115,7 @@ class AdvancedSearchForm(ModelSearchForm):
                         sequence_keywords[k] = 'true'
                     else:
                         sequence_keywords[k] = 'false'
-                else:
+                if k not in ['labPerson', 'accession', 'genbank']:
                     keywords[k] = v
 
         # Check if we got any input value to search from
@@ -128,7 +128,6 @@ class AdvancedSearchForm(ModelSearchForm):
                 sqs = sqs.filter(**keywords)
             else:
                 sqs = SearchQuerySet().using('vouchers').filter(**keywords)
-        print(sqs)
 
         if len(sqs) > 0:
             return sqs
