@@ -8,13 +8,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.conf import settings
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
 
 from haystack.forms import SearchForm
 from haystack.views import SearchView
-from haystack.query import SearchQuerySet
 from haystack.query import ValuesSearchQuerySet
 
 from core.utils import get_version_stats
