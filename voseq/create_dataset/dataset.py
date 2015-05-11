@@ -93,7 +93,7 @@ class Dataset(object):
                     continue
             if gene_code != '':
                 first_entry = re.sub('\s+', ' ', item)
-                voucher, sequence = first_entry.split(' ')
+                sequence = first_entry.split(' ')[1]
                 chars += len(sequence)
                 gene_codes_and_lengths[gene_code] = len(sequence)
                 gene_code = ''
