@@ -46,6 +46,19 @@ class TestCore(TestCase):
         results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
         self.assertEqual(expected, results)
 
+    def test_translation_ambiguous_leucine(self):
+        """We are assuming only one symbol for leucine or isoleucine as RaXML rejects the symbol for
+        aminoacid J.
+        """
+        gene_model = Genes.objects.filter(gene_code='COI').values()[0]
+        sequence = 'AMTTCCC'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
+        expected = 'XP'
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
+        self.assertEqual(expected, results)
+
     def test_translation_to_protein_invalid_codons(self):
         """Catch exceptions when input has invalid codons due to ?"""
         gene_model = Genes.objects.filter(gene_code='COI').values()[0]
