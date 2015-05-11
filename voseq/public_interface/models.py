@@ -165,7 +165,7 @@ class Sequences(models.Model):
     time_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     time_edited = models.DateTimeField(auto_now=True, null=True, blank=True)
     notes = models.TextField(blank=True)
-    genbank = models.NullBooleanField()
+    genbank = models.BooleanField()
     number_ambiguous_bp = models.IntegerField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
