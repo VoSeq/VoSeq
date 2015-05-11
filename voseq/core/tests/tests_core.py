@@ -22,7 +22,8 @@ class TestCore(TestCase):
         seq_description = 'seq_description'
         seq_id = 'seq_id'
         expected = "XXXXXXXXWAGMIGTSLS"
-        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences, seq_description, seq_id)
+        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences,
+                                                      seq_description, seq_id)
         self.assertTrue(expected in results)
 
     def test_translation_to_protein_invalid_codons(self):
@@ -41,7 +42,8 @@ class TestCore(TestCase):
         seq_description = 'seq_description'
         seq_id = 'seq_id'
         expected = 'GMXGTSXSLXIRTELGXPSXLIGDDQXYNXIVTAHAXIMXFF'
-        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences, seq_description, seq_id)
+        results, warning = utils.translate_to_protein(gene_model, sequence_model.sequences,
+                                                      seq_description, seq_id)
         self.assertTrue(expected in results)
 
     def test_translate_to_protein_missing_with_nucleotides(self):
