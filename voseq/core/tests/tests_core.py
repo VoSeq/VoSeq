@@ -26,6 +26,16 @@ class TestCore(TestCase):
         results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
         self.assertTrue(expected in results)
 
+    def test_translation_to_protein_return_empty(self):
+        gene_model = Genes.objects.filter(gene_code='COI').values()[0]
+        sequence = '1234'
+        seq_description = 'COI test sequence_description'
+        seq_id = 'COI test seq_id'
+
+        expected = ''
+        results, warning = utils.translate_to_protein(gene_model, sequence, seq_description, seq_id)
+        self.assertEqual(expected, results)
+
     def test_translation_to_protein_invalid_codons(self):
         """Catch exceptions when input has invalid codons due to ?"""
         gene_model = Genes.objects.filter(gene_code='COI').values()[0]
