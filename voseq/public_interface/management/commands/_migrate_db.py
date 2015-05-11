@@ -303,6 +303,15 @@ class ParseXML(object):
             else:
                 item['number_ambiguous_bp'] = None
 
+            if item['genbank'] == '0':
+                item['genbank'] = False
+            elif item['genbank'] == '1':
+                item['genbank'] = True
+            elif item['genbank'] is None:
+                item['genbank'] = False
+            else:
+                item['genbank'] = False
+
     def save_table_sequences_to_db(self):
         if self.table_sequences_items is None:
             self.import_table_sequences()

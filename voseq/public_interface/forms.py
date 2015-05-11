@@ -98,19 +98,21 @@ class AdvancedSearchForm(ModelSearchForm):
         return sqs
 
     def search(self):
-        if not self.is_valid():
-            return self.no_query_found()
-
         keywords = {}
         sequence_keywords = {}
         for k, v in self.cleaned_data.items():
             if v != '' and v is not None:
                 # remove after adding this to index
-                if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models' or k == 'genbank':
+                if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models':
                     continue
-                if k == 'labPerson':
+                if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
-                else:
+                if k == 'genbank':
+                    if v == 'y':
+                        sequence_keywords[k] = 'true'
+                    else:
+                        sequence_keywords[k] = 'false'
+                if k not in ['labPerson', 'accession', 'genbank']:
                     keywords[k] = v
 
         # Check if we got any input value to search from
@@ -141,11 +143,6 @@ def filter_results_from_sequence_table(sqs):
         return filtered_sqs
     else:
         return sqs
-
-
-class SimpleClass(object):
-    def __init__(self, item):
-        self.item = item
 
 
 # The following form is for the admin site bacth_changes action

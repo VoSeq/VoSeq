@@ -300,7 +300,7 @@
 		<field name="notes" xsi:nil="true" />
 		<field name="timestamp">2008-07-17 17:24:20</field>
 		<field name="id">4</field>
-		<field name="genbank">1</field>
+		<field name="genbank" xsi:nil="true" />
 	</row>
         <row>
             <field name="code">CP100-11</field>
@@ -313,7 +313,20 @@
             <field name="notes" xsi:nil="true" />
             <field name="timestamp">2008-07-17 17:24:20</field>
             <field name="id">5</field>
-            <field name="genbank">1</field>
+            <field name="genbank">0</field>
+        </row>
+        <row>
+            <field name="code">CP100-15</field>
+            <field name="geneCode">COI</field>
+            <field name="sequences">??TGAGCCGGTATAATTGGTACATCCCTAAGTCTTATTATTCGAACCGAATTAGGAAATCCTAGTTTTTTAATTGGAGATGATCAAATTTATAATACCATTGTAACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATGCCAATTATAATTGGAGGATTTGGTAATTGACTTGTACCATTAATATTGGGAGCCCCAGATATAGCTTTCCCCCGAATAAATTATATAAGATTTTGATTATTGCCTCCATCCTTAATTCTTTTAATTTCAAGTAGAATTGTAGAAAATGGGGCAGGAACTGGATGAACAGTTTACCCCCCACTTTCATCTAATATTGCCCATAGAGGAGCTTCAGTGGATTTAGCTATTTTTTCTTTACATTTAGCTGGGATTTCCTCTATCTTAGGAGCTATTAATTTTATTACTACAATTATTAATATACGAATTAATAATATATCTTATGATCAAATACCTTTATTTGTATGAGCAGTAGGAATTACAGCATTACTTCTCTTATTATCTTTACCAGTTTTAGCTGGAGCTATTACTATACTTTTAACGGATCGAAATCTTAATACCTCATTTTTTGATTCCTGCGGAGGAGGAGATCC?????????????????????????????????</field>
+            <field name="accession" xsi:nil="true" />
+            <field name="labPerson">Niklas Wahlberg</field>
+            <field name="dateCreation" xsi:nil="true" />
+            <field name="dateModification" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
+            <field name="timestamp">2008-07-17 17:24:20</field>
+            <field name="id">5</field>
+            <field name="genbank">0</field>
         </row>
 	</table_data>
 	<table_structure name="taxonsets">

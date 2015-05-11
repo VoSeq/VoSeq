@@ -23,7 +23,7 @@ class TestCustomCommand(TestCase):
         res = VouchersPerGene.objects.all().values('gene_code', 'voucher_count')
         for i in res:
             if i['gene_code'] == 'COI':
-                self.assertTrue(i['voucher_count'] == 2)
+                self.assertTrue(i['voucher_count'] == 3)
 
             if i['gene_code'] == '16S':
                 self.assertTrue(i['voucher_count'] == 1)

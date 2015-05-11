@@ -67,6 +67,11 @@ class TestViews(TestCase):
 
         self.client = Client()
 
+    def test_advanced_search_invalid(self):
+        response = self.client.get('/search/advanced/?latitude=Hola')
+        content = response.content.decode('utf-8')
+        self.assertTrue('No results found.' in content)
+
     def test_advanced_search_gui_form(self):
         response = self.client.get('/search/advanced/')
         content = response.content.decode('utf-8')
@@ -90,6 +95,11 @@ class TestViews(TestCase):
         response = self.client.get('/search/advanced/?labPerson=Niklas+Wahlberg')
         content = response.content.decode('utf-8')
         self.assertEqual(1, content.count('/p/CP100-10'))
+
+    def test_advanced_search_dont_show_duplicate_records2(self):
+        response = self.client.get('/search/advanced/?labPerson=Fulano+Sutano')
+        content = response.content.decode('utf-8')
+        self.assertEqual(0, content.count('/p/CP100-10'))
 
     def test_advanced_search_sequence_table_only(self):
         response = self.client.get('/search/advanced/?labPerson=Niklas+Wahlberg')
@@ -115,3 +125,18 @@ class TestViews(TestCase):
         response = self.client.get('/search/advanced/?orden=Coleoptera&labPerson=Niklas+Wahlberg')
         content = response.content.decode('utf-8')
         self.assertTrue('No results found' in content)
+
+    def test_advanced_search_by_accession(self):
+        response = self.client.get('/search/advanced/?accession=AY218260')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-10' in content)
+
+    def test_advanced_search_genbank_true(self):
+        response = self.client.get('/search/advanced/?genbank=y')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-10' in content)
+
+    def test_advanced_search_genbank_false(self):
+        response = self.client.get('/search/advanced/?genbank=n')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-15' in content)

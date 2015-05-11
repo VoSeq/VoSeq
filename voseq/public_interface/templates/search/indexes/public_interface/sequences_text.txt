@@ -1,3 +1,4 @@
 {{ object.vouchers.code }}
 {{ object.labPerson }}
 {{ object.accession }}
+{{ object.genbank }}

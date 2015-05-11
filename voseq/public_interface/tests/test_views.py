@@ -102,6 +102,13 @@ class TestViews(TestCase):
         response = self.client.get('/search/?q=')
         self.assertEqual(302, response.status_code)
 
+    def test_search_voucher_link(self):
+        """Do we have correct links to voucher pages?
+        """
+        response = self.client.get('/search/?q=Melitaea')
+        content = str(response.content)
+        self.assertTrue('href="/p/CP100-14' in content)
+
     def test_search_hymenoptera(self):
         response = self.client.get('/search/?q=Hymenoptera')
         content = str(response.content)
