@@ -120,3 +120,13 @@ class TestViews(TestCase):
         response = self.client.get('/search/advanced/?accession=AY218260')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-10' in content)
+
+    def test_advanced_search_genbank_true(self):
+        response = self.client.get('/search/advanced/?genbank=y')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-10' in content)
+
+    def test_advanced_search_genbank_false(self):
+        response = self.client.get('/search/advanced/?genbank=n')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-15' in content)
