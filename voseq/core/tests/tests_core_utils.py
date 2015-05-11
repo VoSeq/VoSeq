@@ -5,12 +5,13 @@ from core import exceptions
 from core.utils import get_gene_codes
 from core.utils import get_voucher_codes
 from core.utils import get_start_translation_index
+from core.utils import strip_question_marks
 from public_interface.models import TaxonSets
 from public_interface.models import GeneSets
 from public_interface.models import Genes
 
 
-class TestGenBankFastaUtils(TestCase):
+class TestCoreUtils(TestCase):
     def setUp(self):
         args = []
         opts = {'dumpfile': 'test_db_dump.xml', 'verbosity': 0}
@@ -92,3 +93,15 @@ class TestGenBankFastaUtils(TestCase):
         gene_model = {'reading_frame': 1, 'gene_code': 'test_gene'}
         self.assertRaises(exceptions.MissingReadingFrameForGene,
                           get_start_translation_index, gene_model, removed)
+
+    def test_strip_question_marks1(self):
+        seq = '???ATC'
+        result = strip_question_marks(seq)
+        expected = ('ATC', 3)
+        self.assertEqual(expected, result)
+
+    def test_strip_question_marks2(self):
+        seq = '???NNNATC'
+        result = strip_question_marks(seq)
+        expected = ('ATC', 6)
+        self.assertEqual(expected, result)
