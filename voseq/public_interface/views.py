@@ -201,7 +201,7 @@ def show_voucher(request, voucher_code):
 
     seqs_queryset = Sequences.objects.filter(code=voucher_code).values('code', 'gene_code',
                                                                        'number_ambiguous_bp',
-                                                                       'labPerson')
+                                                                       'accession', 'labPerson')
 
     return render(request, 'public_interface/show_voucher.html',
                   {'voucher': voucher_queryset,
