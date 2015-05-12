@@ -2,6 +2,8 @@ from django import forms
 from haystack.forms import ModelSearchForm
 from haystack.query import SearchQuerySet
 
+from public_interface.models import Genes
+
 
 class AdvancedSearchForm(ModelSearchForm):
     NULL = 'Select'
@@ -90,7 +92,12 @@ class AdvancedSearchForm(ModelSearchForm):
         (YES, 'Yes'),
         (NO, 'No'),
     )
-    gene_code = forms.CharField(max_length=100, required=False)
+    gene_code = forms.ModelChoiceField(
+        Genes.objects.all().order_by('gene_code'),
+        required=False,
+        widget=forms.Select(),
+        empty_label='Select',
+    )
     genbank = forms.ChoiceField(widget=forms.RadioSelect, choices=GENBANK_CHOICES, required=False)
     accession = forms.CharField(max_length=100, required=False)
     labPerson = forms.CharField(max_length=100, required=False)
