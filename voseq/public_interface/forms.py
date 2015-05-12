@@ -98,7 +98,7 @@ class AdvancedSearchForm(ModelSearchForm):
     gene_code = forms.ModelChoiceField(
         Genes.objects.all().order_by('gene_code'),
         required=False,
-        widget=forms.Select(),
+        widget=forms.Select(attrs={'class': 'form-control'}),
         empty_label='Select',
     )
     genbank = forms.ChoiceField(widget=forms.RadioSelect, choices=GENBANK_CHOICES, required=False)
