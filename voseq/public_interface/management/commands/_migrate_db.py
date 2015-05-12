@@ -668,7 +668,7 @@ class ParseXML(object):
         return date_obj
 
 
-def parse_typeSpecies(value):
+def parse_type_species(value):
     if value == '0':
         new_value = 'd'
     elif value == '1':
