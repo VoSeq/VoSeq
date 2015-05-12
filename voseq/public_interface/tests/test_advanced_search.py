@@ -147,6 +147,6 @@ class TestAdvancedSearch(TestCase):
         self.assertTrue('CP100-10' in content)
 
     def test_advanced_search_by_type_species_negative(self):
-        response = self.client.get('/search/advanced/?type_species=y&code=CP100-09')
+        response = self.client.get('/search/advanced/?typeSpecies=y&code=CP100-09')
         content = response.content.decode('utf-8')
-        self.assertTrue('No ' in content)
+        self.assertTrue('No results found' in content)

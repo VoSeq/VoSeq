@@ -132,7 +132,7 @@ class AdvancedSearchForm(ModelSearchForm):
         for k, v in self.cleaned_data.items():
             if v != '' and v is not None:
                 # remove after adding this to index
-                if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models':
+                if k == 'sex' or k == 'voucher' or k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
@@ -143,6 +143,13 @@ class AdvancedSearchForm(ModelSearchForm):
                         sequence_keywords[k] = 'true'
                     else:
                         sequence_keywords[k] = 'false'
+                if k == 'typeSpecies':
+                    if v == 'y':
+                        keywords[k] = 'yes'
+                    elif v == 'n':
+                        keywords[k] = 'no'
+                    else:
+                        keywords[k] = 'don\'t know'
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
