@@ -10,6 +10,7 @@ from public_interface.models import FlickrImages
 from public_interface.models import Primers
 from public_interface.models import GeneSets
 from public_interface.models import TaxonSets
+from public_interface.management.commands import _migrate_db as migrate_script
 
 
 class TestCustomCommand(TestCase):
@@ -200,3 +201,27 @@ class TestCustomCommand(TestCase):
         b = TaxonSets.objects.get(taxonset_name='Erebia')
         expected = ['CP100-10', 'CP100-11']
         self.assertEqual(expected, json.loads(b.taxonset_list))
+
+    def test_type_species_dont_know(self):
+        value = '0'
+        expected = 'd'
+        result = migrate_script.parse_type_species(value)
+        self.assertEqual(expected, result)
+
+    def test_type_species_yes(self):
+        value = '1'
+        expected = 'y'
+        result = migrate_script.parse_type_species(value)
+        self.assertEqual(expected, result)
+
+    def test_type_species_no(self):
+        value = '2'
+        expected = 'n'
+        result = migrate_script.parse_type_species(value)
+        self.assertEqual(expected, result)
+
+    def test_type_species_null(self):
+        value = None
+        expected = 'd'
+        result = migrate_script.parse_type_species(value)
+        self.assertEqual(expected, result)

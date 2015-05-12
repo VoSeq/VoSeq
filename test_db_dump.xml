@@ -404,7 +404,7 @@
             <field name="subspecies"></field>
             <field name="country">FINLAND</field>
             <field name="specificLocality">Orivesi, HämeenLääni</field>
-            <field name="typeSpecies">2</field>
+            <field name="typeSpecies">0</field>
             <field name="latitude">61.664300</field>
             <field name="longitude">24.293600</field>
             <field name="altitude">NULL</field>
@@ -444,7 +444,7 @@
 		<field name="subspecies"></field>
 		<field name="country">FINLAND</field>
 		<field name="specificLocality">Orivesi, HämeenLääni</field>
-		<field name="typeSpecies">2</field>
+		<field name="typeSpecies">1</field>
 		<field name="latitude">61.664300</field>
 		<field name="longitude">24.293600</field>
         <field name="altitude"> </field>
@@ -483,7 +483,7 @@
 		<field name="subspecies"></field>
 		<field name="country">FINLAND</field>
 		<field name="specificLocality">Orivesi, HämeenLääni</field>
-		<field name="typeSpecies">2</field>
+		<field name="typeSpecies" xsi:nil="true" />
 		<field name="latitude">61.664300</field>
 		<field name="longitude">24.293600</field>
 		<field name="altitude" xsi:nil="true" />

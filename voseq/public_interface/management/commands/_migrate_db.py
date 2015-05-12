@@ -532,14 +532,7 @@ class ParseXML(object):
             else:
                 item['voucher'] = 'n'
 
-            if item['typeSpecies'] == '0':
-                item['typeSpecies'] = 'd'
-            elif item['typeSpecies'] == '1':
-                item['typeSpecies'] = 'y'
-            elif item['typeSpecies'] == '2':
-                item['typeSpecies'] = 'n'
-            else:
-                item['typeSpecies'] = 'd'
+            item['typeSpecies'] = parse_type_species(item['typeSpecies'])
 
             if items_to_flickr is not None:
                 self.table_flickr_images_items += items_to_flickr
@@ -673,3 +666,15 @@ class ParseXML(object):
         if self.verbosity != 0:
             print("WARNING:: Could not parse %s properly." % field)
         return date_obj
+
+
+def parse_type_species(value):
+    if value == '0':
+        new_value = 'd'
+    elif value == '1':
+        new_value = 'y'
+    elif value == '2':
+        new_value = 'n'
+    else:
+        new_value = 'd'
+    return new_value

@@ -110,26 +110,7 @@ class AdvancedSearchForm(ModelSearchForm):
         return sqs
 
     def search(self):
-        keywords = {}
-        sequence_keywords = {}
-        for k, v in self.cleaned_data.items():
-            if v != '' and v is not None:
-                # remove after adding this to index
-                if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models':
-                    continue
-                if k == 'labPerson' or k == 'accession':
-                    sequence_keywords[k] = v
-                if k == 'gene_code':
-                    sequence_keywords[k] = v.gene_code
-                if k == 'genbank':
-                    if v == 'y':
-                        sequence_keywords[k] = 'true'
-                    else:
-                        sequence_keywords[k] = 'false'
-                if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
-                    keywords[k] = v
-
-        # Check if we got any input value to search from
+        keywords, sequence_keywords = self.clean_search_keywords()
         sqs = ''
         if bool(sequence_keywords) is True:
             sqs = SearchQuerySet().using('advanced_search').filter(**sequence_keywords).facet('code')
@@ -144,6 +125,35 @@ class AdvancedSearchForm(ModelSearchForm):
             return sqs
         else:
             self.no_query_found()
+
+    def clean_search_keywords(self):
+        keywords = {}
+        sequence_keywords = {}
+        for k, v in self.cleaned_data.items():
+            if v != '' and v is not None:
+                # remove after adding this to index
+                if k == 'sex' or k == 'voucher' or k == 'models':
+                    continue
+                if k == 'labPerson' or k == 'accession':
+                    sequence_keywords[k] = v
+                if k == 'gene_code':
+                    sequence_keywords[k] = v.gene_code
+                if k == 'genbank':
+                    if v == 'y':
+                        sequence_keywords[k] = 'true'
+                    else:
+                        sequence_keywords[k] = 'false'
+                if k == 'typeSpecies':
+                    if v == 'y':
+                        keywords[k] = 'yes'
+                    elif v == 'n':
+                        keywords[k] = 'no'
+                    else:
+                        keywords[k] = 'don\'t know'
+                if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
+                    keywords[k] = v
+
+        return keywords, sequence_keywords
 
 
 def filter_results_from_sequence_table(sqs):
