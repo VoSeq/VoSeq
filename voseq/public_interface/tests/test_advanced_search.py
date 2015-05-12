@@ -70,7 +70,7 @@ class TestAdvancedSearch(TestCase):
     def test_advanced_search_invalid(self):
         response = self.client.get('/search/advanced/?latitude=Hola')
         content = response.content.decode('utf-8')
-        self.assertTrue('No results found.' in content)
+        self.assertTrue('Enter a number.' in content)
 
     def test_advanced_search_gui_form(self):
         response = self.client.get('/search/advanced/')
