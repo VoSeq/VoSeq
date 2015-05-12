@@ -2,3 +2,4 @@
 {{ object.labPerson }}
 {{ object.accession }}
 {{ object.genbank }}
+{{ object.gene_code }}

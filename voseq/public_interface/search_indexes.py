@@ -106,6 +106,7 @@ class AdvancedSearchIndex(indexes.SearchIndex, indexes.Indexable):
     code = indexes.CharField(model_attr='code__code', faceted=True)
     labPerson = indexes.EdgeNgramField(model_attr='labPerson', null=True)
     accession = indexes.EdgeNgramField(model_attr='accession', null=True)
+    gene_code = indexes.CharField(model_attr='gene_code', null=True)
     genbank = indexes.BooleanField(model_attr='genbank', null=True)
 
     def get_model(self):
