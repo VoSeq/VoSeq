@@ -23,6 +23,14 @@
        <div class="alert alert-warning"><b>No results were found</b></div>
     {% endif %}
 
+    {% if form.errors %}
+    <div class="alert alert-warning">
+      <b>
+        {{ form.errors }}
+      </b>
+    </div>
+    {% endif %}
+
       <div class="col-lg-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
