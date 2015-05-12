@@ -60,7 +60,8 @@ class AdvancedSearchForm(ModelSearchForm):
     subspecies = forms.CharField(label="Subspecies", max_length=100, required=False)
     country = forms.CharField(label="Country", max_length=100, required=False)
     specificLocality = forms.CharField(label="Specific Locality", max_length=250, required=False)
-    typeSpecies = forms.ChoiceField(label="Type species", choices=TYPE_SPECIES_CHOICES, widget=forms.Select, required=False)
+    typeSpecies = forms.ChoiceField(label="Type species", choices=TYPE_SPECIES_CHOICES,
+                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False)
     latitude = forms.FloatField(label="Latitude", required=False)
     longitude = forms.FloatField(label="Longitude", required=False)
     max_altitude = forms.IntegerField(label="Maximum altitude", required=False)
@@ -76,8 +77,10 @@ class AdvancedSearchForm(ModelSearchForm):
     notes = forms.CharField(label="Notes", required=False)
     latesteditor = forms.CharField(label="Latest editor", required=False)
     hostorg = forms.CharField(label="Host organism", max_length=200, help_text="Hostplant or other host.", required=False)
-    sex = forms.ChoiceField(label="Sex", choices=SEX_CHOICES, required=False)
-    voucher = forms.ChoiceField(label="Voucher", choices=VOUCHER_CHOICES, required=False)
+    sex = forms.ChoiceField(label="Sex", choices=SEX_CHOICES, required=False,
+                            widget=forms.Select(attrs={'class': 'form-control'}))
+    voucher = forms.ChoiceField(label="Voucher", choices=VOUCHER_CHOICES, required=False,
+                                widget=forms.Select(attrs={'class': 'form-control'}))
     voucherCode = forms.CharField(label="Alternative voucher code", max_length=100, help_text="Original code of voucher specimen.", required=False)
     code_bold = forms.CharField(label="Code in BOLD database", max_length=100, help_text="Optional code for specimens kept in the BOLD database.",
                                 required=False)
