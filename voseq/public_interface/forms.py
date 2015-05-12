@@ -110,6 +110,23 @@ class AdvancedSearchForm(ModelSearchForm):
         return sqs
 
     def search(self):
+        keywords, sequence_keywords = self.clean_search_keywords()
+        sqs = ''
+        if bool(sequence_keywords) is True:
+            sqs = SearchQuerySet().using('advanced_search').filter(**sequence_keywords).facet('code')
+            sqs = filter_results_from_sequence_table(sqs)
+        if bool(keywords) is True:
+            if sqs != '':
+                sqs = sqs.filter(**keywords)
+            else:
+                sqs = SearchQuerySet().using('vouchers').filter(**keywords)
+
+        if len(sqs) > 0:
+            return sqs
+        else:
+            self.no_query_found()
+
+    def clean_search_keywords(self):
         keywords = {}
         sequence_keywords = {}
         for k, v in self.cleaned_data.items():
@@ -129,21 +146,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
-        # Check if we got any input value to search from
-        sqs = ''
-        if bool(sequence_keywords) is True:
-            sqs = SearchQuerySet().using('advanced_search').filter(**sequence_keywords).facet('code')
-            sqs = filter_results_from_sequence_table(sqs)
-        if bool(keywords) is True:
-            if sqs != '':
-                sqs = sqs.filter(**keywords)
-            else:
-                sqs = SearchQuerySet().using('vouchers').filter(**keywords)
-
-        if len(sqs) > 0:
-            return sqs
-        else:
-            self.no_query_found()
+        return keywords, sequence_keywords
 
 
 def filter_results_from_sequence_table(sqs):
