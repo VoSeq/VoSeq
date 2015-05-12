@@ -182,7 +182,13 @@
           <table class="table table-condensed table-striped">
             <tr>
               <td><b>Gene region</b></td>
-              <td>{{ form.gene_code }}</td>
+              <td>
+                <select id="id_gene_code" name="gene_code" autocomplete="off">
+                  {% for x, y in form.fields.gene_code.choices %}
+                    <option value="{{ y }}">{{ y }}</option>
+                  {% endfor %}
+                </select>
+              </td>
             </tr>
             <tr>
               <td><b>In Genbank?</b></td>
