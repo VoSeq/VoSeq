@@ -191,11 +191,7 @@
             <tr>
               <td><b>Gene region</b></td>
               <td>
-                <select id="id_gene_code" name="gene_code" autocomplete="off">
-                  {% for x, y in form.fields.gene_code.choices %}
-                    <option value="{{ y }}">{{ y }}</option>
-                  {% endfor %}
-                </select>
+                {{ form.gene_code }}
               </td>
             </tr>
             <tr>

@@ -110,21 +110,21 @@ class AdvancedSearchForm(ModelSearchForm):
         keywords = {}
         sequence_keywords = {}
         for k, v in self.cleaned_data.items():
-            print(k, v)
             if v != '' and v is not None:
                 # remove after adding this to index
                 if k == 'sex' or k == 'typeSpecies' or k == 'voucher' or k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
+                if k == 'gene_code':
+                    sequence_keywords[k] = v.gene_code
                 if k == 'genbank':
                     if v == 'y':
                         sequence_keywords[k] = 'true'
                     else:
                         sequence_keywords[k] = 'false'
-                if k not in ['labPerson', 'accession', 'genbank']:
+                if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
-        print(keywords)
 
         # Check if we got any input value to search from
         sqs = ''

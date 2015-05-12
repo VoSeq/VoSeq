@@ -142,6 +142,6 @@ class TestAdvancedSearch(TestCase):
         self.assertTrue('CP100-15' in content)
 
     def test_advanced_search_by_gene_code(self):
-        response = self.client.get('/search/advanced/?gene_code=16S')
+        response = self.client.get('/search/advanced/?gene_code=1')  # gene 16S
         content = response.content.decode('utf-8')
-        self.assertTrue('CP100-15' in content)
+        self.assertTrue('CP100-10' in content)
