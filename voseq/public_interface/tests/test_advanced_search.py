@@ -53,7 +53,7 @@ TEST_INDEX = {
 
 
 @override_settings(HAYSTACK_CONNECTIONS=TEST_INDEX)
-class TestViews(TestCase):
+class TestAdvancedSearch(TestCase):
     def setUp(self):
         args = []
         opts = {'dumpfile': 'test_db_dump.xml', 'verbosity': 0}
@@ -63,7 +63,7 @@ class TestViews(TestCase):
         # build index with our test data
         haystack.connections.reload('default')
         call_command('rebuild_index', interactive=False, verbosity=0)
-        super(TestViews, self).setUp()
+        super(TestAdvancedSearch, self).setUp()
 
         self.client = Client()
 
@@ -138,5 +138,10 @@ class TestViews(TestCase):
 
     def test_advanced_search_genbank_false(self):
         response = self.client.get('/search/advanced/?genbank=n')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-15' in content)
+
+    def test_advanced_search_by_gene_code(self):
+        response = self.client.get('/search/advanced/?gene_code=16S')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-15' in content)
