@@ -532,7 +532,7 @@ class ParseXML(object):
             else:
                 item['voucher'] = 'n'
 
-            item['typeSpecies'] = parse_typeSpecies(item['typeSpecies'])
+            item['typeSpecies'] = parse_type_species(item['typeSpecies'])
 
             if items_to_flickr is not None:
                 self.table_flickr_images_items += items_to_flickr
