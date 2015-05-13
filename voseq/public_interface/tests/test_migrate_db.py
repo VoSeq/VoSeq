@@ -162,6 +162,11 @@ class TestCustomCommand(TestCase):
         b = Vouchers.objects.get(code='CP100-09')
         self.assertEqual('FINLAND', b.country)
 
+    def test_sex1(self):
+        result = migrate_script.get_sex('female')
+        expected = 'f'
+        self.assertEqual(expected, result)
+
     def test_primers(self):
         b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
         c = Primers.objects.filter(for_sequence=b)

@@ -80,12 +80,14 @@ class Vouchers(models.Model):
     LARVA = 'l'
     WORKER = 'w'
     QUEEN = 'q'
+    UNKNOWN = 'u'
     SEX_CHOICES = (
         (MALE, 'male'),
         (FEMALE, 'female'),
         (LARVA, 'larva'),
         (WORKER, 'worker'),
         (QUEEN, 'queen'),
+        (UNKNOWN, 'unknown'),
     )
 
     DONT_KNOW = 'd'
