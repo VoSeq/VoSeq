@@ -49,6 +49,7 @@ class AdvancedSearchForm(ModelSearchForm):
         (NONE, 'no voucher'),
         (DESTROYED, 'destroyed'),
         (LOST, 'lost'),
+        (UNKNOWN, 'unknown'),
     )
     code = forms.CharField(label="Code in voseq", max_length=100, required=False)
     orden = forms.CharField(label="Order", max_length=100, required=False)
@@ -136,7 +137,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 # remove after adding this to index
                 if v == 'Select':
                     continue
-                if k == 'voucher' or k == 'models':
+                if k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
