@@ -223,6 +223,11 @@ class TestCustomCommand(TestCase):
         self.assertEqual(expected, result)
 
     def test_sex13(self):
+        result = migrate_script.get_sex('Worker')
+        expected = 'w'
+        self.assertEqual(expected, result)
+
+    def test_sex14(self):
         b = Vouchers.objects.get(code='CP100-09')
         expected = 'f'
         self.assertEqual(expected, b.sex)
