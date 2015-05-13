@@ -158,6 +158,10 @@ class TestCustomCommand(TestCase):
         results = [i.voucherImage for i in c]
         self.assertTrue('https://www.flickr.com/photos/nsg_db/15728978251/' in results)
 
+    def test_country(self):
+        b = Vouchers.objects.get(code='CP100-09')
+        self.assertEqual('FINLAND', b.country)
+
     def test_primers(self):
         b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
         c = Primers.objects.filter(for_sequence=b)
