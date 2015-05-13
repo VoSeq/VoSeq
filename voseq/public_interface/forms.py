@@ -153,6 +153,8 @@ class AdvancedSearchForm(ModelSearchForm):
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
+        print("keywords", keywords)
+        print("sequence keywords", sequence_keywords)
         return keywords, sequence_keywords
 
 

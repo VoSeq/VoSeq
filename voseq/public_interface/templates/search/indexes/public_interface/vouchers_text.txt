@@ -10,3 +10,4 @@
 {{ object.subspecies }}
 {{ object.hostorg }}
 {{ object.typeSpecies }}
+{{ object.country }}
