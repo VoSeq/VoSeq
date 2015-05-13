@@ -180,3 +180,13 @@ class TestAdvancedSearch(TestCase):
         response = self.client.get('/search/advanced/?collector=Niklas+Wahlberg')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-16' in content)
+
+    def test_advanced_search_by_author(self):
+        response = self.client.get('/search/advanced/?author=auctorum')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-17' in content)
+
+    def test_advanced_search_by_voucher_locality(self):
+        response = self.client.get('/search/advanced/?voucherLocality=NSG coll')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-16' in content)
