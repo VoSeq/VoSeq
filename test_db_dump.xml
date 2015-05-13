@@ -740,7 +740,7 @@
             <field name="voucherCode"></field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
-            <field name="auctor" xsi:nil="true" />
+            <field name="auctor">auctorum</field>
             <field name="timestamp">2007-08-27 07:51:24</field>
             <field name="id">9</field>
         </row>

@@ -89,7 +89,8 @@ class AdvancedSearchForm(ModelSearchForm):
                                 required=False)
     determinedBy = forms.CharField(label="Determined by", max_length=100, help_text="Person that identified the taxon for this specimen.",
                                    required=False)
-    author = forms.CharField(label="Author", max_length=100, help_text="Person that described this taxon.", required=False)
+    author = forms.CharField(label="Author", max_length=100,
+                             help_text="Person that described this taxon.", required=False)
 
     # Sequences model
     YES = 'y'
