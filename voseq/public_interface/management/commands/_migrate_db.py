@@ -660,13 +660,23 @@ class ParseXML(object):
 
 
 def get_sex(value):
-    value = value.lower().strip()
+    try:
+        value = value.lower().strip()
+    except AttributeError:
+        return 'u'
+
     if value == 'f' or value == 'female':
         return 'f'
     elif value == 'm' or value == 'male' or value == 'mae':
         return 'm'
+    elif value == 'larva':
+        return 'l'
+    elif value == 'worker':
+        return 'w'
+    elif value == 'queen':
+        return 'q'
     else:
-        return None
+        return 'u'
 
 
 def parse_type_species(value):
