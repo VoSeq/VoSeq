@@ -689,7 +689,7 @@
             <field name="extraction">1</field>
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
-            <field name="voucherLocality"></field>
+            <field name="voucherLocality">NSG coll</field>
             <field name="publishedIn"></field>
             <field name="notes"></field>
             <field name="edits" xsi:nil="true" />
