@@ -132,6 +132,8 @@ class AdvancedSearchForm(ModelSearchForm):
         for k, v in self.cleaned_data.items():
             if v != '' and v is not None:
                 # remove after adding this to index
+                if v == 'Select':
+                    continue
                 if k == 'sex' or k == 'voucher' or k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
