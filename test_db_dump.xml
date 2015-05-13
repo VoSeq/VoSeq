@@ -429,6 +429,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">1</field>
         </row>
    	<row>
@@ -469,6 +470,7 @@
 		<field name="determinedBy" xsi:nil="true" />
 		<field name="auctor" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
 		<field name="id">2</field>
 	</row>
   	<row>
@@ -508,6 +510,7 @@
 		<field name="determinedBy" xsi:nil="true" />
 		<field name="auctor" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
 		<field name="id">3</field>
 	</row>
     <row>
@@ -547,6 +550,7 @@
         <field name="determinedBy" xsi:nil="true" />
         <field name="auctor" xsi:nil="true" />
         <field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
         <field name="id">4</field>
     </row>
         <row>
@@ -586,6 +590,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">5</field>
         </row>
         <row>
@@ -625,6 +630,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">6</field>
         </row>
         <row>
@@ -664,6 +670,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">7</field>
         </row>
         <row>
@@ -703,6 +710,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">8</field>
         </row>
         <row>
@@ -742,6 +750,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor">auctorum</field>
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">9</field>
         </row>
         <row>
@@ -781,6 +790,7 @@
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold">BCIBT193-09</field>
             <field name="id">10</field>
         </row>
 	</table_data>

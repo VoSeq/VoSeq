@@ -190,3 +190,8 @@ class TestAdvancedSearch(TestCase):
         response = self.client.get('/search/advanced/?voucherLocality=NSG coll')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-16' in content)
+
+    def test_advanced_search_by_code_bold(self):
+        response = self.client.get('/search/advanced/?code_bold=BCIBT193-09')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-18' in content)

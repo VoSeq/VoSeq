@@ -299,3 +299,9 @@ class TestCustomCommand(TestCase):
         expected = 'd'
         result = migrate_script.parse_type_species(value)
         self.assertEqual(expected, result)
+
+    def test_code_bold(self):
+        """Parse bold id, for completeness"""
+        expected = 'BCIBT193-09'
+        b = Vouchers.objects.get(code='CP100-18')
+        self.assertEqual(expected, b.code_bold)

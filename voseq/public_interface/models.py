@@ -150,8 +150,11 @@ class Vouchers(models.Model):
     sex = models.CharField(max_length=1, choices=SEX_CHOICES, blank=True)
     voucher = models.CharField(max_length=1, choices=VOUCHER_CHOICES, blank=True,
                                help_text="Voucher status.")
-    voucherCode = models.CharField(max_length=100, help_text="Alternative code of voucher specimen.", blank=True)
-    code_bold = models.CharField(max_length=100, help_text="Optional code for specimens kept in the BOLD database.", blank=True)
+    voucherCode = models.CharField(max_length=100, help_text="Alternative code of voucher specimen.",
+                                   blank=True)
+    code_bold = models.CharField(max_length=100,
+                                 help_text="Optional code for specimens kept in the BOLD database.",
+                                 blank=True)
     determinedBy = models.CharField(max_length=100, help_text="Person that identified the taxon for this specimen.", blank=True)
     author = models.CharField(max_length=100, help_text="Person that described this taxon.", blank=True)
     timestamp = models.DateTimeField(null=True)  # TODO change this to date_created = models.DateField(auto_now_add=True)
