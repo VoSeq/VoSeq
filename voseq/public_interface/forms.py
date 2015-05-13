@@ -12,6 +12,7 @@ class AdvancedSearchForm(ModelSearchForm):
     LARVA = 'l'
     WORKER = 'w'
     QUEEN = 'q'
+    UNKNOWN = 'u'
     SEX_CHOICES = (
         (NULL, 'Select'),
         (MALE, 'male'),
@@ -19,6 +20,7 @@ class AdvancedSearchForm(ModelSearchForm):
         (LARVA, 'larva'),
         (WORKER, 'worker'),
         (QUEEN, 'queen'),
+        (UNKNOWN, 'unknown'),
     )
 
     NULL = 'Select'
@@ -134,7 +136,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 # remove after adding this to index
                 if v == 'Select':
                     continue
-                if k == 'sex' or k == 'voucher' or k == 'models':
+                if k == 'voucher' or k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
                     sequence_keywords[k] = v
@@ -155,6 +157,8 @@ class AdvancedSearchForm(ModelSearchForm):
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
+        print("keyords", keywords)
+        print("sequence_keywords", sequence_keywords)
         return keywords, sequence_keywords
 
 

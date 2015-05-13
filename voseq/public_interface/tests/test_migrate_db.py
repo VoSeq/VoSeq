@@ -162,6 +162,71 @@ class TestCustomCommand(TestCase):
         b = Vouchers.objects.get(code='CP100-09')
         self.assertEqual('FINLAND', b.country)
 
+    def test_sex1(self):
+        result = migrate_script.get_sex('female')
+        expected = 'f'
+        self.assertEqual(expected, result)
+
+    def test_sex2(self):
+        result = migrate_script.get_sex('Female')
+        expected = 'f'
+        self.assertEqual(expected, result)
+
+    def test_sex3(self):
+        result = migrate_script.get_sex('f')
+        expected = 'f'
+        self.assertEqual(expected, result)
+
+    def test_sex4(self):
+        result = migrate_script.get_sex('F')
+        expected = 'f'
+        self.assertEqual(expected, result)
+
+    def test_sex5(self):
+        result = migrate_script.get_sex('Mae')
+        expected = 'm'
+        self.assertEqual(expected, result)
+
+    def test_sex6(self):
+        result = migrate_script.get_sex('male')
+        expected = 'm'
+        self.assertEqual(expected, result)
+
+    def test_sex7(self):
+        result = migrate_script.get_sex('Male')
+        expected = 'm'
+        self.assertEqual(expected, result)
+
+    def test_sex8(self):
+        result = migrate_script.get_sex('m')
+        expected = 'm'
+        self.assertEqual(expected, result)
+
+    def test_sex9(self):
+        result = migrate_script.get_sex('M')
+        expected = 'm'
+        self.assertEqual(expected, result)
+
+    def test_sex10(self):
+        result = migrate_script.get_sex('NA')
+        expected = 'u'  # unknown
+        self.assertEqual(expected, result)
+
+    def test_sex11(self):
+        result = migrate_script.get_sex('NULL')
+        expected = 'u'  # unknown
+        self.assertEqual(expected, result)
+
+    def test_sex12(self):
+        result = migrate_script.get_sex(None)
+        expected = 'u'  # unknown
+        self.assertEqual(expected, result)
+
+    def test_sex13(self):
+        b = Vouchers.objects.get(code='CP100-09')
+        expected = 'f'
+        self.assertEqual(expected, b.sex)
+
     def test_primers(self):
         b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
         c = Primers.objects.filter(for_sequence=b)

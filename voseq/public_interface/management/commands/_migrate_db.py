@@ -525,7 +525,7 @@ class ParseXML(object):
             del item['flickr_id']
 
             if item['sex'] is not None:
-                item['sex'] = self.get_sex(item['sex'])
+                item['sex'] = get_sex(item['sex'])
 
             if item['voucher'] is not None:
                 item['voucher'] = self.get_voucher(item['voucher'])
@@ -636,15 +636,6 @@ class ParseXML(object):
         else:
             return 'n'
 
-    def get_sex(self, string):
-        string = string.lower().strip()
-        if string == 'f' or string == 'female':
-            return 'f'
-        elif string == 'm' or string == 'male' or string == 'mae':
-            return 'm'
-        else:
-            return None
-
     def convert_to_int(self, string):
         try:
             string = int(string)
@@ -666,6 +657,26 @@ class ParseXML(object):
         if self.verbosity != 0:
             print("WARNING:: Could not parse %s properly." % field)
         return date_obj
+
+
+def get_sex(value):
+    try:
+        value = value.lower().strip()
+    except AttributeError:
+        return 'u'
+
+    if value == 'f' or value == 'female':
+        return 'f'
+    elif value == 'm' or value == 'male' or value == 'mae':
+        return 'm'
+    elif value == 'larva':
+        return 'l'
+    elif value == 'worker':
+        return 'w'
+    elif value == 'queen':
+        return 'q'
+    else:
+        return 'u'
 
 
 def parse_type_species(value):

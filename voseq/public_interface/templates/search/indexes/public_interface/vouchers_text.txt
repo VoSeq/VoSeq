@@ -11,3 +11,4 @@
 {{ object.hostorg }}
 {{ object.typeSpecies }}
 {{ object.country }}
+{{ object.sex }}
