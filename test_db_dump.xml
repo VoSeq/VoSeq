@@ -694,7 +694,7 @@
             <field name="notes"></field>
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
-            <field name="hostorg" xsi:nil="true" />
+            <field name="hostorg">hostorg</field>
             <field name="sex">null</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher destroyed</field>
