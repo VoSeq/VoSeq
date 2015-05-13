@@ -524,14 +524,8 @@ class ParseXML(object):
             del item['thumbnail']
             del item['flickr_id']
 
-            if item['sex'] is not None:
-                item['sex'] = get_sex(item['sex'])
-
-            if item['voucher'] is not None:
-                item['voucher'] = self.get_voucher(item['voucher'])
-            else:
-                item['voucher'] = 'n'
-
+            item['sex'] = get_sex(item['sex'])
+            item['voucher'] = get_voucher(item['voucher'])
             item['typeSpecies'] = parse_type_species(item['typeSpecies'])
 
             if items_to_flickr is not None:
@@ -617,25 +611,6 @@ class ParseXML(object):
 
         return as_tupple
 
-    def get_voucher(self, string):
-        string = string.lower().strip()
-        if string == 'no photo':
-            return 'e'
-        elif string == 'no voucher':
-            return 'n'
-        elif string == 'spread':
-            return 's'
-        elif string == 'unspread':
-            return 'e'
-        elif string == 'voucher destroyed':
-            return 'd'
-        elif string == 'voucher lost':
-            return 'l'
-        elif string == 'voucher photo':
-            return 'p'
-        else:
-            return 'n'
-
     def convert_to_int(self, string):
         try:
             string = int(string)
@@ -657,6 +632,29 @@ class ParseXML(object):
         if self.verbosity != 0:
             print("WARNING:: Could not parse %s properly." % field)
         return date_obj
+
+
+def get_voucher(value):
+    try:
+        value = value.lower().strip()
+    except AttributeError:
+        return 'u'
+    if value == 'no photo':
+        return 'e'
+    elif value == 'no voucher':
+        return 'n'
+    elif value == 'spread':
+        return 's'
+    elif value == 'unspread':
+        return 'e'
+    elif value == 'voucher destroyed':
+        return 'd'
+    elif value == 'voucher lost':
+        return 'l'
+    elif value == 'voucher photo':
+        return 'p'
+    else:
+        return 'u'
 
 
 def get_sex(value):
