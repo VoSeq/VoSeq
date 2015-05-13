@@ -126,11 +126,11 @@ class TestCustomCommand(TestCase):
 
     def test_voucher_null(self):
         b = Vouchers.objects.get(code='CP100-12')
-        self.assertEqual('n', b.voucher)
+        self.assertEqual('u', b.voucher)
 
     def test_voucher_empty(self):
         b = Vouchers.objects.get(code='CP100-13')
-        self.assertEqual('n', b.voucher)
+        self.assertEqual('u', b.voucher)
 
     def test_voucher_photo(self):
         b = Vouchers.objects.get(code='CP100-14')
