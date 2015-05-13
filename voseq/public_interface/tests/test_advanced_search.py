@@ -160,3 +160,8 @@ class TestAdvancedSearch(TestCase):
         response = self.client.get('/search/advanced/?typeSpecies=y')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-10' in content)
+
+    def test_advanced_search_by_country(self):
+        response = self.client.get('/search/advanced/?country=FINLAND')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-09' in content)
