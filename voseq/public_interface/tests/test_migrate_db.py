@@ -222,6 +222,11 @@ class TestCustomCommand(TestCase):
         expected = 'u'  # unknown
         self.assertEqual(expected, result)
 
+    def test_sex13(self):
+        b = Vouchers.objects.get(code='CP100-09')
+        expected = 'f'
+        self.assertEqual(expected, b.sex)
+
     def test_primers(self):
         b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
         c = Primers.objects.filter(for_sequence=b)
