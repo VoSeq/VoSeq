@@ -175,3 +175,8 @@ class TestAdvancedSearch(TestCase):
         response = self.client.get('/search/advanced/?hostorg=hostorg')
         content = response.content.decode('utf-8')
         self.assertTrue('CP100-16' in content)
+
+    def test_advanced_search_by_collector(self):
+        response = self.client.get('/search/advanced/?collector=Niklas+Wahlberg')
+        content = response.content.decode('utf-8')
+        self.assertTrue('CP100-16' in content)
