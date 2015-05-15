@@ -1,8 +1,14 @@
+from functools import partial
+
 from django import forms
 from haystack.forms import ModelSearchForm
 from haystack.query import SearchQuerySet
 
 from public_interface.models import Genes
+
+
+DateInput = partial(forms.DateInput, {'class': 'datepicker form-control',
+                                      'placeholder': 'Pick a date'})
 
 
 class AdvancedSearchForm(ModelSearchForm):
@@ -70,7 +76,8 @@ class AdvancedSearchForm(ModelSearchForm):
     max_altitude = forms.IntegerField(label="Maximum altitude", required=False)
     min_altitude = forms.IntegerField(label="Minimum altitude", required=False)
     collector = forms.CharField(label="Collector", max_length=100, required=False)
-    dateCollection = forms.DateField(label="Date of collection", required=False)
+    dateCollection = forms.DateField(label="Date of collection", required=False, widget=DateInput(),
+                                     error_messages={'invalid': 'Enter valid date: YYYY-mm-dd'})
     extraction = forms.CharField(label="Extraction", max_length=50, help_text="Number of extraction event.", required=False)
     extractionTube = forms.CharField(label="Extraction tube", max_length=50, help_text="Tube containing DNA extract.", required=False)
     dateExtraction = forms.DateField(label="Date extraction", required=False)
