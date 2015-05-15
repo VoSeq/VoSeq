@@ -507,7 +507,7 @@
 		<field name="voucher">Unspread</field>
 		<field name="voucherCode"></field>
 		<field name="flickr_id" xsi:nil="true" />
-		<field name="determinedBy" xsi:nil="true" />
+		<field name="determinedBy">R. Núñez</field>
 		<field name="auctor" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
         <field name="code_bold" xsi:nil="true" />
@@ -547,7 +547,7 @@
         <field name="voucher" xsi:nil="true" />
         <field name="voucherCode"></field>
         <field name="flickr_id" xsi:nil="true" />
-        <field name="determinedBy" xsi:nil="true" />
+        <field name="determinedBy">NULL</field>
         <field name="auctor" xsi:nil="true" />
         <field name="timestamp">2007-08-27 07:51:24</field>
         <field name="code_bold" xsi:nil="true" />
