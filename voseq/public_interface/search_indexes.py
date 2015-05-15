@@ -89,6 +89,8 @@ class VouchersIndex(indexes.SearchIndex, indexes.Indexable):
     voucher = indexes.CharField(model_attr='voucher', null=True)
     sex = indexes.CharField(model_attr='sex', null=True)
 
+    extraction = indexes.CharField(model_attr='extraction', null=True)
+    extractionTube = indexes.CharField(model_attr='extractionTube', null=True)
     extractor = indexes.CharField(model_attr='extractor', null=True)
 
     publishedIn = indexes.EdgeNgramField(model_attr='publishedIn', null=True)
