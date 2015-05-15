@@ -11,3 +11,8 @@ def index(request):
                       'form': form,
                   },
                   )
+
+
+def results(request):
+    print("resutls")
+    return ''
