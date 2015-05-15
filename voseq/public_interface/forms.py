@@ -124,6 +124,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 sqs = sqs.filter(**keywords)
             else:
                 sqs = SearchQuerySet().using('vouchers').filter(**keywords)
+                print(sqs)
 
         if len(sqs) > 0:
             return sqs

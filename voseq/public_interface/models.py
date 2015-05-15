@@ -138,7 +138,8 @@ class Vouchers(models.Model):
     collector = models.CharField(max_length=100, blank=True)
     dateCollection = models.DateField(null=True)  # TODO check if better blank null rather than null true
     extraction = models.CharField(max_length=50, help_text="Number of extraction event.", blank=True)
-    extractionTube = models.CharField(max_length=50, help_text="Tube containing DNA extract.", blank=True)
+    extractionTube = models.CharField(max_length=50, help_text="Tube containing DNA extract.",
+                                      blank=True)
     dateExtraction = models.DateField(null=True)
     extractor = models.CharField(max_length=100, blank=True)
     voucherLocality = models.CharField(max_length=200, blank=True)

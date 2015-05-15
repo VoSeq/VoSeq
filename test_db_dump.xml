@@ -422,7 +422,7 @@
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
             <field name="sex">female</field>
-            <field name="extractionTube">1</field>
+            <field name="extractionTube">09</field>
             <field name="voucher">No voucher</field>
             <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id">|15728978251|15110967254</field>
@@ -773,7 +773,7 @@
             <field name="dateCollection">1996-03-25</field>
             <field name="voucherImage">na.gif</field>
             <field name="thumbnail">na.gif</field>
-            <field name="extraction">1</field>
+            <field name="extraction">100</field>
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
