@@ -13,4 +13,5 @@
 {{ object.typeSpecies }}
 {{ object.country }}
 {{ object.voucher }}
+{{ object.voucherCode }}
 {{ object.sex }}
