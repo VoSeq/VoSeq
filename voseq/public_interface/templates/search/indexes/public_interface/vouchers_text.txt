@@ -16,5 +16,7 @@
 {{ object.determinedBy }}
 {{ object.voucherCode }}
 {{ object.extraction }}
-{{ object.extractionTube }}
+{{ object.extractiontube }}
+{{ object.publishedIn }}
+{{ object.notes }}
 {{ object.sex }}
