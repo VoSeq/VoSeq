@@ -1,3 +1,4 @@
+import datetime
 from functools import partial
 
 from django import forms
@@ -146,6 +147,8 @@ class AdvancedSearchForm(ModelSearchForm):
                 # remove after adding this to index
                 if v == 'Select':
                     continue
+                if k == 'dateCollection':
+                    v = datetime.date.strftime(v, "%Y-%m-%d")
                 if k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
@@ -167,7 +170,7 @@ class AdvancedSearchForm(ModelSearchForm):
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
-        print("keyords", keywords)
+        print("keywords", keywords)
         print("sequence_keywords", sequence_keywords)
         return keywords, sequence_keywords
 

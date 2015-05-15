@@ -87,6 +87,7 @@ class VouchersIndex(indexes.SearchIndex, indexes.Indexable):
     voucherCode = indexes.CharField(model_attr='voucherCode', null=True)
     determinedBy = indexes.CharField(model_attr='determinedBy', null=True)
     voucher = indexes.CharField(model_attr='voucher', null=True)
+    dateCollection = indexes.DateField(model_attr='dateCollection', null=True)
     sex = indexes.CharField(model_attr='sex', null=True)
 
     extraction = indexes.CharField(model_attr='extraction', null=True)

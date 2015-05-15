@@ -19,4 +19,5 @@
 {{ object.extractiontube }}
 {{ object.publishedIn }}
 {{ object.notes }}
+{{ object.dateCollection }}
 {{ object.sex }}
