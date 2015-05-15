@@ -424,7 +424,7 @@
             <field name="sex">female</field>
             <field name="extractionTube">1</field>
             <field name="voucher">No voucher</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id">|15728978251|15110967254</field>
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
@@ -465,7 +465,7 @@
 		<field name="sex">male</field>
 		<field name="extractionTube">1</field>
 		<field name="voucher">Spread</field>
-		<field name="voucherCode"></field>
+		<field name="voucherCode" xsi:nil="true" />
 		<field name="flickr_id" xsi:nil="true" />
 		<field name="determinedBy" xsi:nil="true" />
 		<field name="auctor" xsi:nil="true" />
@@ -505,7 +505,7 @@
 		<field name="sex" xsi:nil="true" />
 		<field name="extractionTube">1</field>
 		<field name="voucher">Unspread</field>
-		<field name="voucherCode"></field>
+		<field name="voucherCode" xsi:nil="true" />
 		<field name="flickr_id" xsi:nil="true" />
 		<field name="determinedBy">R. Núñez</field>
 		<field name="auctor" xsi:nil="true" />
@@ -545,7 +545,7 @@
         <field name="sex">mae</field>
         <field name="extractionTube">1</field>
         <field name="voucher" xsi:nil="true" />
-        <field name="voucherCode"></field>
+        <field name="voucherCode" xsi:nil="true" />
         <field name="flickr_id" xsi:nil="true" />
         <field name="determinedBy">NULL</field>
         <field name="auctor" xsi:nil="true" />
@@ -585,7 +585,7 @@
             <field name="sex">larva</field>
             <field name="extractionTube">1</field>
             <field name="voucher"></field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
@@ -625,7 +625,7 @@
             <field name="sex">queen</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher photo</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
@@ -665,7 +665,7 @@
             <field name="sex">unknown</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher lost</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode">RN 76022 16192-6</field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
@@ -705,7 +705,7 @@
             <field name="sex">null</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher destroyed</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
@@ -745,7 +745,7 @@
             <field name="sex">na</field>
             <field name="extractionTube">1</field>
             <field name="voucher">no photo</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor">auctorum</field>
@@ -785,7 +785,7 @@
             <field name="sex">f</field>
             <field name="extractionTube">1</field>
             <field name="voucher">M-105</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="auctor" xsi:nil="true" />
