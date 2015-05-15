@@ -9,3 +9,4 @@
 {{ object.species }}
 {{ object.subspecies }}
 {{ object.hostorg }}
+{{ object.code_bold }}
