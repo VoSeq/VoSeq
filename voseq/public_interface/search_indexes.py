@@ -94,6 +94,7 @@ class VouchersIndex(indexes.SearchIndex, indexes.Indexable):
     extractor = indexes.CharField(model_attr='extractor', null=True)
 
     publishedIn = indexes.EdgeNgramField(model_attr='publishedIn', null=True)
+    notes = indexes.EdgeNgramField(model_attr='notes', null=True)
     hostorg = indexes.CharField(model_attr='hostorg', null=True)
     typeSpecies = indexes.CharField(model_attr='typeSpecies', null=True)
 

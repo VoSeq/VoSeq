@@ -53,7 +53,7 @@
 		<field name="length">412</field>
 		<field name="description">wingless (wgl)</field>
 		<field name="readingframe">2</field>
-		<field name="notes"></field>
+        <field name="notes" xsi:nil="true" />
 		<field name="timestamp">2013-04-23</field>
 		<field name="genetic_code">1</field>
 		<field name="aligned">yes</field>
@@ -416,8 +416,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
@@ -457,8 +457,8 @@
 		<field name="dateExtraction">2008-07-17</field>
 		<field name="extractor">Niklas Wahlberg</field>
 		<field name="voucherLocality"></field>
-		<field name="publishedIn"></field>
-		<field name="notes"></field>
+		<field name="publishedIn" xsi:nil="true" />
+        <field name="notes" xsi:nil="true" />
 		<field name="edits" xsi:nil="true" />
 		<field name="latesteditor" xsi:nil="true" />
 		<field name="hostorg" xsi:nil="true" />
@@ -497,8 +497,8 @@
 		<field name="dateExtraction">2008-07-17</field>
 		<field name="extractor">Niklas Wahlberg</field>
 		<field name="voucherLocality"></field>
-		<field name="publishedIn"></field>
-		<field name="notes"></field>
+        <field name="publishedIn" xsi:nil="true" />
+        <field name="notes" xsi:nil="true" />
 		<field name="edits" xsi:nil="true" />
 		<field name="latesteditor" xsi:nil="true" />
 		<field name="hostorg" xsi:nil="true" />
@@ -537,8 +537,8 @@
         <field name="dateExtraction">2008-07-17</field>
         <field name="extractor">Niklas Wahlberg</field>
         <field name="voucherLocality"></field>
-        <field name="publishedIn"></field>
-        <field name="notes"></field>
+        <field name="publishedIn">BMC 2009</field>
+        <field name="notes">photo 30</field>
         <field name="edits" xsi:nil="true" />
         <field name="latesteditor" xsi:nil="true" />
         <field name="hostorg" xsi:nil="true" />
@@ -577,8 +577,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
@@ -617,8 +617,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
@@ -657,8 +657,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
@@ -697,8 +697,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality">NSG coll</field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg">hostorg</field>
@@ -737,8 +737,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
@@ -777,8 +777,8 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
