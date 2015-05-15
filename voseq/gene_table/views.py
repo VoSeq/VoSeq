@@ -1,6 +1,9 @@
 from collections import OrderedDict
+import os
+import uuid
 
 from django.shortcuts import render
+from amas import AMAS
 
 from .forms import GeneTableForm
 from core.utils import get_version_stats
@@ -26,6 +29,7 @@ def results(request):
         if form.is_valid():
             print(">>>>", form.cleaned_data)
             table = GeneTable(form.cleaned_data)
+            print(table.stats)
             return render(request, 'gene_table/results.html',
                           {
                               'version': version,
@@ -69,9 +73,40 @@ class GeneTable(object):
             elif this_line.startswith('---------------'):
                 continue
             else:
-                partitions[this_gene] += line
+                partitions[this_gene] += line + '\n'
 
         return partitions
 
     def get_stats_from_partitions(self):
-        pass
+        """These are the stats headers of AMAS v0.2
+
+        dna_header = [
+            "Alignment_name",
+            "No_of_taxa",
+            "Alignment_length",
+            "Total_matrix_cells",
+            "Undetermined_characters",
+            "Missing_percent",
+            "No_variable_sites",
+            "Proportion_variable_sites",
+            "Parsimony_informative_sites",
+            "Proportion_parsimony_informative",
+        ]
+        """
+        in_file = self.make_guid() + '.fas'
+
+        for code, partition in self.fasta_partitions.items():
+            with open(in_file, 'w') as handle:
+                handle.write(partition)
+
+            aln = AMAS.DNAAlignment(in_file, 'fasta', 'dna')
+            print(aln.summarize_alignment())
+            print(code, partition)
+
+        try:
+            os.remove(in_file)
+        except OSError:
+            pass
+
+    def make_guid(self):
+        return uuid.uuid4().hex
