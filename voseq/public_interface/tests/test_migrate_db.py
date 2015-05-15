@@ -305,3 +305,13 @@ class TestCustomCommand(TestCase):
         expected = 'BCIBT193-09'
         b = Vouchers.objects.get(code='CP100-18')
         self.assertEqual(expected, b.code_bold)
+
+    def test_determined_by(self):
+        expected = 'R. Núñez'
+        b = Vouchers.objects.get(code='CP100-11')
+        self.assertEqual(expected, b.determinedBy)
+
+    def test_determined_by_null(self):
+        expected = ''
+        b = Vouchers.objects.get(code='CP100-12')
+        self.assertEqual(expected, b.determinedBy)
