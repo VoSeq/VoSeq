@@ -491,7 +491,7 @@ class ParseXML(object):
                 item['longitude'] = float(item['longitude'])
 
             item['dateCollection'] = self.parse_date(item['dateCollection'], 'dateCollection')
-            item['dateExtraction'] = self.parse_timestamp(item['dateExtraction'], 'dateExtraction')
+            item['dateExtraction'] = self.parse_date(item['dateExtraction'], 'dateExtraction')
             item['timestamp'] = self.parse_timestamp(item['timestamp'], 'timestamp')
 
             # Deal with flickr images
