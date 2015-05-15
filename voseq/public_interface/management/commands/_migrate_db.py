@@ -490,8 +490,8 @@ class ParseXML(object):
             if item['longitude'] is not None:
                 item['longitude'] = float(item['longitude'])
 
-            item['dateCollection'] = self.parse_timestamp(item['dateCollection'], 'dateCollection')
-            item['dateExtraction'] = self.parse_timestamp(item['dateExtraction'], 'dateExtraction')
+            item['dateCollection'] = self.parse_date(item['dateCollection'], 'dateCollection')
+            item['dateExtraction'] = self.parse_date(item['dateExtraction'], 'dateExtraction')
             item['timestamp'] = self.parse_timestamp(item['timestamp'], 'timestamp')
 
             # Deal with flickr images
@@ -621,6 +621,18 @@ class ParseXML(object):
         except ValueError:
             string = None
         return string
+
+    def parse_date(self, mydate, field):
+        try:
+            date_obj = datetime.datetime.strptime(mydate, '%Y-%m-%d').replace(tzinfo=TZINFO)
+        except ValueError:
+            date_obj = None
+        except TypeError:
+            date_obj = None
+
+        if self.verbosity != 0:
+            print("WARNING:: Could not parse %s properly." % field)
+        return date_obj
 
     def parse_timestamp(self, timestamp, field):
         try:

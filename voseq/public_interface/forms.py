@@ -1,8 +1,15 @@
+import datetime
+from functools import partial
+
 from django import forms
 from haystack.forms import ModelSearchForm
 from haystack.query import SearchQuerySet
 
 from public_interface.models import Genes
+
+
+DateInput = partial(forms.DateInput, {'class': 'datepicker form-control',
+                                      'placeholder': 'Type or pick a date'})
 
 
 class AdvancedSearchForm(ModelSearchForm):
@@ -70,10 +77,12 @@ class AdvancedSearchForm(ModelSearchForm):
     max_altitude = forms.IntegerField(label="Maximum altitude", required=False)
     min_altitude = forms.IntegerField(label="Minimum altitude", required=False)
     collector = forms.CharField(label="Collector", max_length=100, required=False)
-    dateCollection = forms.DateField(label="Date of collection", required=False)
+    dateCollection = forms.DateField(label="Date of collection", required=False, widget=DateInput(),
+                                     error_messages={'invalid': 'Enter valid date: YYYY-mm-dd'})
     extraction = forms.CharField(label="Extraction", max_length=50, help_text="Number of extraction event.", required=False)
     extractionTube = forms.CharField(label="Extraction tube", max_length=50, help_text="Tube containing DNA extract.", required=False)
-    dateExtraction = forms.DateField(label="Date extraction", required=False)
+    dateExtraction = forms.DateField(label="Date of extraction", required=False, widget=DateInput(),
+                                     error_messages={'invalid': 'Enter valid date: YYYY-mm-dd'})
     extractor = forms.CharField(label="Extractor", max_length=100, required=False)
     voucherLocality = forms.CharField(label="Voucher locality", max_length=200, required=False)
     publishedIn = forms.CharField(label="Published in", required=False)
@@ -139,6 +148,8 @@ class AdvancedSearchForm(ModelSearchForm):
                 # remove after adding this to index
                 if v == 'Select':
                     continue
+                if k == 'dateCollection' or k == 'dateExtraction':
+                    v = datetime.date.strftime(v, "%Y-%m-%d")
                 if k == 'models':
                     continue
                 if k == 'labPerson' or k == 'accession':
@@ -160,8 +171,6 @@ class AdvancedSearchForm(ModelSearchForm):
                 if k not in ['labPerson', 'accession', 'genbank', 'gene_code']:
                     keywords[k] = v
 
-        print("keyords", keywords)
-        print("sequence_keywords", sequence_keywords)
         return keywords, sequence_keywords
 
 

@@ -2,7 +2,9 @@
 
 {% block additional_css %}
   {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.structure.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.theme.min.css' %}" />
 {% endblock additional_css %}
 
 
@@ -269,5 +271,16 @@
           $(this).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
         }
     });
+  </script>
+
+  <script>
+  $(function() {
+    $("#id_dateCollection").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    $("#id_dateExtraction").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+  });
   </script>
 {% endblock additional_javascript_footer %}
