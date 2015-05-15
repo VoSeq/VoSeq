@@ -8,6 +8,7 @@ config.json
 *pdf
 *bak
 *.fasta
+*.fas
 
 # package builds
 VoSeq.egg-info
