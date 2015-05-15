@@ -50,6 +50,8 @@ class AutoCompleteIndex(SimpleSearchIndex):
     voucherCode = indexes.EdgeNgramField(model_attr='voucherCode', null=True)
     determinedBy = indexes.EdgeNgramField(model_attr='determinedBy', null=True)
 
+    extraction = indexes.EdgeNgramField(model_attr='extraction', null=True)
+    extractionTube = indexes.EdgeNgramField(model_attr='extractionTube', null=True)
     extractor = indexes.EdgeNgramField(model_attr='extractor', null=True)
 
     publishedIn = indexes.EdgeNgramField(model_attr='publishedIn', null=True)
