@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from django.core.management import call_command
@@ -315,3 +316,8 @@ class TestCustomCommand(TestCase):
         expected = ''
         b = Vouchers.objects.get(code='CP100-12')
         self.assertEqual(expected, b.determinedBy)
+
+    def test_date_collection(self):
+        expected = datetime.date(1996, 3, 25)
+        b = Vouchers.objects.get(code='CP100-12')
+        self.assertEqual(expected, b.dateCollection)

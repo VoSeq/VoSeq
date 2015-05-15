@@ -8,7 +8,7 @@ from public_interface.models import Genes
 
 
 DateInput = partial(forms.DateInput, {'class': 'datepicker form-control',
-                                      'placeholder': 'Pick a date'})
+                                      'placeholder': 'Type or pick a date'})
 
 
 class AdvancedSearchForm(ModelSearchForm):
