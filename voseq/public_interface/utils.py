@@ -7,8 +7,10 @@ from core.utils import get_version_stats
 
 class VoSeqSearchView(SearchView):
     def __init__(self, url_encoded_query, *args, **kwargs):
+        self.searchqueryset = kwargs['searchqueryset']
         self.url_encoded_query = self.get_correct_url_query(url_encoded_query)
         self.simple_query = self.recover_keyword(url_encoded_query)
+        self.voucher_code_list = self.get_voucher_code_list()
         super(VoSeqSearchView, self).__init__(*args, **kwargs)
 
     def get_correct_url_query(self, url_encoded_query):
@@ -29,9 +31,16 @@ class VoSeqSearchView(SearchView):
         this_query = re.sub('&$', '', this_query)
         return this_query
 
+    def get_voucher_code_list(self):
+        code_list = ''
+        for i in self.searchqueryset:
+            code_list += i.code + '\n'
+        return code_list
+
     def extra_context(self):
         version, stats = get_version_stats()
         return {
+            'voucher_code_list': self.voucher_code_list,
             'simple_query': self.simple_query,
             'url_encoded_query': self.url_encoded_query,
             'result_count': len(self.searchqueryset),
