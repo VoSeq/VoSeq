@@ -32,6 +32,8 @@ class VoSeqSearchView(SearchView):
         return this_query
 
     def get_voucher_code_list(self):
+        if self.searchqueryset is None:
+            return None
         code_list = ''
         for i in self.searchqueryset:
             code_list += i.code + '\n'
