@@ -85,12 +85,9 @@
 
     <div class="col-lg-4 col-sm-6 col-xs-6">
       {% if result_count > 0 %}
-        <p><b>I have found {{ result_count|intcomma }} results for query:</b> {{ simple_query }}</p>
-
-        {% if suggestion != query and suggestion != None %}
-        <span class="text-warning"><b>Did you mean:</b></span> <a href="/search/?q={{ suggestion }}">{{ suggestion }}</a>
-      {% endif %}
+        <p><b>List of voucher codes:</b></p>
         <hr>
+        <textarea class="form-control" rows="10">{{ voucher_codes_list }}</textarea>
       {% endif %}
     </div>
 
