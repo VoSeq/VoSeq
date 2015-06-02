@@ -146,22 +146,22 @@ class TestViews(TestCase):
         self.assertTrue('Melitaea' in content)
 
     def test_url_encoded_query_advanced_search1(self):
-        my_view = VoSeqSearchView(url_encoded_query='page=2&genus=Melitaea')
+        my_view = VoSeqSearchView(url_encoded_query='page=2&genus=Melitaea', searchqueryset='')
         expected = 'genus=Melitaea'
         self.assertEqual(expected, my_view.url_encoded_query)
 
     def test_url_encoded_query_advanced_search2(self):
-        my_view = VoSeqSearchView(url_encoded_query='&genus=Melitaea')
+        my_view = VoSeqSearchView(url_encoded_query='&genus=Melitaea', searchqueryset='')
         expected = 'genus=Melitaea'
         self.assertEqual(expected, my_view.url_encoded_query)
 
     def test_url_encoded_query_simple_search1(self):
-        my_view = VoSeqSearchView(url_encoded_query='q=Melitaea')
+        my_view = VoSeqSearchView(url_encoded_query='q=Melitaea', searchqueryset='')
         expected = 'q=Melitaea'
         self.assertEqual(expected, my_view.url_encoded_query)
 
     def test_url_encoded_query_simple_search2(self):
-        my_view = VoSeqSearchView(url_encoded_query='q=Melitaea&page=2')
+        my_view = VoSeqSearchView(url_encoded_query='q=Melitaea&page=2', searchqueryset='')
         expected = 'q=Melitaea'
         self.assertEqual(expected, my_view.url_encoded_query)
 
