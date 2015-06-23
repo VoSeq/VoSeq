@@ -123,11 +123,10 @@ class BLAST(object):
 
             my_records = []
             for i in queryset:
-                id = i.code_id + '|' + i.gene_code
+                item_id = i.code_id + '|' + i.gene_code
                 seq = self.strip_question_marks(i.sequences)
                 if seq != '':
-                    seq_record = SeqRecord(Seq(seq),
-                                           id=id)
+                    seq_record = SeqRecord(Seq(seq), id=item_id)
                     my_records.append(seq_record)
             SeqIO.write(my_records, self.seq_file, "fasta")
 
@@ -225,8 +224,6 @@ class BLAST(object):
 
         seq = re.sub('^N+', '', seq)
         seq = re.sub('N+$', '', seq)
-        if '?' in seq or 'N' in seq.upper():
-            # having ambiguous characters will mess up the creation of blast database
-            return ''
-        else:
-            return seq
+        seq = seq.replace('-', 'N')
+        seq = seq.replace('?', 'N')
+        return seq

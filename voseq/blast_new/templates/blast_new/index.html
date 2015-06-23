@@ -1,5 +1,8 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ BLAST - VoSeq
+{% endblock title %}
 
 {% block content %}
 <div class="explorer-container">
@@ -43,18 +46,36 @@
                   {{ form.sequence }}
               </td>
             </tr>
-              <tr>
+            <tr>
+              <td>
+                <button type="submit" class="btn btn-info" id="submit_button">
+                  <i class="fa fa-bomb"></i>
+                  Blast this
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                  <label for="id_gene_codes">Genes: </label>
+              </td>
                   <td>
-                      <label for="id_gene_codes">Genes: </label>
-                  </td>
-                  <td>
+
+
                       {{ form.gene_codes.errors }}
-                      <table class="table table-condensed table-striped">
+                      <table class="table table-condensed table-striped small_fonts">
                           <tr>
                               {% for i in form.gene_codes %}
-                              <td>
-                              {{ i }}
-                              </td>
+                                {% if forloop.counter == 1 %}
+                                  <tr>
+                                {% endif %}
+                                    <td>
+                                      {{ i }}
+                                    </td>
+
+                                {% if forloop.counter|divisibleby:"5" %}
+                                  </tr>
+                                {% endif %}
+
                               {% endfor %}
                           </tr>
                       </table>
@@ -63,10 +84,7 @@
           </table>
         </div><!-- panel -->
 
-            <button type="submit" class="btn btn-info" id="submit_button">
-                <i class="fa fa-bomb"></i>
-                Blast this
-            </button>
+
         </form>
 
 

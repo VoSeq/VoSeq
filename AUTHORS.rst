@@ -5,9 +5,10 @@ Credits
 Development Lead
 ----------------
 
-* Carlos Peña <mycalesis@gmail.com>
-* Tobias Malm <tobemalm@gmail.com>
-* Victor Solis <vm_solism@yahoo.es>
+* Carlos Peña @carlosp420
+* Tobias Malm @tmalm
+* Victor Solis @mezarino
+* Manuel Bellido @manubellido
 
 Contributors
 ------------

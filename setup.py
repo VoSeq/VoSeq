@@ -19,6 +19,7 @@ requirements = [
     'django-haystack',
     'django-debug-toolbar',
     'pytz',
+    'django-suit',
 ]
 
 test_requirements = [

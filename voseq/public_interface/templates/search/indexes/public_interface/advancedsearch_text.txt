@@ -1,0 +1,12 @@
+{{ object.code }}
+{{ object.orden }}
+{{ object.superfamily }}
+{{ object.family }}
+{{ object.subfamily }}
+{{ object.tribe }}
+{{ object.subtribe }}
+{{ object.genus }}
+{{ object.species }}
+{{ object.subspecies }}
+{{ object.hostorg }}
+{{ object.code_bold }}

@@ -1,5 +1,9 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ Browse - VoSeq
+{% endblock title %}
+
 
 {% block content %}
 <div class="explorer-container">
@@ -7,7 +11,7 @@
     <h3>Browse VoSeq</h3>
 
     This is the user/public interface of this manager. <i>Mortal</i>
-users can search for voucher and taxonomical infomation,
+users can search for voucher and taxonomic information,
 photos and access molecular sequences that have been flagged as
 being deposited in GenBank (hence public).
 
@@ -17,10 +21,10 @@ being deposited in GenBank (hence public).
         <div class="col-sm-6 col-md-5 col-md-offset-1 col-lg-4 col-lg-offset-2">
           {% if results|length > 1 %}
             <h2>Lastest entries:</h2>
-            <ul>
+            <ul class="fa-ul">
 
               {% for i in results %}
-              <li>
+              <li><i class="fa-li fa fa-circle"></i>
                 <b><a href="/p/{{ i.code }}">{{ i.code }}</a></b>
                 <i>{{ i.genus }} {{ i.species }}</i>
                 {% if i.author != None %}
@@ -32,7 +36,15 @@ being deposited in GenBank (hence public).
                   <a href="/p/{{ i.code }}"><img src="{% static 'img/icon_image.png' %}" title="See photos"/></a>
                 {% endif %}
                 <br />
-                By {{ i.extractor }} on {{ i.timestamp|date }}
+
+                <small>
+                  {% if i.extractor != '' %}
+                    By {{ i.extractor }} on
+                  {% endif %}
+
+                  {{ i.timestamp|date }}
+                </small>
+
               </li>
               {% endfor %}
 

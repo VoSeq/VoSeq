@@ -1,5 +1,8 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ Create dataset results - VoSeq
+{% endblock title %}
 
 {% block content %}
 <div class="explorer-container">
@@ -10,10 +13,28 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-11 col-lg-offset-1">
+
+
+        {% if warnings|length > 0 %}
+        <div class="panel panel-warning" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>During the processing of you dataset some issues were raised
+              <span class="badge"><b>{{ warnings|length }}</b></span>
+            </b></h3>
+          </div>
+
+          <ul class="list-group">
+            {% for i in warnings %}
+            <li class="list-group-item">{{ i }}</li>
+            {% endfor %}
+          </ul>
+        </div><!-- panel -->
+        {% endif %}
+
 
         {% if errors|length > 0 %}
-        <div class="panel panel-primary" style="min-width: 790px;">
+        <div class="panel panel-danger" style="min-width: 790px;">
           <div class="panel-heading">
             <h3 class="panel-title"><b>During the processing of you dataset some errors were found
               <span class="badge"><b>{{ errors|length }}</b></span>
@@ -37,20 +58,32 @@
           <table class="table table-bordered">
             <tr>
               <td>
-                <textarea readonly style="height: 550px; white-space: nowrap;" class="form-control">{{ dataset }}</textarea>
+                <textarea readonly style="height: 450px;" wrap="off" class="form-control dataset">{{ dataset }}</textarea>
               </td>
             </tr>
           </table>
 
         </div><!-- panel -->
 
-        <a href="/genbank_fasta/results/{{ protein_file }}">
+        <a href="/create_dataset/results/{{ dataset_file }}">
         <button class="btn btn-info">
           <i class="fa fa-download"></i>
           Download dataset file
         </button></a>
 
 
+          <br />
+          <br />
+
+      {% if charset_block %}
+         <table class="table table-bordered">
+            <tr>
+              <td>
+                <textarea readonly style="height: 150px;" class="form-control" wrap="soft">{{ charset_block }}</textarea>
+              </td>
+            </tr>
+          </table>
+      {% endif %}
 
 
         </div><!-- col -->

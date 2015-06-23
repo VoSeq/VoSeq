@@ -5,11 +5,21 @@
    Aciliini (Coleoptera: Dytiscidae). *BMC Evolutionary Biology*, 14(1), 5.
    [doi: 10.1186/1471-2148-14-5](http://dx.doi.org/10.1186/1471-2148-14-5)
    
+1. Bukontaite R, Ranarilalatiana T, Randriamihaja JH, Bergsten J (**2015**).
+   In or Out-of-Madagascar?—Colonization Patterns for Large-Bodied Diving Beetles
+   (Coleoptera: Dytiscidae). *PLoS ONE*, 10(3): e0120777.
+   [doi: 10.1371/journal.pone.0120777](10.1371/journal.pone.0120777)
+   
 1. Cally S, Solbès P, Grosso B, Murienne J (**2014**) An occurence records 
    database of French Guiana harvestmen (Arachnida, Opiliones). *Biodiversity 
    Data Journal*, 2: e4244.
    [doi: 10.3897/BDJ.2.e4244](http://dx.doi.org/10.3897/BDJ.2.e4244)
-   
+
+2. Doorenweerd C, van Nieukerken EJ, Menken SBJ (**2015**) A Global Phylogeny of
+   Leafmining *Ectoedemia* Moths (Lepidoptera: Nepticulidae): Exploring Host
+   Plant Family Shifts and Allopatry as Drivers of Speciation. *PLoS ONE* 10(3):
+   e0119586. [doi: 10.1371/journal.pone.0119586](http://dx.doi.org/10.1371/journal.pone.0119586) 
+
 1. Heikkilä, M. (**2014**). Systematizing morphology: a total evidence 
    approach to ditrysian phylogenetics (Lepidoptera). University of Helsinki. 
    PhD thesis.
@@ -61,7 +71,12 @@
    Towards a  better understanding of Neotropical biogeography. *Molecular 
    phylogenetics and evolution*, 66(1), 54-68.
    [doi: 10.1016/j.ympev.2012.09.005](http://dx.doi.org/10.1016/j.ympev.2012.09.005)
-  
+
+3. Peña, C., Witthauer, H., Klečková, I., Fric, Z. & Wahlberg, N. (**2015**). Adaptive
+   Radiations in Butterflies: Evolutionary History of the Genus Erebia (Nymphalidae:
+   Satyrinae). *Biological Journal of the Linnean Society*,
+   [doi: 10.1111/bij.12597](http://dx.doi.org/10.1111/bij.12597)
+
 4. Müller, C. J., Matos‐Maraví, P. F., & Beheregaray, L. B. (**2013**). Delving 
    into *Delias* Hübner (Lepidoptera: Pieridae): fine‐scale biogeography, 
    phylogenetics and systematics of the world's largest butterfly genus. 
@@ -79,6 +94,7 @@
    N. (**2014**). Relationships within the *Melitaea phoebe* species group 
    (Lepidoptera: Nymphalidae): new insights from molecular and morphometric 
    information. *Systematic Entomology*, 39(4), 749-757. 
+   [doi: 10.1111/syen.12083](http://dx.doi.org/10.1111/syen.12083)
    
 5. Wahlberg, E., & Johanson, K. A. (**2014**). The age, ancestral distribution
    and radiation of *Chimarra* (Trichoptera: Philopotamidae) using  molecular

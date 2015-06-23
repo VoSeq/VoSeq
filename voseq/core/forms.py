@@ -1,7 +1,5 @@
 from django import forms
 
-from core.utils import get_voucher_codes
-from core.utils import get_gene_codes
 from public_interface.models import Genes
 from public_interface.models import GeneSets
 from public_interface.models import TaxonSets
@@ -21,15 +19,17 @@ class BaseDatasetForm(forms.Form):
         label='Choose taxonset',
         required=False,
         empty_label='Choose taxonset',
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
     geneset = forms.ModelChoiceField(
         GeneSets.objects.all(),
         label='Choose geneset',
         required=False,
         empty_label='Choose geneset',
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
     gene_codes = forms.ModelMultipleChoiceField(
-        Genes.objects.all(),
+        Genes.objects.all().order_by('gene_code'),
         label='Check to select your alignment/gene',
         required=False,
         widget=forms.CheckboxSelectMultiple(),

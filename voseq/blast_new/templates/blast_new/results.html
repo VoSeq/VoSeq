@@ -1,5 +1,8 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ BLAST results - VoSeq
+{% endblock title %}
 
 {% block content %}
 
@@ -47,7 +50,7 @@
 </div>
 {% else %}
 <div class="container">
-    <h3>Blasting that sequence could retrieve any close match.</h3>
+    <h3>Blasting that sequence could not retrieve any close match.</h3>
 </div>
 {% endif %}
 

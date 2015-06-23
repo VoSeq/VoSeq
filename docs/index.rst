@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to VoSeq's documentation!
-=================================================================
+=================================
 
 Contents:
 
@@ -17,4 +17,12 @@ Contents:
    contributing
    authors
    history
-   modules
+
+Detailed documentation
+----------------------
+Here you will find more info on the implementation of various tools of VoSeq.
+
+.. toctree::
+   :maxdepth: 2
+
+   dev

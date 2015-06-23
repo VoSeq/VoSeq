@@ -1,9 +1,13 @@
-.PHONY: clean-pyc clean-build docs
+.PHONY: docs serve test migrations import index collectstatic admin
 
 help:
 	@echo "docs - build documentation in HTML format"
 	@echo "serve - runserver for development"
 	@echo "test - use testing settings and SQlite3 database"
+	@echo "migrations - prepare database for Django based on models"
+	@echo "import - import a MySQL database dump in XML format"
+	@echo "index - rebuild the database index. Required. Speeds up data retrieval"
+	@echo "admin - create administrator user for your VoSeq installation"
 
 clean: clean-build clean-pyc
 
@@ -18,10 +22,10 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 docs:
-	rm -f docs/voseq.*
+	# rm -f docs/voseq.*
+	# rm -f docs/modules.rst
 	rm -rf docs/_build
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ voseq
+	# sphinx-apidoc -o docs/ voseq
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 
@@ -36,6 +40,9 @@ migrations:
 	python voseq/manage.py migrate --settings=voseq.settings.local
 
 import:
+	python voseq/manage.py migrate_db --dumpfile=dump.xml --settings=voseq.settings.local
+
+test_import:
 	python voseq/manage.py migrate_db --dumpfile=test_db_dump.xml --settings=voseq.settings.local
 
 index:
@@ -44,7 +51,10 @@ index:
 stats:
 	python voseq/manage.py create_stats --settings=voseq.settings.local
 
-coverage: test
+collectstatic:
+	python voseq/manage.py collectstatic --settings=voseq.settings.production
+
+coverage: travis_test
 	coverage report -m
 	coverage html
 
@@ -53,5 +63,15 @@ test:
 	python voseq/manage.py migrate --settings=voseq.settings.testing
 	rm -rf htmlcov .coverage
 	coverage run --source voseq voseq/manage.py test -v 2 blast_local blast_local_full blast_ncbi blast_new \
-	    core create_dataset genbank_fasta public_interface stats view_genes genbank_fasta \
+	    core create_dataset genbank_fasta public_interface stats view_genes genbank_fasta gene_table \
+	    voucher_table gbif overview_table \
 	    --settings=voseq.settings.testing
+
+travis_test:
+	python voseq/manage.py makemigrations --settings=voseq.settings.testing
+	python voseq/manage.py migrate --settings=voseq.settings.testing
+	rm -rf htmlcov .coverage
+	coverage run --source voseq voseq/manage.py test -v 2 blast_local blast_local_full blast_ncbi blast_new \
+	    core create_dataset genbank_fasta public_interface stats view_genes genbank_fasta gene_table \
+	    voucher_table gbif overview_table \
+	    --settings=voseq.settings.travis

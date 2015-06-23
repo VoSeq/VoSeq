@@ -1,5 +1,5 @@
-Recommendations
-===============
+Recommendations for developers
+==============================
 
 There are many issues to tackle, some of them marked as
 `easy <https://github.com/carlosp420/VoSeq/issues>`_.

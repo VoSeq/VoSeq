@@ -5,15 +5,19 @@ Needs an XML file with the database dump from MySQL:
 > mysqldump --xml database > dump.xml
 """
 import datetime
+from os.path import basename
 import pytz
 import re
+from urllib import parse
 import xml.etree.ElementTree as ET
 
 import pyprind
 from django.conf import settings
+from django.contrib.auth.models import User
 
 from public_interface.models import Vouchers
 from public_interface.models import FlickrImages
+from public_interface.models import LocalImages
 from public_interface.models import Sequences
 from public_interface.models import Primers
 from public_interface.models import Genes
@@ -48,6 +52,7 @@ class ParseXML(object):
         self.table_taxonsets_items = None
         self.table_vouchers_items = None
         self.table_flickr_images_items = []
+        self.table_local_images_items = []
         self.list_of_voucher_codes = []
         self.verbosity = int(verbosity)
 
@@ -85,18 +90,7 @@ class ParseXML(object):
             self.parse_table_genes(self.dump_string)
 
         for item in self.table_genes_items:
-            try:
-                date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZINFO)
-            except ValueError as e:
-                date_obj = None
-                if self.verbosity != 0:
-                    print(e)
-                    print("WARNING:: Could not parse dateCreation properly.")
-            except TypeError as e:
-                date_obj = None
-                if self.verbosity != 0:
-                    print(e)
-                    print("WARNING:: Could not parse dateCreation properly.")
+            date_obj = self.parse_timestamp(item['timestamp'], 'timestamp')
 
             item['time_created'] = date_obj
             del item['timestamp']
@@ -148,6 +142,9 @@ class ParseXML(object):
             item['geneset_description'] = row.find("./field/[@name='geneset_description']").text
             item['geneset_list'] = row.find("./field/[@name='geneset_list']").text
             # item['geneset_id'] = row.find("./field/[@name='geneset_id']").text
+
+            if item['geneset_creator'] is None:
+                item['geneset_creator'] = 'dummy'
             self.table_genesets_items.append(item)
 
     def import_table_genesets(self):
@@ -163,6 +160,10 @@ class ParseXML(object):
                 item['geneset_description'] = ''
             item['geneset_list'] = item['geneset_list'].split(',')
             GeneSets.objects.create(**item)
+
+    def import_table_members(self):
+        if self.table_members_items is None:
+            self.parse_table_members(self.dump_string)
 
     def parse_table_members(self, xml_string):
         our_data = False
@@ -180,13 +181,36 @@ class ParseXML(object):
         self.table_members_items = []
         for row in our_data.findall('row'):
             item = dict()
-            item['member_id'] = row.find("./field/[@name='member_id']").text
-            item['firstname'] = row.find("./field/[@name='firstname']").text
-            item['lastname'] = row.find("./field/[@name='lastname']").text
-            item['login'] = row.find("./field/[@name='login']").text
-            item['passwd'] = row.find("./field/[@name='passwd']").text
-            item['admin'] = row.find("./field/[@name='admin']").text
+            item['username'] = row.find("./field/[@name='login']").text
+            item['first_name'] = row.find("./field/[@name='firstname']").text
+            item['last_name'] = row.find("./field/[@name='lastname']").text
+            item['password'] = row.find("./field/[@name='passwd']").text
+            admin = str(row.find("./field/[@name='admin']").text)
+
+            if admin == '0':
+                item['is_superuser'] = False
+            else:
+                item['is_superuser'] = True
+            item['is_staff'] = True
+            item['is_active'] = True
             self.table_members_items.append(item)
+
+    def save_table_members_to_db(self):
+        if self.table_members_items is None:
+            self.import_table_members()
+
+        for item in self.table_members_items:
+            user = User.objects.create_user(item['username'], email=None, first_name=item['first_name'],
+                                            last_name=item['last_name'])
+            user.is_staff = True
+            if item['is_superuser'] is False:
+                user.is_superuser = False
+            else:
+                user.is_superuser = True
+            user.save()
+
+        if self.verbosity != 0:
+            print("Uploading table `public_interface_members`")
 
     def parse_table_primers(self, xml_string):
         our_data = False
@@ -301,37 +325,26 @@ class ParseXML(object):
             item['gene_code'] = item['geneCode']
             del item['geneCode']
 
-            try:
-                date_obj = datetime.datetime.strptime(item['time_created'], '%Y-%m-%d').replace(tzinfo=TZINFO)
-            except ValueError as e:
-                date_obj = None
-                if self.verbosity != 0:
-                    print(e)
-                    print("WARNING:: Could not parse dateCreation properly.")
-                    print("WARNING:: Using empty date for `time_created` for code %s and gene_code %s." % (item['code_id'], item['gene_code']))
-            except TypeError as e:
-                date_obj = None
-                if self.verbosity != 0:
-                    print(e)
-                    print("WARNING:: Could not parse dateCreation properly.")
-                    print("WARNING:: Using empty date for `time_created` for code %s and gene_code %s." % (item['code_id'], item['gene_code']))
+            item['time_created'] = self.parse_timestamp(item['time_created'], 'time_created')
+            item['time_edited'] = self.parse_timestamp(item['time_edited'], 'time_edited')
 
-            item['time_created'] = date_obj
+            if item['sequences'] is not None:
+                ambiguous_chars = item['sequences'].count('?') + item['sequences'].count('-')
+                ambiguous_chars += item['sequences'].count('N') + item['sequences'].count('n')
+                item['number_ambiguous_bp'] = ambiguous_chars
+                item['total_number_bp'] = len(item['sequences'])
+            else:
+                item['number_ambiguous_bp'] = None
+                item['total_number_bp'] = None
 
-            try:
-                date_obj = datetime.datetime.strptime(item['time_edited'], '%Y-%m-%d').replace(tzinfo=TZINFO)
-            except ValueError:
-                date_obj = None
-                if self.verbosity != 0:
-                    print("WARNING:: Could not parse dateModification properly.")
-                    print("WARNING:: Using empty date for `time_edited` for code %s." % item['code_id'])
-            except TypeError:
-                date_obj = None
-                if self.verbosity != 0:
-                    print("WARNING:: Could not parse dateCreation properly.")
-                    print("WARNING:: Using empty as date for `time_edited` for code %s." % item['code_id'])
-
-            item['time_edited'] = date_obj
+            if item['genbank'] == '0':
+                item['genbank'] = False
+            elif item['genbank'] == '1':
+                item['genbank'] = True
+            elif item['genbank'] is None:
+                item['genbank'] = False
+            else:
+                item['genbank'] = False
 
     def save_table_sequences_to_db(self):
         if self.table_sequences_items is None:
@@ -353,6 +366,8 @@ class ParseXML(object):
         seqs_objects = []
         for i in range(n):
             item = seqs_to_insert[i]
+            if item['sequences'] is None:
+                continue
             item = self.clean_value(item, 'labPerson')
             item = self.clean_value(item, 'notes')
             item = self.clean_value(item, 'sequences')
@@ -405,7 +420,7 @@ class ParseXML(object):
             if item['taxonset_creator'] is None:
                 item['taxonset_creator'] = ''
             if item['taxonset_list'] is not None:
-                item['taxonset_list'] = item['taxonset_list'].split(',')
+                item['taxonset_list'] = item['taxonset_list'].replace(',', '\n')
 
     def save_table_taxonsets_to_db(self):
         if self.table_taxonsets_items is None:
@@ -466,6 +481,10 @@ class ParseXML(object):
             item['extractionTube'] = row.find("./field/[@name='extractionTube']").text
             item['voucher'] = row.find("./field/[@name='voucher']").text
             item['voucherCode'] = row.find("./field/[@name='voucherCode']").text
+            try:
+                item['code_bold'] = row.find("./field/[@name='code_bold']").text
+            except AttributeError:
+                item['code_bold'] = None
             item['flickr_id'] = row.find("./field/[@name='flickr_id']").text
             item['determinedBy'] = row.find("./field/[@name='determinedBy']").text
             item['author'] = row.find("./field/[@name='auctor']").text
@@ -510,79 +529,72 @@ class ParseXML(object):
             if item['longitude'] is not None:
                 item['longitude'] = float(item['longitude'])
 
-            if item['dateCollection'] is not None:
-                try:
-                    date_obj = datetime.datetime.strptime(item['dateCollection'], '%Y-%m-%d').date()
-                except ValueError:
-                    date_obj = None
-                item['dateCollection'] = date_obj
+            item['dateCollection'] = self.parse_date(item['dateCollection'], 'dateCollection')
+            item['dateExtraction'] = self.parse_date(item['dateExtraction'], 'dateExtraction')
+            item['timestamp'] = self.parse_timestamp(item['timestamp'], 'timestamp')
 
-            if item['dateExtraction'] is not None:
-                try:
-                    date_obj = datetime.datetime.strptime(item['dateExtraction'], '%Y-%m-%d').date()
-                except ValueError:
-                    date_obj = None
-                item['dateExtraction'] = date_obj
+            is_flickr, image_info = self.parse_image_info(item)
+            if is_flickr is True:
+                self.table_flickr_images_items += image_info
+            if is_flickr is False:
+                self.table_local_images_items += image_info
 
-            if item['timestamp'] is not None:
-                try:
-                    date_obj = datetime.datetime.strptime(item['timestamp'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZINFO)
-                except ValueError:
-                    date_obj = None
-                item['timestamp'] = date_obj
+            del item['voucherImage']
+            del item['thumbnail']
+            if 'flickr_id' in item:
+                del item['flickr_id']
 
-            # Deal with flickr images
-            if item['voucherImage'] == '':
-                item['voucherImage'] = None
-            elif item['voucherImage'] is not None:
-                item['voucherImage'] = self.get_as_tuple(item['voucherImage'])
+            item['sex'] = get_sex(item['sex'])
+            item['voucher'] = get_voucher(item['voucher'])
+            item['typeSpecies'] = parse_type_species(item['typeSpecies'])
+            self.list_of_voucher_codes.append(item['code'])
 
-            if item['thumbnail'] == '':
-                item['thumbnail'] = None
-            elif item['thumbnail'] is not None:
-                item['thumbnail'] = self.get_as_tuple(item['thumbnail'])
+    def parse_image_info(self, item):
+        got_flickr = self.test_if_photo_in_flickr(item)
+        if item['voucherImage'] == 'na.gif':
+            return None, None
+        elif item['voucherImage'] is not None:
+            item['voucherImage'] = self.get_as_tuple(item['voucherImage'], got_flickr)
 
+        if item['thumbnail'] == '':
+            item['thumbnail'] = None
+        elif item['thumbnail'] is not None:
+            item['thumbnail'] = self.get_as_tuple(item['thumbnail'], got_flickr)
+
+        imgs = []
+        if got_flickr is True:
             if item['flickr_id'] == '':
                 item['flickr_id'] = None
             elif item['flickr_id'] is not None:
-                item['flickr_id'] = self.get_as_tuple(item['flickr_id'])
+                item['flickr_id'] = self.get_as_tuple(item['flickr_id'], got_flickr)
 
-            items_to_flickr = None
             if item['voucherImage'] is not None and item['thumbnail'] is not None \
                     and item['flickr_id'] is not None:
-                items_to_flickr = []
                 for i in range(0, len(item['voucherImage']), 1):
-                    items_to_flickr.append({
+                    imgs.append({
                         'voucher_id': item['code'],
                         'voucherImage': item['voucherImage'][i],
                         'thumbnail': item['thumbnail'][i],
                         'flickr_id': item['flickr_id'][i],
                     })
-            del item['voucherImage']
-            del item['thumbnail']
-            del item['flickr_id']
+            return True, imgs
+        elif got_flickr is False:
+            if item['voucherImage'] is not None and item['thumbnail'] is not None:
+                for i in range(0, len(item['voucherImage']), 1):
+                    imgs.append({
+                        'voucher_id': item['code'],
+                        'voucherImage': item['voucherImage'][i],
+                        'thumbnail': item['thumbnail'][i],
+                    })
+            return False, imgs
 
-            if item['sex'] is not None:
-                item['sex'] = self.get_sex(item['sex'])
-
-            if item['voucher'] is not None:
-                item['voucher'] = self.get_voucher(item['voucher'])
-            else:
-                item['voucher'] = 'n'
-
-            if item['typeSpecies'] == '0':
-                item['typeSpecies'] = 'd'
-            elif item['typeSpecies'] == '1':
-                item['typeSpecies'] = 'y'
-            elif item['typeSpecies'] == '2':
-                item['typeSpecies'] = 'n'
-            else:
-                item['typeSpecies'] = 'd'
-
-            if items_to_flickr is not None:
-                self.table_flickr_images_items += items_to_flickr
-
-            self.list_of_voucher_codes.append(item['code'])
+    def test_if_photo_in_flickr(self, item):
+        value = item['voucherImage']
+        if value is not None:
+            value = value.replace('|', '').strip()
+            if value.startswith('https://www.flickr'):
+                return True
+        return False
 
     def save_table_vouchers_to_db(self):
         if self.table_vouchers_items is None:
@@ -613,6 +625,7 @@ class ParseXML(object):
             item = self.clean_value(item, 'voucherLocality')
             item = self.clean_value(item, 'collector')
             item = self.clean_value(item, 'voucherCode')
+            item = self.clean_value(item, 'code_bold')
             item = self.clean_value(item, 'determinedBy')
             item = self.clean_value(item, 'sex')
 
@@ -634,6 +647,11 @@ class ParseXML(object):
             flickr_objs.append(FlickrImages(**item))
         FlickrImages.objects.bulk_create(flickr_objs)
 
+        image_objs = []
+        for item in self.table_local_images_items:
+            image_objs.append(LocalImages(**item))
+        LocalImages.objects.bulk_create(image_objs)
+
         if self.verbosity != 0:
             print("Uploading table `public_interface_flickrimages`")
 
@@ -651,42 +669,24 @@ class ParseXML(object):
             item[key] = ''
         return item
 
-    def get_as_tuple(self, string):
+    def get_as_tuple(self, string, got_flickr=None):
+        # http://www.nymphalidae.net/VoSeq/pictures/kitten1.jpg
         as_tupple = ()
         if string == 'na.gif':
             return None
         list1 = string.split("|")
         for item in list1:
             if item.strip() != '':
+                item = self.strip_domain_from_filename(item, got_flickr)
                 as_tupple += (item,)
-
         return as_tupple
 
-    def get_voucher(self, string):
-        string = string.lower().strip()
-        if string == 'no photo':
-            return 'e'
-        elif string == 'no voucher':
-            return 'n'
-        elif string == 'spread':
-            return 's'
-        elif string == 'unspread':
-            return 'e'
-        elif string == 'voucher destroyed':
-            return 'd'
-        elif string == 'voucher lost':
-            return 'l'
-        elif string == 'voucher photo':
-            return 'p'
-        else:
-            return 'n'
-
-    def get_sex(self, string):
-        string = string.lower().strip()
-        if string == 'f' or string == 'female':
-            return 'f'
-        elif string == 'm' or string == 'male' or string == 'mae':
-            return 'm'
+    def strip_domain_from_filename(self, item, got_flickr=None):
+        if got_flickr is False:
+            disassembled = parse.urlsplit(item)
+            return basename(disassembled.path)
+        elif got_flickr is True:
+            return item
         else:
             return None
 
@@ -698,3 +698,83 @@ class ParseXML(object):
         except ValueError:
             string = None
         return string
+
+    def parse_date(self, mydate, field):
+        try:
+            date_obj = datetime.datetime.strptime(mydate, '%Y-%m-%d').replace(tzinfo=TZINFO)
+        except ValueError:
+            date_obj = None
+        except TypeError:
+            date_obj = None
+
+        if self.verbosity != 0:
+            print("WARNING:: Could not parse %s properly." % field)
+        return date_obj
+
+    def parse_timestamp(self, timestamp, field):
+        try:
+            date_obj = datetime.datetime.strptime(timestamp,
+                                                  '%Y-%m-%d %H:%M:%S').replace(tzinfo=TZINFO)
+        except ValueError:
+            date_obj = None
+        except TypeError:
+            date_obj = None
+
+        if self.verbosity != 0:
+            print("WARNING:: Could not parse %s properly." % field)
+        return date_obj
+
+
+def get_voucher(value):
+    try:
+        value = value.lower().strip()
+    except AttributeError:
+        return 'u'
+    if value == 'no photo':
+        return 'e'
+    elif value == 'no voucher':
+        return 'n'
+    elif value == 'spread':
+        return 's'
+    elif value == 'unspread':
+        return 'e'
+    elif value == 'voucher destroyed':
+        return 'd'
+    elif value == 'voucher lost':
+        return 'l'
+    elif value == 'voucher photo':
+        return 'p'
+    else:
+        return 'u'
+
+
+def get_sex(value):
+    try:
+        value = value.lower().strip()
+    except AttributeError:
+        return 'u'
+
+    if value == 'f' or value == 'female':
+        return 'f'
+    elif value == 'm' or value == 'male' or value == 'mae':
+        return 'm'
+    elif value == 'larva':
+        return 'l'
+    elif value == 'worker':
+        return 'w'
+    elif value == 'queen':
+        return 'q'
+    else:
+        return 'u'
+
+
+def parse_type_species(value):
+    if value == '0':
+        new_value = 'd'
+    elif value == '1':
+        new_value = 'y'
+    elif value == '2':
+        new_value = 'n'
+    else:
+        new_value = 'd'
+    return new_value

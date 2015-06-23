@@ -1,0 +1,2 @@
+class MissingReadingFrameForGene(Exception):
+    pass

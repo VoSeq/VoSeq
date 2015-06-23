@@ -1,17 +1,108 @@
-            <h3>Results</h3>
+{% extends 'public_interface/base.html' %}
+{% load humanize %}
 
-            {% for item in results %}
-                <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ item.code }}</a>
-                </p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
 
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
+{% block title %}
+ Search Results - VoSeq
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-11 col-lg-offset-1 col-md-offset-1">
+
+      <h3>Search</h3>
+      <hr>
+
+    </div><!-- col -->
+  </div><!-- row -->
+
+  <div class="row">
+    <div class="col-lg-7 col-md-offset-1 col-md-6 col-sm-6 col-xs-6">
+
+  {% if result_count > 0 %}
+    <p><b>I have found {{ result_count|intcomma }} results for query:</b> {{ simple_query }}</p>
+
+      {% if suggestion|lower != query|lower and suggestion != None %}
+        <span class="text-warning"><b>Did you mean:</b></span> <a href="/search/?q={{ suggestion }}">{{ suggestion }}</a>
+      {% endif %}
+    <hr>
+  {% endif %}
+
+    <ul class="fa-ul">
+      {% for result in page.object_list %}
+        <li><i class="fa-li fa fa-circle"></i>
+          <a href="/p/{{ result.code }}">{{ result.code }}</a>
+             <i>{{ result.genus}}</i>
+             <i>{{ result.species}}</i>
+
+          <br />
+
+          <small>
+            {% if result.object.extractor != '' %}
+              By {{ result.object.extractor }} on
             {% endif %}
+
+            {{ result.object.timestamp|date }}
+          </small>
+
+        </li>
+      {% empty %}
+        <p>
+        <i class="fa fa-search fa-2x"></i>
+        <b>No results found.</b></p> You could try an <a href="/search/advanced/">advanced search</a>.
+      {% endfor %}
+    </ul>
+
+  {% if page.has_previous or page.has_next %}
+    <nav>
+      <ul class="pagination">
+        {% if page.has_previous %}
+        <li>
+          <a href="?{{ url_encoded_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% for i in paginator.page_range %}
+          {% if i > page.number|add:"-10" and i < page.number|add:"10" %}
+            {% if page.number == i %}
+              <li class="active">
+            {% else %}
+              <li>
+            {% endif %}
+              <a href="?{{ url_encoded_query }}&amp;page={{ i }}">{{ i }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page.has_next %}
+        <li>
+          <a href="?{{ url_encoded_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+
+    </div><!-- col -->
+
+    <div class="col-lg-4 col-sm-6 col-xs-6">
+      {% if result_count > 0 %}
+        <p><b>List of voucher codes found:</b></p>
+        <hr>
+        <textarea class="form-control" rows="10">{{ voucher_code_list }}</textarea>
+      {% endif %}
+    </div>
+
+
+  </div><!-- row -->
+
+</div>
+
+{% endblock content %}

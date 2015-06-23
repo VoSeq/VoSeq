@@ -1,0 +1,41 @@
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>
+                        <label for="id_taxonset">Choose taxonset: </label>
+                      </td>
+                      <td>
+                        {{ form.taxonset }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="id_voucher_codes">... and/or a list of voucher codes: </label>
+                      </td>
+                      <td>
+                        Enter one code per line<br />
+                        in the box below.<br />
+                        (with a -- sign before taxon<br />
+                        names to disable them from<br />
+                        the taxon set)<br />
+                        For example:<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-10<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-11<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;--S078-21<br />
+                        and so on...<br />
+                        {% for i in form.voucher_codes.errors %}
+                        <div class="alert alert-warning">{{ i }}</div>
+                        {% endfor %}
+                        {{ form.voucher_codes }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                       &nbsp;
+                      </td>
+                      <td>
+                        <button type="submit" class="btn btn-info" id="submit_button">
+                          Create dataset
+                        </button>
+                      </td>
+                    </tr>
+                  </table>

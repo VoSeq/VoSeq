@@ -1,9 +1,23 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ Advanced Search - VoSeq
+{% endblock title %}
+
+
+{% block additional_css %}
+  {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.structure.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.theme.min.css' %}" />
+{% endblock additional_css %}
+
+
 {% block content %}
 
 
-<form method="get" action=".">
+   <form method="get" action="/search/advanced/" class="autocomplete-me">
+
 <div class="explorer-container">
   <div class="container">
     <div class="row">
@@ -16,13 +30,21 @@
        <div class="alert alert-warning"><b>No results were found</b></div>
     {% endif %}
 
+    {% if form.errors %}
+    <div class="alert alert-warning">
+      <b>
+        {{ form.errors }}
+      </b>
+    </div>
+    {% endif %}
+
       <div class="col-lg-6">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title"><b>Search by taxonomy</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
             <tr>
               <td><label for="id_orden"><b>Order:</b></label></td>
               <td>{{ form.orden }}</td>
@@ -73,7 +95,7 @@
             <h3 class="panel-title"><b>Search by locality</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
              <tr>
                 <td colspan="2"><b>Country:</b></td>
                 <td colspan="2">{{ form.country }}</td>
@@ -104,7 +126,7 @@
             <h3 class="panel-title"><b>Search by collection data</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
             <tr>
               <td><b>Code in VoSeq:</b></td>
               <td><b>Voucher locality:</b></td>
@@ -147,7 +169,7 @@
             <h3 class="panel-title"><b>Search by extraction data. DNA</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
             <tr>
               <td><b>Extraction:</b></td>
               <td><b>Tube:</b></td>
@@ -172,10 +194,12 @@
             <h3 class="panel-title"><b>Search by sequence information</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
             <tr>
               <td><b>Gene region</b></td>
-              <td>{{ form.gene_code }}</td>
+              <td>
+                {{ form.gene_code }}
+              </td>
             </tr>
             <tr>
               <td><b>In Genbank?</b></td>
@@ -201,7 +225,7 @@
             <h3 class="panel-title"><b>Search by publication and notes</b></h3>
           </div>
 
-          <table class="table table-condensed table-striped">
+          <table class="table table-condensed table-striped advanced-search">
             <tr>
               <td><b>Published in:</b></td>
               <td><b>Notes:</b></td>
@@ -212,10 +236,56 @@
             </tr>
           </table>
         </div><!-- panel -->
-        <input type="submit" value="Search">
+
+        <button type="submit" class="btn btn-primary">
+          <span class="glyphicon glyphicon-search"></span>
+          SEARCH
+        </button>
+
     </div><!-- row -->
   </div>
 </div>
 </form>
 
 {% endblock content %}
+
+{% block additional_javascript_footer %}
+  {% load staticfiles %}
+  <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+
+  <script type="text/javascript">
+    $("[id^=id_]").autocomplete({
+        source: function ( request, response) {
+          var this_id = $(this)[0].element[0].id.replace('id_', '');
+          $.ajax({
+            url: '/autocomplete/',
+            data: {
+                field: this_id,
+                term: request.term
+            },
+            success: function( data ) {
+                response( data );
+            }
+          });
+        },
+        minLength: 2,
+        open: function() {
+          $(this).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+          $(this).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+    });
+  </script>
+
+  <script>
+  $(function() {
+    $("#id_dateCollection").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+    $("#id_dateExtraction").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+  });
+  </script>
+{% endblock additional_javascript_footer %}

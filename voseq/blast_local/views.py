@@ -1,11 +1,13 @@
 from django.shortcuts import render
 
 from core.utils import get_version_stats
+from core.utils import get_username
 from .utils import BLAST
 
 
 def index(request, voucher_code, gene_code):
     version, stats = get_version_stats()
+    username = get_username(request)
 
     blast = BLAST('local', voucher_code, gene_code)
     blast.save_seqs_to_file()
@@ -19,6 +21,7 @@ def index(request, voucher_code, gene_code):
     blast.delete_query_output_files()
     return render(request, 'blast_local/index.html',
                   {
+                      'username': username,
                       'result': result,
                       'version': version,
                       'stats': stats,

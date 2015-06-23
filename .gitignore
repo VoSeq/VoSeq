@@ -9,6 +9,9 @@ config.json
 *bak
 *.fasta
 
+# virtual machine in vagrant
+./vagrant
+
 # package builds
 VoSeq.egg-info
 build
@@ -24,10 +27,15 @@ htmlcov
 # old VoSeq files to ignore
 conf.php
 
+# avoid including dataset files
+voseq/create_dataset/dataset_files/*txt
+
 # avoid including migrations files
 voseq/public_interface/migrations/*
+voseq/overview_table/migrations/*
 voseq/stats/migrations/*
 
 # avoid including doc files for modules
 docs/voseq.*
 docs/_build
+.vagrant/

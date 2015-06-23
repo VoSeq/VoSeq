@@ -18,12 +18,28 @@
                 <b><a href="/genes/{{ i.gene_code }}/">{{ i.gene_code }}</a></b>
                 <i>{{ i.description }}</i>
                 &mdash; {{ i.length|intcomma }} bp
+
+                <span class="badge">
+                {% if i.voucher_count == 1 %}
+                  <b>{{ i.voucher_count }} voucher</b>
+                {% else %}
+                  <b>{{ i.voucher_count|intcomma }} vouchers</b>
+                {% endif %}
+                </span>
+
               </li>
               {% endfor %}
 
             </ul>
           {% else %}
-            <h4>There are no genes to show.</h4>
+            <p>There are no genes to show.</p>
+
+            <p>
+               You might need to run the VoSeq's housekeeping command from the
+               command line:
+            </p>
+                <pre>make stats</pre>
+
           {% endif %}
         </div><!-- col -->
 

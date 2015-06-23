@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock title %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">VoSeq Administration</a></h1>
+{% endblock branding %}
+
+{% block userlinks %}
+  {% url 'django-admindocs-docroot' as docsroot %}
+  {% if docsroot %}
+    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a>
+    <span class="separator">|</span>
+  {% endif %}
+
+  <a href="/">View site</a>
+  <span class="separator">|</span>
+
+  <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a>
+  <span class="separator">|</span>
+  <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+  </span>
+{% endblock userlinks %}
+
+{% block nav-global %}
+{% endblock nav-global %}
+

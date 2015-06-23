@@ -53,7 +53,7 @@
 		<field name="length">412</field>
 		<field name="description">wingless (wgl)</field>
 		<field name="readingframe">2</field>
-		<field name="notes"></field>
+        <field name="notes" xsi:nil="true" />
 		<field name="timestamp">2013-04-23</field>
 		<field name="genetic_code">1</field>
 		<field name="aligned">yes</field>
@@ -119,14 +119,14 @@
 		<field name="lastname">Pena</field>
 		<field name="login">carlosp420</field>
 		<field name="passwd">f0578f1e7174b1a41c4ea8c6e17f7a8a3b88c92a</field>
-		<field name="admin">1</field>
+		<field name="admin">0</field>
 	</row>
 	<row>
 		<field name="member_id">2</field>
 		<field name="firstname">Admin</field>
 		<field name="lastname">admin</field>
 		<field name="login">admin</field>
-		<field name="passwd">9d4e1e23bd5b727046a9e3b4b7db57bd8d6ee684</field>
+		<field name="passwd">a72bd08fb0f60fa5ea658d0fa24b55ea58f90b62</field>
 		<field name="admin">1</field>
 	</row>
 	</table_data>
@@ -300,7 +300,7 @@
 		<field name="notes" xsi:nil="true" />
 		<field name="timestamp">2008-07-17 17:24:20</field>
 		<field name="id">4</field>
-		<field name="genbank">1</field>
+		<field name="genbank" xsi:nil="true" />
 	</row>
         <row>
             <field name="code">CP100-11</field>
@@ -313,8 +313,34 @@
             <field name="notes" xsi:nil="true" />
             <field name="timestamp">2008-07-17 17:24:20</field>
             <field name="id">5</field>
-            <field name="genbank">1</field>
+            <field name="genbank">0</field>
         </row>
+        <row>
+            <field name="code">CP100-15</field>
+            <field name="geneCode">COI</field>
+            <field name="sequences">??TGAGCCGGTATAATTGGTACATCCCTAAGTCTTATTATTCGAACCGAATTAGGAAATCCTAGTTTTTTAATTGGAGATGATCAAATTTATAATACCATTGTAACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATGCCAATTATAATTGGAGGATTTGGTAATTGACTTGTACCATTAATATTGGGAGCCCCAGATATAGCTTTCCCCCGAATAAATTATATAAGATTTTGATTATTGCCTCCATCCTTAATTCTTTTAATTTCAAGTAGAATTGTAGAAAATGGGGCAGGAACTGGATGAACAGTTTACCCCCCACTTTCATCTAATATTGCCCATAGAGGAGCTTCAGTGGATTTAGCTATTTTTTCTTTACATTTAGCTGGGATTTCCTCTATCTTAGGAGCTATTAATTTTATTACTACAATTATTAATATACGAATTAATAATATATCTTATGATCAAATACCTTTATTTGTATGAGCAGTAGGAATTACAGCATTACTTCTCTTATTATCTTTACCAGTTTTAGCTGGAGCTATTACTATACTTTTAACGGATCGAAATCTTAATACCTCATTTTTTGATTCCTGCGGAGGAGGAGATCC?????????????????????????????????</field>
+            <field name="accession" xsi:nil="true" />
+            <field name="labPerson">Niklas Wahlberg</field>
+            <field name="dateCreation" xsi:nil="true" />
+            <field name="dateModification" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
+            <field name="timestamp">2008-07-17 17:24:20</field>
+            <field name="id">5</field>
+            <field name="genbank">0</field>
+        </row>
+		<row>
+			<field name="code">CP100-15</field>
+			<field name="geneCode">16S</field>
+			<field name="sequences" xsi:nil="true" />
+			<field name="accession" xsi:nil="true" />
+			<field name="labPerson">Niklas Wahlberg</field>
+			<field name="dateCreation" xsi:nil="true" />
+			<field name="dateModification" xsi:nil="true" />
+			<field name="notes" xsi:nil="true" />
+			<field name="timestamp">2008-07-17 17:24:20</field>
+			<field name="id">5</field>
+			<field name="genbank">0</field>
+		</row>
 	</table_data>
 	<table_structure name="taxonsets">
 		<field Field="taxonset_name" Type="varchar(45)" Null="YES" Key="" Extra="" Comment="" />
@@ -391,7 +417,7 @@
             <field name="subspecies"></field>
             <field name="country">FINLAND</field>
             <field name="specificLocality">Orivesi, HämeenLääni</field>
-            <field name="typeSpecies">2</field>
+            <field name="typeSpecies">0</field>
             <field name="latitude">61.664300</field>
             <field name="longitude">24.293600</field>
             <field name="altitude">NULL</field>
@@ -403,19 +429,20 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
-            <field name="extractionTube">1</field>
+            <field name="sex">female</field>
+            <field name="extractionTube">09</field>
             <field name="voucher">No voucher</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id">|15728978251|15110967254</field>
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">1</field>
         </row>
    	<row>
@@ -431,31 +458,32 @@
 		<field name="subspecies"></field>
 		<field name="country">FINLAND</field>
 		<field name="specificLocality">Orivesi, HämeenLääni</field>
-		<field name="typeSpecies">2</field>
+		<field name="typeSpecies">1</field>
 		<field name="latitude">61.664300</field>
 		<field name="longitude">24.293600</field>
         <field name="altitude"> </field>
 		<field name="collector">Niklas Wahlberg</field>
 		<field name="dateCollection">1996-03-25</field>
-		<field name="voucherImage">na.gif</field>
-		<field name="thumbnail">na.gif</field>
+		<field name="voucherImage">|http://www.nymphalidae.net/VoSeq/pictures/kitten1.jpg|http://www.nymphalidae.net/VoSeq/pictures/kitten3.jpg</field>
+		<field name="thumbnail">|http://www.nymphalidae.net/VoSeq/pictures/thumbnails/tn_kitten1.jpg|http://www.nymphalidae.net/VoSeq/pictures/thumbnails/tn_kitten3.jpg</field>
 		<field name="extraction">1</field>
 		<field name="dateExtraction">2008-07-17</field>
 		<field name="extractor">Niklas Wahlberg</field>
 		<field name="voucherLocality"></field>
-		<field name="publishedIn"></field>
-		<field name="notes"></field>
+		<field name="publishedIn" xsi:nil="true" />
+        <field name="notes" xsi:nil="true" />
 		<field name="edits" xsi:nil="true" />
 		<field name="latesteditor" xsi:nil="true" />
 		<field name="hostorg" xsi:nil="true" />
-		<field name="sex"></field>
+		<field name="sex">male</field>
 		<field name="extractionTube">1</field>
 		<field name="voucher">Spread</field>
-		<field name="voucherCode"></field>
+		<field name="voucherCode" xsi:nil="true" />
 		<field name="flickr_id" xsi:nil="true" />
 		<field name="determinedBy" xsi:nil="true" />
 		<field name="author" xsi:nil="true" />
 		<field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
 		<field name="id">2</field>
 	</row>
   	<row>
@@ -470,31 +498,33 @@
 		<field name="subspecies"></field>
 		<field name="country">FINLAND</field>
 		<field name="specificLocality">Orivesi, HämeenLääni</field>
-		<field name="typeSpecies">2</field>
+		<field name="typeSpecies" xsi:nil="true" />
 		<field name="latitude">61.664300</field>
 		<field name="longitude">24.293600</field>
 		<field name="altitude" xsi:nil="true" />
 		<field name="collector">Niklas Wahlberg</field>
 		<field name="dateCollection">1996-03-25</field>
-		<field name="voucherImage">na.gif</field>
-		<field name="thumbnail">na.gif</field>
+		<field name="voucherImage">|http://www.nymphalidae.net/VoSeq/pictures/kitten2.jpg</field>
+		<field name="thumbnail">|http://www.nymphalidae.net/VoSeq/pictures/thumbnails/tn_kitten2.jpg</field>
 		<field name="extraction">1</field>
 		<field name="dateExtraction">2008-07-17</field>
 		<field name="extractor">Niklas Wahlberg</field>
 		<field name="voucherLocality"></field>
-		<field name="publishedIn"></field>
-		<field name="notes"></field>
+        <field name="publishedIn" xsi:nil="true" />
+        <field name="notes" xsi:nil="true" />
 		<field name="edits" xsi:nil="true" />
 		<field name="latesteditor" xsi:nil="true" />
 		<field name="hostorg" xsi:nil="true" />
-		<field name="sex"></field>
+		<field name="sex" xsi:nil="true" />
 		<field name="extractionTube">1</field>
 		<field name="voucher">Unspread</field>
-		<field name="voucherCode"></field>
+		<field name="voucherCode" xsi:nil="true" />
 		<field name="flickr_id" xsi:nil="true" />
-		<field name="determinedBy" xsi:nil="true" />
+        <field name="determinedBy">R. Núñez</field>
 		<field name="author" xsi:nil="true" />
-		<field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="auctor" xsi:nil="true" />
+        <field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
 		<field name="id">3</field>
 	</row>
     <row>
@@ -515,25 +545,27 @@
         <field name="altitude"> 600m</field>
         <field name="collector">Niklas Wahlberg</field>
         <field name="dateCollection">1996-03-25</field>
-        <field name="voucherImage">na.gif</field>
-        <field name="thumbnail">na.gif</field>
+        <field name="voucherImage">|http://www.nymphalidae.net/VoSeq/pictures/kitten2.jpg|http://www.nymphalidae.net/VoSeq/pictures/kitten3.jpg</field>
+        <field name="thumbnail">|http://www.nymphalidae.net/VoSeq/pictures/thumbnails/tn_kitten2.jpg|http://www.nymphalidae.net/VoSeq/pictures/thumbnails/tn_kitten3.jpg</field>
         <field name="extraction">1</field>
         <field name="dateExtraction">2008-07-17</field>
         <field name="extractor">Niklas Wahlberg</field>
         <field name="voucherLocality"></field>
-        <field name="publishedIn"></field>
-        <field name="notes"></field>
+        <field name="publishedIn">BMC 2009</field>
+        <field name="notes">photo 30</field>
         <field name="edits" xsi:nil="true" />
         <field name="latesteditor" xsi:nil="true" />
         <field name="hostorg" xsi:nil="true" />
-        <field name="sex"></field>
+        <field name="sex">mae</field>
         <field name="extractionTube">1</field>
         <field name="voucher" xsi:nil="true" />
-        <field name="voucherCode"></field>
+        <field name="voucherCode" xsi:nil="true" />
         <field name="flickr_id" xsi:nil="true" />
-        <field name="determinedBy" xsi:nil="true" />
+        <field name="determinedBy">NULL</field>
         <field name="author" xsi:nil="true" />
+        <field name="auctor" xsi:nil="true" />
         <field name="timestamp">2007-08-27 07:51:24</field>
+        <field name="code_bold" xsi:nil="true" />
         <field name="id">4</field>
     </row>
         <row>
@@ -560,19 +592,20 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="sex">larva</field>
             <field name="extractionTube">1</field>
             <field name="voucher"></field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">5</field>
         </row>
         <row>
@@ -599,19 +632,20 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="sex">queen</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher photo</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">6</field>
         </row>
         <row>
@@ -638,19 +672,20 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="sex">unknown</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher lost</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode">RN 76022 16192-6</field>
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">7</field>
         </row>
         <row>
@@ -676,20 +711,21 @@
             <field name="extraction">1</field>
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
-            <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="voucherLocality">NSG coll</field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
-            <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="hostorg">hostorg</field>
+            <field name="sex">null</field>
             <field name="extractionTube">1</field>
             <field name="voucher">Voucher destroyed</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">8</field>
         </row>
         <row>
@@ -716,19 +752,21 @@
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="sex">na</field>
             <field name="extractionTube">1</field>
             <field name="voucher">no photo</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
+            <field name="auctor">auctorum</field>
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold" xsi:nil="true" />
             <field name="id">9</field>
         </row>
         <row>
@@ -751,23 +789,24 @@
             <field name="dateCollection">1996-03-25</field>
             <field name="voucherImage">na.gif</field>
             <field name="thumbnail">na.gif</field>
-            <field name="extraction">1</field>
+            <field name="extraction">100</field>
             <field name="dateExtraction">2008-07-17</field>
             <field name="extractor">Niklas Wahlberg</field>
             <field name="voucherLocality"></field>
-            <field name="publishedIn"></field>
-            <field name="notes"></field>
+            <field name="publishedIn" xsi:nil="true" />
+            <field name="notes" xsi:nil="true" />
             <field name="edits" xsi:nil="true" />
             <field name="latesteditor" xsi:nil="true" />
             <field name="hostorg" xsi:nil="true" />
-            <field name="sex"></field>
+            <field name="sex">f</field>
             <field name="extractionTube">1</field>
             <field name="voucher">M-105</field>
-            <field name="voucherCode"></field>
+            <field name="voucherCode" xsi:nil="true" />
             <field name="flickr_id" xsi:nil="true" />
             <field name="determinedBy" xsi:nil="true" />
             <field name="author" xsi:nil="true" />
             <field name="timestamp">2007-08-27 07:51:24</field>
+            <field name="code_bold">BCIBT193-09</field>
             <field name="id">10</field>
         </row>
 	</table_data>

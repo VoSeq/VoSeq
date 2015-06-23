@@ -10,11 +10,19 @@ class TestViews(TestCase):
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
 
+        call_command('create_stats')
+
         self.client = Client()
 
     def test_genes(self):
         response = self.client.get('/genes/')
         self.assertEqual(200, response.status_code)
+
+    def test_genes_with_number_of_vouchers(self):
+        response = self.client.get('/genes/')
+        expected = '3 vouchers'
+        result = str(response.content)
+        self.assertTrue(expected in result)
 
     def test_view_gene(self):
         response = self.client.get('/genes/wingless/')

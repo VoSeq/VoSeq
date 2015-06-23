@@ -2,16 +2,19 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from core.utils import get_version_stats
+from core.utils import get_username
 from .utils import BLASTNew
 from .forms import BLASTNewForm
 
 
 def index(request):
     version, stats = get_version_stats()
+    username = get_username(request)
 
     form = BLASTNewForm()
     return render(request, 'blast_new/index.html',
                   {
+                      'username': username,
                       'form': form,
                       'version': version,
                       'stats': stats,
@@ -21,6 +24,7 @@ def index(request):
 
 def results(request):
     version, stats = get_version_stats()
+    username = get_username(request)
 
     if request.method == 'POST':
         form = BLASTNewForm(request.POST)
@@ -43,6 +47,7 @@ def results(request):
             blast.delete_query_output_files()
             return render(request, 'blast_new/results.html',
                           {
+                              'username': username,
                               'result': result,
                               'version': version,
                               'stats': stats,
@@ -51,6 +56,7 @@ def results(request):
         else:
             return render(request, 'blast_new/index.html',
                           {
+                              'username': username,
                               'form': form,
                               'version': version,
                               'stats': stats,

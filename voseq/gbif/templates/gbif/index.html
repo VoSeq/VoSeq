@@ -1,0 +1,103 @@
+{% extends 'public_interface/base.html' %}
+{% block title %}
+ Share data with GBIF - VoSeq
+{% endblock title %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Integration with GBIF:</h3>
+    <hr>
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-11 ">
+          <p>
+            You can share your information hosted in VoSeq with GBIF.
+          </p>
+
+          <p>
+            <b>GBIF</b> prefers data owners to use their
+            <a href="http://www.gbif.org/ipt">Integrated Publishing Toolkit (IPT)</a>. This means that
+            you can install their IPT software to produce a resource in Darwin Core format that can be
+            harvested by GBIF. In addition to the actual data in your VoSeq installation, <b>IPT allows you
+            to include a rich variety of metadata</b> for GBIF.
+          </p>
+
+          <p>
+            VoSeq is able to produce a <b>dump file</b> containing all the data you own. Then you can import
+            this file into a IPT installation and choose which types of data you want to publish via
+            GBIF. Once you include all the metadata required by GBIF you have two choices in order to
+            expose your data taken from GBIF website:
+          </p>
+
+          <ul class="fa-ul">
+            <li><i class="fa-li fa fa-check-square"></i><h4>By setting up a dynamic server software:</h4>
+              <ul class="list-group">
+                <li class="list-group-item">- Acquire hardware with a permanent Internet connection (a regular PC is sufficient).</li>
+                <li class="list-group-item">- Install data publishing software. GBIF recommends the Integrated Publishing Toolkit (IPT). You will need a web server such as Apache.</li>
+                <li class="list-group-item">- Configure the software for your local data structure; this is the "mapping" process. Please follow the documentation of your chosen publishing software for this process.</li>
+                <li class="list-group-item">- Register your service with GBIF and sign the GBIF Data Sharing Agreement.</li>
+              </ul>
+            </li>
+            <li><i class="fa-li fa fa-check-square"></i><h4>Create an archive for your entire dataset:</h4>
+              <ul class="list-group">
+                <li class="list-group-item">- This scenario doesn't require a permanent Internet connection.</li>
+                <li class="list-group-item">- You simply need to create a Darwin Core Archive, upload it to a repository (for example an IPT repository installed by your GBIF Participant Node, an institutional FTP or web server, or a service like Dropbox or the Internet Archive).</li>
+                <li class="list-group-item">- You then just need to register the public URL for the storage location of your archive with GBIF.</li>
+              </ul>
+            </li>
+        </ul>
+
+
+        <button class="btn btn-primary" onClick="dump_data();">Dump data for GBIF</button>
+
+        <div id="output"></div>
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block additional_javascript_footer %}
+  <script type="text/javascript">
+
+        function dump_data() {
+          $.ajax({
+            type: "GET",
+            url: "dump_data/",
+            data: {
+                   'request': 'count_data'
+                  },
+            success: function(data) {
+                  console.log(data);
+                  var out = '';
+
+                  out =  "<br /><br /><p>A total of <b>" + data.count + "</b> records were processed for GBIF. ";
+                  out += "<br />A MS EXCEL will be created with all data for GBIF. <a href='dump_data/?request=make_file'>Click here to Download</a>. ";
+                  out += "<p>Submit to GBIF by using an installation of their ";
+                  out += "<a href='http://www.gbif.org/ipt'>Integrated Publishing Toolkit (IPT)</a>.</p>";
+                  out += "<p>See <a href='http://carlosp420.github.io/VoSeq/#integration-with-gbif'>VoSeq documentation</a> on how to upload this dump file into IPT.</p>";
+                  console.log(out);
+
+                  $('#output').empty().html('<img src="/static/img/ajax_loader.gif" />').fadeIn('slow', function(){}).delay(1000).fadeOut('slow', function() {
+                                                                        $('#output').html(out).show();
+                                                                        });
+                  }
+          });
+
+          // make and download MS EXCEL file
+          // $.get('dump_data', { request: "make_file" });
+        }
+
+  </script>
+{% endblock additional_javascript_footer %}

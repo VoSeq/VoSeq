@@ -1,5 +1,9 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ {{ voucher.code }} - VoSeq
+{% endblock title %}
+
 
 {% block additional_css %}
 {% load staticfiles %}
@@ -243,7 +247,15 @@
         <div class="panel panel-default">
           <div class="panel-body">
             {% for image in images %}
-              <a href="{{ image.voucherImage }}"><img class="img-thumbnail" src="{{ image.thumbnail }}" /></a>
+              {% if 'staticflickr' in image.thumbnail %}
+                <a href="{{ image.voucherImage }}">
+                  <img class="img-thumbnail" src="{{ image.thumbnail }}" />
+                </a>
+              {% else %}
+                <a href="/static/{{ image.voucherImage }}">
+                  <img class="img-thumbnail" src="/static/{{ image.thumbnail }}" />
+                </a>
+              {% endif %}
             {% endfor %}
           </div>
         </div><!-- panel -->
@@ -295,9 +307,9 @@
             </tr>
             {% for item in sequences %}
             <tr>
-              <td><a href="/s/{{ item.code.code }}/{{ item.gene_code }}/">{{ item.gene_code }}</a></td>
+              <td><a href="/s/{{ item.code }}/{{ item.gene_code }}/">{{ item.gene_code }}</a></td>
               <td>{{ item.sequence_length }}</td>
-              <td>{{ item.ambiguous_seq_length }}</td>
+              <td>{{ item.number_ambiguous_bp }}</td>
               <td>{{ item.labPerson }}</td>
               <td><a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Search&db=nucleotide&term={{ item.accession }}[accn]&doptcmdl=GenBank">{{ item.accession }}</a></td>
               <td class="text-center">

@@ -1,0 +1,73 @@
+{% extends 'public_interface/base.html' %}
+{% block title %}
+ Create gene table - VoSeq
+{% endblock title %}
+
+{% block additional_css %}
+  {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tooltipster.css' %}" />
+{% endblock additional_css %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Create gene table:</h3>
+
+    <div class="alert alert-info" role="alert">
+      <b>Select sequences you want for a dataset by entering the voucher codes and gene codes.</b>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-warning" role="alert">
+        {% for i in form.non_field_errors %}
+          <b>{{ i }}</b>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-11 ">
+
+        <form action="/create_gene_table/results/" method="post">
+        <div class="panel panel-primary" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Enter the required info to make yourself a table in MS Excel format</b></h3>
+          </div>
+
+
+        {% csrf_token %}
+
+        <table class="table table-bordered"><!-- big -->
+            <tr>
+                <td>
+
+                  {% include "core/form_taxonset.html" %}
+
+                </td>
+
+                <td>
+                  {% include 'core/form_geneset.html' %}
+                </td>
+
+            </tr>
+        </table><!-- big -->
+
+        </div><!-- panel -->
+
+
+        </form>
+
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}

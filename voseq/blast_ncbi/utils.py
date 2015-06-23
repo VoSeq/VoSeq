@@ -28,8 +28,11 @@ class BLASTNcbi(BLAST):
         """
         Does a blast against NCBI and saves returned XML file to local disk.
         """
-        fasta_string = open(self.query_file).read()
+        with open(self.query_file) as handle:
+            fasta_string = handle.read()
+
         result_handle = NCBIWWW.qblast('blastn', 'nt', fasta_string)
+
         with open(self.output_file, 'w') as writer:
             writer.write(result_handle.read())
         result_handle.close()

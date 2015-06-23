@@ -1,0 +1,34 @@
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>
+                        <label for="id_geneset">Choose geneset: </label>
+                      </td>
+                      <td>
+                        {{ form.geneset }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Check to select your alignment/gene:<br />
+                        <br />
+                        (if geneset chosen, adds extra genes)
+                      </td>
+                      <td>
+                        <table class="table table-condensed table-striped small_fonts">
+                            {% for i in form.gene_codes %}
+                              {% if forloop.counter == 1 %}
+                                <tr>
+                              {% endif %}
+                                  <td>
+                                  {{ i }}
+                                  </td>
+                              {% if forloop.counter|divisibleby:"4" %}
+                                </tr>
+                              {% endif %}
+
+                            {% endfor %}
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>

@@ -12,6 +12,39 @@
 
         <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
 
+        {% if errors|length > 0 %}
+        <div class="panel panel-danger" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>During the processing of you dataset some errors were found
+              <span class="badge"><b>{{ errors|length }}</b></span>
+              </b></h3>
+          </div>
+
+          <ul class="list-group">
+            {% for i in errors %}
+              <li class="list-group-item">{{ i }}</li>
+            {% endfor %}
+          </ul>
+        </div><!-- panel -->
+        {% endif %}
+
+
+        {% if warnings|length > 0 %}
+        <div class="panel panel-warning" style="min-width: 790px;">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>During the processing of you dataset some issues were raised
+              <span class="badge"><b>{{ warnings|length }}</b></span>
+            </b></h3>
+          </div>
+
+          <ul class="list-group">
+            {% for i in warnings %}
+            <li class="list-group-item">{{ i }}</li>
+            {% endfor %}
+          </ul>
+        </div><!-- panel -->
+        {% endif %}
+
         <div class="panel panel-primary" style="min-width: 790px;">
           <div class="panel-heading">
             <h3 class="panel-title"><b>Sequences that already have GenBank accession numbers:
@@ -48,7 +81,7 @@
           <table class="table table-bordered">
             <tr>
               <td>
-                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control">{{ fasta }}</textarea>
+                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control dataset">{{ dataset }}</textarea>
               </td>
             </tr>
           </table>
@@ -78,7 +111,7 @@
           <table class="table table-bordered">
             <tr>
               <td>
-                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control">{{ protein }}</textarea>
+                <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control dataset">{{ protein }}</textarea>
               </td>
             </tr>
           </table>

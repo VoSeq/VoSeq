@@ -10,24 +10,20 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
+import sys
+import os
 
-import sys, os
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
 
-cwd = os.getcwd()
-parent = os.path.dirname(cwd)
-sys.path.append(os.path.abspath(parent))
-sys.path.append(os.path.abspath(os.path.join(parent, 'voseq')))
+sys.path.insert(0, os.path.abspath('../voseq'))
 sys.path.append(os.path.abspath('_themes'))
-
 
 import voseq
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'voseq.voseq.settings.base'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'voseq.settings.base'
 
 
 # -- General configuration -----------------------------------------------------
@@ -93,7 +89,7 @@ exclude_patterns = ['_build']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'flask_theme_support.FlaskyStyle'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []

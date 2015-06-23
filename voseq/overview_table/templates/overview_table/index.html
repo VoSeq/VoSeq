@@ -1,0 +1,151 @@
+{% extends 'public_interface/base.html' %}
+
+{% block title %}
+  VoSeq | Overview table
+{% endblock title %}
+
+{% load staticfiles %}
+{% block additional_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}">
+{% endblock additional_css %}
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Interactive overview table:</h3>
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-12">
+
+
+          <table class="table table-condensed table-striped small_fonts">
+            {% for i in genes %}
+              {% if forloop.counter == 1 %}
+                <tr>
+              {% endif %}
+                <td>
+                  <input type="checkbox" class="toggle-vis" data-column="{{ forloop.counter|add:6 }}">
+                    {{ i.gene_code }}
+                  </input>
+                </td>
+
+              {% if forloop.counter|divisibleby:"4" %}
+                </tr>
+              {% endif %}
+
+            {% endfor %}
+            </tr>
+          </table>
+
+          <table id="datatable" class="display table table-striped table-hover" width="100%">
+              <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Order</th>
+                    <th>Superfamily</th>
+                    <th>Family</th>
+                    <th>Subfamily</th>
+                    <th>Genus</th>
+                    <th>Species</th>
+                    {% for i in genes %}
+                      <th class="genes">{{ i.gene_code }}</th>
+                    {% endfor %}
+              </thead>
+              <tbody>
+
+                {% for item in data %}
+                  <tr>
+                    <td><a href="/p/{{ item.o_code }}/">{{ item.o_code }}</a></td>
+                    <td>{{ item.orden }}</td>
+                    <td>{{ item.superfamily }}</td>
+                    <td>{{ item.family }}</td>
+                    <td>{{ item.subfamily }}</td>
+                    <td>{{ item.genus }}</td>
+                    <td>{{ item.species }}</td>
+                    {{ item.sequence_string|safe }}
+                  </tr>
+                {% endfor %}
+
+              </tbody>
+          </table>
+
+
+        </div><!-- col -->
+
+      </div><!-- row -->
+
+      <div class="row"><!-- pagination -->
+        {% if data.has_previous or data.has_next %}
+          <nav class="text-center">
+            <ul class="pagination">
+              {% if data.has_previous %}
+              <li>
+                <a href="?page={{ data.previous_page_number }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {% endif %}
+
+              {% for i in page_range %}
+                {% if i > data.number|add:"-10" and i < data.number|add:"10" %}
+                  {% if data.number == i %}
+                    <li class="active">
+                  {% else %}
+                    <li>
+                  {% endif %}
+                      <a href="?{{ url_encoded_query }}&amp;page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+              {% endfor %}
+
+              {% if data.has_next %}
+              <li>
+                <a href="?page={{ data.next_page_number }}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+        {% endif %}
+      </div><!-- pagination -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block additional_javascript_footer %}
+  <script type="text/javascript" charset="utf8" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+  <script type="text/javascript" charset="utf8" src="{% static 'js/dataTables.bootstrap.min.js' %}"></script>
+<script>
+  $(document).ready( function () {
+      var table = $('#datatable').DataTable(
+          {
+              "paging": false,
+              "scrollY": 600,
+              "info": false
+          }
+      );
+
+      table.columns( '.genes' ).visible(false, false);
+      table.columns.adjust().draw(false);
+
+      $('input.toggle-vis').on('click', function(e) {
+        e.preventDefault();
+
+        // Get the column API object
+        var column = table.column( $(this).attr('data-column') );
+
+        // Toggle the visibility
+        column.visible( ! column.visible() );
+      });
+  });
+</script>
+
+{% endblock additional_javascript_footer %}

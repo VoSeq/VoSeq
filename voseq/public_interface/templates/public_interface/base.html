@@ -18,7 +18,7 @@ rss icon by: http://glyphicons.com/
     <meta name="description" content="VoSeq">
     <meta name="author" content="Carlos Pena">
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock title %}</title>
 
   {% block additional_css %}{% endblock additional_css %}
 
@@ -76,10 +76,10 @@ rss icon by: http://glyphicons.com/
             <li class="hidden-sm"><a href="#contact">Contact</a></li>
             <li>
 
-              <form action="#" method="get" class="navbar-form navbar-right form-inline" role="search">
+              <form action="/search/" method="get" class="navbar-form navbar-right form-inline" role="search">
                 <div class="form-group">
                     <input style="width:240px;" type="text" id="query" name="q"
-                            class="form-control"
+                            class="form-control" value="{{ simple_query }}"
                              placeholder="Taxon name">
                 </div>
                 <div class="form-group">
@@ -88,7 +88,7 @@ rss icon by: http://glyphicons.com/
                       Search
                   </button>
                   &nbsp;
-                  <small><a href="/search/">Advanced <b>Search</b></a></small>
+                  <small><a href="/search/advanced/">Advanced <b>Search</b></a></small>
                 </div>
               </form>
             </li>
@@ -102,19 +102,26 @@ rss icon by: http://glyphicons.com/
                   Tools <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="/genes/">View genes</a></li>
                   <li><a href="/blast_new/">Blast new sequence</a></li>
+                  <li><a href="/view_table/">Interactive overview table</a></li>
+                  <li><a href="/genes/">View genes</a></li>
                   <li><a href="/create_dataset/">Create new dataset</a></li>
+                  <li><a href="/create_voucher_table/">Create Voucher table</a></li>
+                  <li><a href="/create_gene_table/">Create Gene table</a></li>
                   <li><a href="/genbank_fasta/">Create GenBank FASTA file</a></li>
+                  <li><a href="/share_data_gbif/">Share data with GBIF</a></li>
                 </ul>
               </div>
             </li>
             <li>
               <form action="#" class="navbar-form form-inline">
                 <div class="form-group">
-                  <a href="#">
-                    <button class="btn btn-success">Sign in</button>
-                  </a>
+                  {% if request.user.is_authenticated %}
+                    <a class="btn btn-info" href="/admin/">Admin</a>
+                    <a class="btn btn-danger" href="{% url 'auth_logout' %}">Logout</a>
+                  {% else %}
+                    <a class="btn btn-success" href="{% url 'auth_login' %}">Login</a>
+                  {% endif %}
                 </div>
               </form>
             </li>
@@ -133,7 +140,6 @@ rss icon by: http://glyphicons.com/
 
 {% block content %}
 {% endblock content %}
-<hr>
 
 {% include 'public_interface/footer.html' %}
 

@@ -10,23 +10,15 @@
 {{ object.subspecies }}
 {{ object.hostorg }}
 {{ object.author }}
-
+{{ object.typeSpecies }}
 {{ object.country }}
-{{ object.specificLocality }}
-{{ object.latitude }}
-{{ object.longitude }}
-{{ object.max_altitude }}
-{{ object.min_altitude }}
-
-{{ object.code_bold }}
-{{ object.voucherCode }}
-{{ object.voucherLocality }}
+{{ object.voucher }}
 {{ object.determinedBy }}
-{{ object.collector }}
-
+{{ object.voucherCode }}
 {{ object.extraction }}
-{{ object.extractionTube }}
-{{ object.extractor }}
-
+{{ object.extractiontube }}
 {{ object.publishedIn }}
 {{ object.notes }}
+{{ object.dateCollection }}
+{{ object.dateExtraction }}
+{{ object.sex }}

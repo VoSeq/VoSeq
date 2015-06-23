@@ -1,5 +1,8 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ Create dataset - VoSeq
+{% endblock title %}
 
 {% block additional_css %}
   {% load staticfiles %}
@@ -28,7 +31,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-11 ">
 
         <form action="/create_dataset/results/" method="post">
         <div class="panel panel-primary" style="min-width: 790px;">
@@ -105,14 +108,6 @@
 
             <tr>
               <td>
-                For single gene datasets, <br />
-                exclude taxa missing this gene?
-              </td>
-              <td>{{ form.exclude }}</td>
-            </tr>
-
-            <tr>
-              <td>
                 For multigene datasets, <br />
                 exclude taxa with less than X genes?
               </td>
@@ -136,69 +131,13 @@
         <table class="table table-bordered"><!-- big -->
             <tr>
                 <td>
-                  <table class="table table-bordered">
-                    <tr>
-                      <td>
-                        <label for="id_taxonset">Choose taxonset: </label>
-                      </td>
-                      <td>
 
-                        {{ form.taxonset }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label for="id_voucher_codes">... and/or a list of voucher codes: </label>
-                      </td>
-                      <td>
-                        Enter one code per line<br />
-                        in the box below.<br />
-                        (with a -- sign before taxon<br />
-                        names to disable them from<br />
-                        the taxon set)<br />
-                        For example:<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-10<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;CP100-11<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;--S078-21<br />
-                        and so on...<br />
-                        {% for i in form.voucher_codes.errors %}
-                        <div class="alert alert-warning">{{ i }}</div>
-                        {% endfor %}
-                        {{ form.voucher_codes }}
-                      </td>
-                    </tr>
-                  </table>
+                  {% include "core/form_taxonset.html" %}
+
                 </td>
 
                 <td>
-                  <table class="table table-bordered">
-                    <tr>
-                      <td>
-                        <label for="id_geneset">Choose geneset: </label>
-                      </td>
-                      <td>
-                        {{ form.geneset }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        Check to select your alignment/gene:<br />
-                        <br />
-                        (if geneset chosen, adds extra genes)
-                      </td>
-                      <td>
-                        <table class="table table-condensed table-striped">
-                          <tr>
-                            <td>
-                            {% for i in form.gene_codes %}
-                              {{ i }}&nbsp;&nbsp;&nbsp;&nbsp;
-                            {% endfor %}
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
+                  {% include 'core/form_geneset.html' %}
                 </td>
 
             </tr>
@@ -206,9 +145,7 @@
 
         </div><!-- panel -->
 
-            <button type="submit" class="btn btn-info" id="submit_button">
-              Create dataset
-            </button>
+
         </form>
 
 

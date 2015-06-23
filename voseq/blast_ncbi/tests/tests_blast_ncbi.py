@@ -1,3 +1,6 @@
+import unittest
+
+from django.conf import settings
 from django.test import TestCase
 from django.core.management import call_command
 
@@ -15,6 +18,8 @@ class TestNcbiBlast(TestCase):
         gene_code = 'COI'
         self.blast = BLASTNcbi(voucher_code, gene_code)
 
+    @unittest.skipIf(settings.TRAVIS is True,
+                     'Testing using BLASTNcbi fails due to network problems')
     def test_blast_with_accession_number_in_header(self):
         self.blast.save_query_to_file()
         self.blast.do_blast()
@@ -22,6 +27,8 @@ class TestNcbiBlast(TestCase):
         self.blast.delete_query_output_files()
         self.assertTrue(len(result) > 0)
 
+    @unittest.skipIf(settings.TRAVIS is True,
+                     'Testing using BLASTNcbi fails due to network problems')
     def test_index(self):
         response = self.client.get('/blast_ncbi/CP100-10/COI/')
         self.assertEqual(200, response.status_code)

@@ -10,6 +10,7 @@ class CreateDatasetForm(BaseDatasetForm):
             ('TNT', 'TNT format'),
             ('NEXUS', 'NEXUS format'),
             ('PHY', 'PHYLIP format'),
+            ('MEGA', 'MEGA format'),
             ('FASTA', 'Unaligned FASTA format'),
         ],
         widget=forms.RadioSelect(),
@@ -43,7 +44,7 @@ class CreateDatasetForm(BaseDatasetForm):
         choices=[
             ('ONE', 'as one'),
             ('EACH', 'each'),
-            ('1st-3rd', '1st-2nd, 3rd'),
+            ('1st2nd_3rd', '1st-2nd, 3rd'),
         ],
         widget=forms.RadioSelect(),
         initial='ONE',
@@ -102,18 +103,6 @@ class CreateDatasetForm(BaseDatasetForm):
         initial=['CODE', 'GENUS', 'SPECIES'],
         required=False,
         help_text='If taxon_names is None, use standart code_genus_species',
-    )
-
-    exclude = forms.ChoiceField(
-        help_text='If dataset is for single gene, exclude taxa missing this gene? '
-                  'Otherwise include taxon with ? as sequences.',
-        choices=[
-            ('YES', 'yes'),
-            ('NO', 'no'),
-        ],
-        widget=forms.RadioSelect(),
-        initial='YES',
-        required=True,
     )
 
     number_genes = forms.IntegerField(

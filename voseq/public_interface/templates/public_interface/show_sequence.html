@@ -1,5 +1,10 @@
 {% extends 'public_interface/base.html' %}
 
+{% block title %}
+ {{ sequence.gene_code }} - {{ voucher.code }} - VoSeq
+{% endblock title %}
+
+
 {% block content %}
 <div class="explorer-container">
   <div class="container">
