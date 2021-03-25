@@ -58,7 +58,7 @@ def create_dataset(
     dataset_file_abs = dataset_creator.dataset_file
     if dataset_file_abs is not None:
         dataset_file = re.search(
-            '([A-Z]+_[a-z0-9]+\.txt)',
+            r'([A-Za-z]+_[a-z0-9]+\.txt)',
             dataset_file_abs
         ).groups()[0]
     else:

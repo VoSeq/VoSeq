@@ -12,6 +12,7 @@ class CreateDatasetForm(BaseDatasetForm):
             ('PHYLIP', 'PHYLIP format'),
             ('MEGA', 'MEGA format'),
             ('FASTA', 'Unaligned FASTA format'),
+            ('Bankit', 'Bankit format'),
         ],
         widget=forms.RadioSelect(),
         required=True,
