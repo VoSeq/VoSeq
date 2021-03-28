@@ -1,6 +1,6 @@
 import logging
 
-from celery import chord
+from celery import chord, group
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
@@ -101,8 +101,8 @@ def schedule_dataset(cleaned_data, user) -> int:
         user=user
     )
 
-    tasks = chord(
-        header=create_dataset.si(
+    dataset_tasks = [
+        create_dataset.si(
             taxonset_id,
             geneset_id,
             gene_codes_ids,
@@ -120,6 +120,33 @@ def schedule_dataset(cleaned_data, user) -> int:
             introns,
             dataset_obj.id,
         ).on_error(log_email_error.s(user.id)),
+    ]
+    if file_format == "bankit":
+        aa_dataset_obj = Dataset.objects.create(
+            user=user,
+            sister_dataset_id=dataset_obj.id,
+        )
+        dataset_tasks.append(
+            taxonset_id,
+            geneset_id,
+            gene_codes_ids,
+            voucher_codes,
+            file_format,
+            outgroup,
+            positions,
+            partition_by_positions,
+            translations,
+            True,
+            degen_translations,
+            special,
+            taxon_names,
+            number_genes,
+            introns,
+            aa_dataset_obj.id,
+        )
+
+    tasks = chord(
+        header=group(dataset_tasks).on_error(log_email_error.s(user.id)),
         body=notify_user.si(dataset_obj.id, user.id)
     )
     tasks.apply_async()
