@@ -1,6 +1,6 @@
 import logging
 
-from celery import chord
+from celery import chord, group
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
@@ -97,12 +97,17 @@ def schedule_dataset(cleaned_data, user) -> int:
     number_genes = cleaned_data['number_genes']
     introns = cleaned_data['introns']
 
-    dataset_obj = Dataset.objects.create(
+    nucleotide_dataset_obj = Dataset.objects.create(
         user=user
     )
+    if file_format == "bankit":
+        aa_dataset_obj = Dataset.objects.create(
+            user=user,
+            sister_dataset_id=nucleotide_dataset_obj.id,
+        )
 
-    tasks = chord(
-        header=create_dataset.si(
+    dataset_tasks = [
+        create_dataset.si(
             taxonset_id,
             geneset_id,
             gene_codes_ids,
@@ -118,9 +123,33 @@ def schedule_dataset(cleaned_data, user) -> int:
             taxon_names,
             number_genes,
             introns,
-            dataset_obj.id,
+            nucleotide_dataset_obj.id,
         ).on_error(log_email_error.s(user.id)),
-        body=notify_user.si(dataset_obj.id, user.id)
+    ]
+    if file_format == "bankit":
+        dataset_tasks.append(
+            create_dataset.si(
+                taxonset_id,
+                geneset_id,
+                gene_codes_ids,
+                voucher_codes,
+                file_format,
+                outgroup,
+                positions,
+                partition_by_positions,
+                translations,
+                True,
+                degen_translations,
+                special,
+                taxon_names,
+                number_genes,
+                introns,
+                aa_dataset_obj.id,
+            ).on_error(log_email_error.s(user.id)),
+        )
+    tasks = chord(
+        header=group(dataset_tasks),
+        body=notify_user.si(aa_dataset_obj.id, user.id)
     )
     tasks.apply_async()
-    return dataset_obj.id
+    return aa_dataset_obj.id
