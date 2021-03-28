@@ -149,13 +149,15 @@ def schedule_dataset(cleaned_data, user) -> int:
         )
         tasks = chord(
             header=group(dataset_tasks),
-            body=notify_user.si(nucleotide_dataset_obj.id, user.id)
+            body=notify_user.si(aa_dataset_obj.id, user.id)
         )
+        tasks.apply_async()
+        return aa_dataset_obj.id
     else:
         tasks = chord(
             header=group(dataset_tasks),
-            body=notify_user.si(aa_dataset_obj.id, user.id)
+            body=notify_user.si(nucleotide_dataset_obj.id, user.id)
         )
+        tasks.apply_async()
+        return nucleotide_dataset_obj.id
 
-    tasks.apply_async()
-    return aa_dataset_obj.id
