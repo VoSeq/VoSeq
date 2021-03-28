@@ -50,7 +50,21 @@ def results(request, dataset_id):
     except Dataset.DoesNotExist:
         raise Http404(f'such dataset {dataset_id} does not exist')
 
-    context['dataset'] = dataset
+    if dataset.sister_dataset_id:
+        aa_dataset = dataset
+        try:
+            nucleotide_dataset = Dataset.objects.get(
+                id=aa_dataset.sister_dataset_id
+            )
+        except Dataset.DoesNotExist:
+            raise Http404(f'such dataset {dataset_id} does not exist')
+    else:
+        nucleotide_dataset = dataset
+        aa_dataset = None
+
+    if aa_dataset:
+        context['aa_dataset'] = aa_dataset
+    context['nucleotide_dataset'] = nucleotide_dataset
     return render(request, 'create_dataset/results.html', context)
 
 
