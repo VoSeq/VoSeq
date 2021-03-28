@@ -64,8 +64,12 @@ def results(request, dataset_id):
 
     if aa_dataset:
         context['aa_dataset'] = aa_dataset
-    context['nucleotide_dataset'] = nucleotide_dataset
-    return render(request, 'create_dataset/results.html', context)
+        context['nucleotide_dataset'] = nucleotide_dataset
+        return render(request, 'create_dataset/results_bankit.html', context)
+    else:
+        context['dataset'] = nucleotide_dataset
+        return render(request, 'create_dataset/results.html', context)
+
 
 
 @login_required
