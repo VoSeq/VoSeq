@@ -100,7 +100,7 @@ def schedule_dataset(cleaned_data, user) -> int:
     nucleotide_dataset_obj = Dataset.objects.create(
         user=user
     )
-    if file_format == "bankit":
+    if file_format == "Bankit":
         aa_dataset_obj = Dataset.objects.create(
             user=user,
             sister_dataset_id=nucleotide_dataset_obj.id,
@@ -126,7 +126,7 @@ def schedule_dataset(cleaned_data, user) -> int:
             nucleotide_dataset_obj.id,
         ).on_error(log_email_error.s(user.id)),
     ]
-    if file_format == "bankit":
+    if file_format == "Bankit":
         dataset_tasks.append(
             create_dataset.si(
                 taxonset_id,
