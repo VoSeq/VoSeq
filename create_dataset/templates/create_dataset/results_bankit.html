@@ -1,0 +1,137 @@
+{% extends 'public_interface/base.html' %}
+
+
+{% block content %}
+<div class="explorer-container">
+  <div class="container">
+    <h3>Results:</h3>
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12  col-md-11 col-lg-9 col-lg-offset-1">
+
+          {% if aa_dataset and aa_dataset.completed is None %}
+            <br>
+            <br>
+            <h3>
+              <i class="fas fa-spinner fa-spin"></i>
+              Your dataset is being created. This page will show you the results
+              once it is ready.
+            </h3>
+            <h4>Refresh this page to update status.</h4>
+
+          {% else %}
+
+            {% if errors|length > 0 %}
+            <div class="panel panel-danger" style="min-width: 790px;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><b>During the processing of you dataset some errors were found
+                  <span class="badge"><b>{{ errors|length }}</b></span>
+                  </b></h3>
+              </div>
+
+              <ul class="list-group">
+                {% for i in errors %}
+                  <li class="list-group-item">{{ i }}</li>
+                {% endfor %}
+              </ul>
+            </div><!-- panel -->
+            {% endif %}
+
+            {% if warnings|length > 0 %}
+            <div class="panel panel-warning" style="min-width: 790px;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><b>During the processing of you dataset some issues were raised
+                  <span class="badge"><b>{{ warnings|length }}</b></span>
+                </b></h3>
+              </div>
+
+              <ul class="list-group">
+                {% for i in warnings %}
+                <li class="list-group-item">{{ i }}</li>
+                {% endfor %}
+              </ul>
+            </div><!-- panel -->
+            {% endif %}
+
+            <div class="panel panel-primary" style="min-width: 790px;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><b>Sequences that already have GenBank accession numbers:
+                  <span class="badge"><b>{{ items_with_accession|length }}</b></span>
+                  <br />
+                  These will be ignored</b></h3>
+              </div>
+
+              <ul class="list-group">
+                {% for i in items_with_accession %}
+                  <li class="list-group-item">{{ i.code }} for {{ i.gene_code }} = {{ i.accession_number }}</li>
+                {% endfor %}
+              </ul>
+            </div><!-- panel -->
+
+            <h3>
+              This is your nucleotide FASTA file to import into Genbank
+            </h3>
+
+            <a href="/create_dataset/download/{{ nucleotide_dataset.id }}">
+              <button class="btn btn-info">
+                <i class="fa fa-download"></i>
+                Download nucleotide file
+               </button></a>
+            <br />
+            <br />
+            <div class="panel panel-primary" style="min-width: 790px;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><b>Your nucleotide file:</b></h3>
+              </div>
+
+              <table class="table table-bordered">
+                <tr>
+                  <td>
+                    <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control dataset">{{ nucleotide_dataset.content|truncatechars:1500 }}</textarea>
+                  </td>
+                </tr>
+              </table>
+
+            </div><!-- panel -->
+
+            <h3>
+              This is your protein file to use in case you have introns.
+              Load it in Genbank after your nucleotide file to link nucleotides to
+              protein and identify the introns.
+            </h3>
+
+            <a href="/create_dataset/download/{{ aa_dataset.id }}">
+            <button class="btn btn-info">
+              <i class="fa fa-download"></i>
+              Download protein file
+            </button></a>
+            <br />
+            <br />
+            <div class="panel panel-primary" style="min-width: 790px;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><b>Your protein file:</b></h3>
+              </div>
+
+              <table class="table table-bordered">
+                <tr>
+                  <td>
+                    <textarea readonly style="height: 250px; white-space: nowrap;" class="form-control dataset">{{ aa_dataset.content|truncatechars:1500 }}</textarea>
+                  </td>
+                </tr>
+              </table>
+
+            </div><!-- panel -->
+
+          {% endif %}
+        </div><!-- col -->
+
+      </div><!-- row -->
+    </div><!-- container -->
+
+
+  </div>
+</div>
+{% endblock content %}
