@@ -1,6 +1,10 @@
 HISTORY
 -------
 
+2.5.0 (2021-04-02)
+++++++++++++++++++
+- Added bankit format for dataset creation.
+
 2.4.0 (2021-03-14)
 ++++++++++++++++++
 - allow batch upload of vouchers with Flickr photos urls.
