@@ -562,11 +562,12 @@ class ParseXML(object):
         primers_queryset = Sequences.objects.all().values('code', 'gene__gene_code')
         primers_objs = []
         for item in self.table_primers_items:
-            if {'gene_code': item['gene_code'], 'code': item['code']} in primers_queryset:
+            if {'gene__gene_code': item['gene_code'], 'code': item['code']} in primers_queryset:
                 try:
+                    g = Genes.objects.get(gene_code=item['gene_code'])
                     item['for_sequence'] = Sequences.objects.get(
                         code=item['code'],
-                        gene_code=item['gene_code'],
+                        gene=g,
                     )
                 except Sequences.MultipleObjectsReturned:
                     print("Multiple sequences for {} {}".format(
