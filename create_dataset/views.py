@@ -1,6 +1,7 @@
 import logging
 
-from celery import chord, group
+from celery import chord, group, uuid
+from celery.result import AsyncResult
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
@@ -35,7 +36,9 @@ def generate_results(request):
 
         if form.is_valid():
             dataset_obj_id = schedule_dataset(form.cleaned_data, request.user)
-            return HttpResponseRedirect(reverse('create-dataset-results', kwargs={'dataset_id': dataset_obj_id}))
+            return HttpResponseRedirect(
+                reverse('create-dataset-results', kwargs={'dataset_id': dataset_obj_id})
+            )
         else:
             log.debug("invalid form")
             context["form"] = form
@@ -63,13 +66,20 @@ def results(request, dataset_id):
         aa_dataset = None
 
     if aa_dataset:
+        context['task_status'] = ''
+        if aa_dataset.task_uuid:
+            task_results = AsyncResult(aa_dataset.task_uuid)
+            context['task_status'] = task_results.state
         context['aa_dataset'] = aa_dataset
         context['nucleotide_dataset'] = nucleotide_dataset
         return render(request, 'create_dataset/results_bankit.html', context)
     else:
+        context['task_status'] = ''
+        if nucleotide_dataset.task_uuid:
+            task_results = AsyncResult(nucleotide_dataset.task_uuid)
+            context['task_status'] = task_results.state
         context['dataset'] = nucleotide_dataset
         return render(request, 'create_dataset/results.html', context)
-
 
 
 @login_required
@@ -115,13 +125,15 @@ def schedule_dataset(cleaned_data, user) -> int:
     number_genes = cleaned_data['number_genes']
     introns = cleaned_data['introns']
 
+    task_id = uuid()
     nucleotide_dataset_obj = Dataset.objects.create(
-        user=user
+        user=user, task_uuid=task_id
     )
     if file_format == "Bankit":
         aa_dataset_obj = Dataset.objects.create(
             user=user,
             sister_dataset_id=nucleotide_dataset_obj.id,
+            task_uuid=task_id,
         )
 
     dataset_tasks = [
