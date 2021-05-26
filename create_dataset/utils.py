@@ -4,6 +4,7 @@ import re
 from seqrecord_expanded import SeqRecordExpanded
 from seqrecord_expanded.exceptions import MissingParameterError, TranslationErrorMixedGappedSeq
 from dataset_creator import Dataset
+from create_dataset.models import Dataset as DatasetModel
 from Bio.Nexus.Nexus import NexusError
 
 from core import exceptions
@@ -43,8 +44,9 @@ class CreateDataset(object):
         ``dataset_str``: output dataset to pass to users.
 
     """
-    def __init__(self, cleaned_data):
+    def __init__(self, cleaned_data, dataset_obj_id=None):
         # skip sequences with accession numbers and building GenBank Fasta file
+        self.dataset_obj_id = dataset_obj_id
         self.sequences_skipped = []
         self.cleaned_data = cleaned_data
         self.translations = None
@@ -106,6 +108,7 @@ class CreateDataset(object):
         supported_formats = [
             'NEXUS', 'GenBankFASTA', 'FASTA', 'MEGA', 'TNT', 'PHYLIP', 'Bankit'
         ]
+        print('')
         if self.file_format in supported_formats:
             try:
                 dataset = Dataset(
@@ -148,6 +151,10 @@ class CreateDataset(object):
         for sequence in all_seqs:
             idx += 1
             if idx % 100 == 0:
+                if self.dataset_obj_id:
+                    DatasetModel.objects.filter(id=self.dataset_obj_id).update(
+                        progress=f"{idx}/{all_seqs_count}"
+                    )
                 log.info(
                     f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
                     f'{sequence["gene__gene_code"]}'
@@ -182,15 +189,6 @@ class CreateDataset(object):
             gene__gene_code__in=self.gene_codes,
         ).values('code_id', 'gene__gene_code', 'sequences', 'accession').order_by('code_id')
         return all_seqs
-
-        # for seq in all_seqs:
-        #     code = seq['code_id']
-        #     gene_code = seq['gene__gene_code']
-        #
-        #     if code not in seqs_dict:
-        #         seqs_dict[code] = {gene_code: ''}
-        #     seqs_dict[code][gene_code] = seq
-        # return seqs_dict
 
     def build_seq_obj(self, code, gene_code, accession_number, our_taxon_names, all_seqs):
         """Builds a SeqRecordExpanded object. If cannot be built, returns None.

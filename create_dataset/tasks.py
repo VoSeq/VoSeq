@@ -40,7 +40,7 @@ def create_dataset(
     cleaned_data['taxon_names'] = taxon_names
     cleaned_data['number_genes'] = number_genes
     cleaned_data['introns'] = introns
-    dataset_creator = CreateDataset(cleaned_data)
+    dataset_creator = CreateDataset(cleaned_data, dataset_obj_id)
     dataset = "{}{}{}".format(
         dataset_creator.dataset_str[0:1500],
         '\n...\n\n\n',
