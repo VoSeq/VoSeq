@@ -1,5 +1,3 @@
-import re
-
 from django.utils import timezone
 
 from public_interface.models import TaxonSets, GeneSets, Genes
@@ -40,12 +38,7 @@ def create_dataset(
     cleaned_data['taxon_names'] = taxon_names
     cleaned_data['number_genes'] = number_genes
     cleaned_data['introns'] = introns
-    dataset_creator = CreateDataset(cleaned_data)
-    dataset = "{}{}{}".format(
-        dataset_creator.dataset_str[0:1500],
-        '\n...\n\n\n',
-        '#######\nComplete dataset file available for download.\n#######',
-    )
+    dataset_creator = CreateDataset(cleaned_data, dataset_obj_id)
 
     dataset_obj = Dataset.objects.get(id=dataset_obj_id)
     dataset_obj.content = dataset_creator.dataset_str
@@ -54,21 +47,3 @@ def create_dataset(
     dataset_obj.errors = dataset_creator.errors
     dataset_obj.warnings = list(set(dataset_creator.warnings))
     dataset_obj.save()
-
-    dataset_file_abs = dataset_creator.dataset_file
-    if dataset_file_abs is not None:
-        dataset_file = re.search(
-            r'([A-Za-z]+_[a-z0-9]+\.txt)',
-            dataset_file_abs
-        ).groups()[0]
-    else:
-        dataset_file = False
-
-    context = dict()
-    context['dataset_file'] = dataset_file
-    context['charset_block'] = dataset_creator.charset_block
-    context['dataset'] = dataset
-    context['dataset_format'] = file_format
-    context['errors'] = dataset_obj.errors
-    context['warnings'] = dataset_obj.warnings
-

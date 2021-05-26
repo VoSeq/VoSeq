@@ -4,6 +4,7 @@ import re
 from seqrecord_expanded import SeqRecordExpanded
 from seqrecord_expanded.exceptions import MissingParameterError, TranslationErrorMixedGappedSeq
 from dataset_creator import Dataset
+from create_dataset.models import Dataset as DatasetModel
 from Bio.Nexus.Nexus import NexusError
 
 from core import exceptions
@@ -43,8 +44,9 @@ class CreateDataset(object):
         ``dataset_str``: output dataset to pass to users.
 
     """
-    def __init__(self, cleaned_data):
+    def __init__(self, cleaned_data, dataset_obj_id=None):
         # skip sequences with accession numbers and building GenBank Fasta file
+        self.dataset_obj_id = dataset_obj_id
         self.sequences_skipped = []
         self.cleaned_data = cleaned_data
         self.translations = None
@@ -137,9 +139,7 @@ class CreateDataset(object):
             return dataset.dataset_str
 
     def create_seq_objs(self):
-        """Generate a list of SeqRecord-expanded objects.
-
-        """
+        """Generate a list of SeqRecord-expanded objects"""
         our_taxon_names = self.get_taxon_names_for_taxa()
         all_seqs = self.get_all_sequences()
         all_seqs_count = all_seqs.count()
@@ -148,6 +148,10 @@ class CreateDataset(object):
         for sequence in all_seqs:
             idx += 1
             if idx % 100 == 0:
+                if self.dataset_obj_id:
+                    DatasetModel.objects.filter(id=self.dataset_obj_id).update(
+                        progress=f"{idx}/{all_seqs_count}"
+                    )
                 log.info(
                     f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
                     f'{sequence["gene__gene_code"]}'
@@ -183,15 +187,6 @@ class CreateDataset(object):
         ).values('code_id', 'gene__gene_code', 'sequences', 'accession').order_by('code_id')
         return all_seqs
 
-        # for seq in all_seqs:
-        #     code = seq['code_id']
-        #     gene_code = seq['gene__gene_code']
-        #
-        #     if code not in seqs_dict:
-        #         seqs_dict[code] = {gene_code: ''}
-        #     seqs_dict[code][gene_code] = seq
-        # return seqs_dict
-
     def build_seq_obj(self, code, gene_code, accession_number, our_taxon_names, all_seqs):
         """Builds a SeqRecordExpanded object. If cannot be built, returns None.
 
@@ -201,7 +196,7 @@ class CreateDataset(object):
         if this_voucher_seqs == '?':
             seq = '?' * self.gene_codes_metadata[gene_code]['length']
         else:
-            seq = self.create_seq_record(this_voucher_seqs)
+            seq = self.create_seq_record(this_voucher_seqs, gene_code)
 
         if code in our_taxon_names:
             lineage = self.get_lineage(code)
@@ -245,27 +240,25 @@ class CreateDataset(object):
         try:
             this_voucher_seqs = voucher_sequences.filter(
                 gene__gene_code=gene_code,
-            ).first().sequences
-        except (AttributeError, KeyError):
+            ).first()['sequences']
+        except (AttributeError, KeyError, TypeError):
             self.warnings += [
                 'Could not find sequences for voucher {0} and gene_code {1}'.format(
                     code, gene_code)]
             return '?'
         return this_voucher_seqs
 
-    def create_seq_record(self, s):
+    def create_seq_record(self, sequence_str, gene_code):
         """
         Adds ? if the sequence is not long enough
-        :param s:
+        :param sequence_str:
         :return: str.
         """
-        gene_code = s['gene__gene_code']
         length = self.gene_codes_metadata[gene_code]['length']
-        sequence = s['sequences']
-        length_difference = length - len(sequence)
+        length_difference = length - len(sequence_str)
 
-        sequence += '?' * length_difference
-        return sequence
+        sequence_str += '?' * length_difference
+        return sequence_str
 
     def get_taxon_names_for_taxa(self):
         """Returns dict: {'CP100-10': {'taxon': 'name'}}
