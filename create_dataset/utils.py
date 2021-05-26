@@ -142,12 +142,16 @@ class CreateDataset(object):
         """
         our_taxon_names = self.get_taxon_names_for_taxa()
         all_seqs = self.get_all_sequences()
+        all_seqs_count = all_seqs.count()
 
         idx = 0
         for sequence in all_seqs:
             idx += 1
             if idx % 100 == 0:
-                log.info(f'processing dataset {sequence["code_id"]} {sequence["gene__gene_code"]}')
+                log.info(
+                    f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
+                    f'{sequence["gene__gene_code"]}'
+                )
             seq_obj = self.build_seq_obj(
                 sequence['code_id'],
                 sequence['gene__gene_code'],
