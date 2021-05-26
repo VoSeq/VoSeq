@@ -108,7 +108,6 @@ class CreateDataset(object):
         supported_formats = [
             'NEXUS', 'GenBankFASTA', 'FASTA', 'MEGA', 'TNT', 'PHYLIP', 'Bankit'
         ]
-        print('')
         if self.file_format in supported_formats:
             try:
                 dataset = Dataset(
@@ -140,9 +139,7 @@ class CreateDataset(object):
             return dataset.dataset_str
 
     def create_seq_objs(self):
-        """Generate a list of SeqRecord-expanded objects.
-
-        """
+        """Generate a list of SeqRecord-expanded objects"""
         our_taxon_names = self.get_taxon_names_for_taxa()
         all_seqs = self.get_all_sequences()
         all_seqs_count = all_seqs.count()
@@ -199,7 +196,7 @@ class CreateDataset(object):
         if this_voucher_seqs == '?':
             seq = '?' * self.gene_codes_metadata[gene_code]['length']
         else:
-            seq = self.create_seq_record(this_voucher_seqs)
+            seq = self.create_seq_record(this_voucher_seqs, gene_code)
 
         if code in our_taxon_names:
             lineage = self.get_lineage(code)
@@ -243,27 +240,25 @@ class CreateDataset(object):
         try:
             this_voucher_seqs = voucher_sequences.filter(
                 gene__gene_code=gene_code,
-            ).first().sequences
-        except (AttributeError, KeyError):
+            ).first()['sequences']
+        except (AttributeError, KeyError, TypeError):
             self.warnings += [
                 'Could not find sequences for voucher {0} and gene_code {1}'.format(
                     code, gene_code)]
             return '?'
         return this_voucher_seqs
 
-    def create_seq_record(self, s):
+    def create_seq_record(self, sequence_str, gene_code):
         """
         Adds ? if the sequence is not long enough
-        :param s:
+        :param sequence_str:
         :return: str.
         """
-        gene_code = s['gene__gene_code']
         length = self.gene_codes_metadata[gene_code]['length']
-        sequence = s['sequences']
-        length_difference = length - len(sequence)
+        length_difference = length - len(sequence_str)
 
-        sequence += '?' * length_difference
-        return sequence
+        sequence_str += '?' * length_difference
+        return sequence_str
 
     def get_taxon_names_for_taxa(self):
         """Returns dict: {'CP100-10': {'taxon': 'name'}}
