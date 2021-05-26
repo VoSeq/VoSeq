@@ -140,54 +140,53 @@ class CreateDataset(object):
         """Generate a list of SeqRecord-expanded objects.
 
         """
-        sorted_gene_codes = sorted(list(self.gene_codes), key=str.lower)
         our_taxon_names = self.get_taxon_names_for_taxa()
         all_seqs = self.get_all_sequences()
 
-        for gene_code in sorted_gene_codes:
-            for code in self.voucher_codes:
-
-                try:
-                    accession_number = all_seqs[code][gene_code]["accession"]
-                except KeyError:
-                    accession_number = ""
-
-                seq_obj = self.build_seq_obj(code, gene_code, accession_number,
-                                             our_taxon_names, all_seqs)
-                if seq_obj is None:
-                    self.warnings += ['Could not find voucher {0}'.format(code)]
-                    continue
-                if self.file_format == "GenBankFASTA" and seq_obj.accession_number:
-                    log.debug("Skipping seq {} {} because it has accession number {}"
-                              "".format(seq_obj.voucher_code, seq_obj.gene_code,
-                                        seq_obj.accession_number))
-                    self.sequences_skipped.append({
-                        "code": seq_obj.voucher_code,
-                        "gene_code": seq_obj.gene_code,
-                        "accession_number": seq_obj.accession_number,
-                    })
-                else:
-                    self.seq_objs.append(seq_obj)
+        idx = 0
+        for sequence in all_seqs:
+            idx += 1
+            if idx % 100 == 0:
+                log.info(f'processing dataset {sequence["code_id"]} {sequence["gene__gene_code"]}')
+            seq_obj = self.build_seq_obj(
+                sequence['code_id'],
+                sequence['gene__gene_code'],
+                sequence['accession'],
+                our_taxon_names,
+                all_seqs,
+            )
+            if seq_obj is None:
+                self.warnings += ['Could not find voucher {0}'.format(sequence['code_id'])]
+                continue
+            if self.file_format == "GenBankFASTA" and seq_obj.accession_number:
+                log.debug("Skipping seq {} {} because it has accession number {}"
+                          "".format(seq_obj.voucher_code, seq_obj.gene_code,
+                                    seq_obj.accession_number))
+                self.sequences_skipped.append({
+                    "code": seq_obj.voucher_code,
+                    "gene_code": seq_obj.gene_code,
+                    "accession_number": seq_obj.accession_number,
+                })
+            else:
+                self.seq_objs.append(seq_obj)
 
     def get_all_sequences(self):
         """Return sequences as dict of lists containing sequence and related data.
-
         """
-        seqs_dict = {}
-
         all_seqs = Sequences.objects.filter(
             code__in=self.voucher_codes,
             gene__gene_code__in=self.gene_codes,
         ).values('code_id', 'gene__gene_code', 'sequences', 'accession').order_by('code_id')
+        return all_seqs
 
-        for seq in all_seqs:
-            code = seq['code_id']
-            gene_code = seq['gene__gene_code']
-
-            if code not in seqs_dict:
-                seqs_dict[code] = {gene_code: ''}
-            seqs_dict[code][gene_code] = seq
-        return seqs_dict
+        # for seq in all_seqs:
+        #     code = seq['code_id']
+        #     gene_code = seq['gene__gene_code']
+        #
+        #     if code not in seqs_dict:
+        #         seqs_dict[code] = {gene_code: ''}
+        #     seqs_dict[code][gene_code] = seq
+        # return seqs_dict
 
     def build_seq_obj(self, code, gene_code, accession_number, our_taxon_names, all_seqs):
         """Builds a SeqRecordExpanded object. If cannot be built, returns None.
@@ -232,7 +231,7 @@ class CreateDataset(object):
 
     def extract_sequence_from_all_seqs_in_db(self, all_seqs, code, gene_code):
         try:
-            voucher_sequences = all_seqs[code]
+            voucher_sequences = all_seqs.filter(code_id=code)
         except KeyError:
             self.warnings += [
                 'Could not find sequences for voucher {0} and gene_code {1}'.format(
@@ -240,8 +239,10 @@ class CreateDataset(object):
             return '?'
 
         try:
-            this_voucher_seqs = voucher_sequences[gene_code]
-        except KeyError:
+            this_voucher_seqs = voucher_sequences.filter(
+                gene__gene_code=gene_code,
+            ).first().sequences
+        except (AttributeError, KeyError):
             self.warnings += [
                 'Could not find sequences for voucher {0} and gene_code {1}'.format(
                     code, gene_code)]
