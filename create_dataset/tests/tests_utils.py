@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.management import call_command
 
 from create_dataset.utils import CreateDataset
-from public_interface.models import Genes
+from public_interface.models import Genes, Sequences
 from public_interface.models import TaxonSets
 
 

@@ -145,38 +145,52 @@ class CreateDataset(object):
         all_seqs_count = all_seqs.count()
 
         idx = 0
-        for sequence in all_seqs:
-            idx += 1
-            if idx % 100 == 0:
-                if self.dataset_obj_id:
-                    DatasetModel.objects.filter(id=self.dataset_obj_id).update(
-                        progress=f"{idx}/{all_seqs_count}"
+        for gene_code in self.gene_codes:
+            for voucher_code in self.voucher_codes:
+                idx += 1
+                sequence = all_seqs.filter(code_id=voucher_code, gene__gene_code=gene_code)
+                if idx % 100 == 0:
+                    if self.dataset_obj_id:
+                        DatasetModel.objects.filter(id=self.dataset_obj_id).update(
+                            progress=f"{idx}/{all_seqs_count}"
+                        )
+                    log.info(
+                        f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
+                        f'{sequence["gene__gene_code"]}'
                     )
-                log.info(
-                    f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
-                    f'{sequence["gene__gene_code"]}'
-                )
-            seq_obj = self.build_seq_obj(
-                sequence['code_id'],
-                sequence['gene__gene_code'],
-                sequence['accession'],
-                our_taxon_names,
-                all_seqs,
-            )
-            if seq_obj is None:
-                self.warnings += ['Could not find voucher {0}'.format(sequence['code_id'])]
-                continue
-            if self.file_format == "GenBankFASTA" and seq_obj.accession_number:
-                log.debug("Skipping seq {} {} because it has accession number {}"
-                          "".format(seq_obj.voucher_code, seq_obj.gene_code,
-                                    seq_obj.accession_number))
-                self.sequences_skipped.append({
-                    "code": seq_obj.voucher_code,
-                    "gene_code": seq_obj.gene_code,
-                    "accession_number": seq_obj.accession_number,
-                })
-            else:
-                self.seq_objs.append(seq_obj)
+
+                if not sequence.exists():
+                    seq_obj = self.build_seq_obj(
+                        voucher_code,
+                        gene_code,
+                        accession_number='',
+                        our_taxon_names=our_taxon_names,
+                        all_seqs=all_seqs,
+                    )
+                else:
+                    sequence = sequence.first()
+                    seq_obj = self.build_seq_obj(
+                        sequence['code_id'],
+                        sequence['gene__gene_code'],
+                        sequence['accession'],
+                        our_taxon_names,
+                        all_seqs,
+                    )
+
+                if seq_obj is None:
+                    self.warnings += ['Could not find voucher {0}'.format(sequence['code_id'])]
+                    continue
+                if self.file_format == "GenBankFASTA" and seq_obj.accession_number:
+                    log.debug("Skipping seq {} {} because it has accession number {}"
+                              "".format(seq_obj.voucher_code, seq_obj.gene_code,
+                                        seq_obj.accession_number))
+                    self.sequences_skipped.append({
+                        "code": seq_obj.voucher_code,
+                        "gene_code": seq_obj.gene_code,
+                        "accession_number": seq_obj.accession_number,
+                    })
+                else:
+                    self.seq_objs.append(seq_obj)
 
     def get_all_sequences(self):
         """Return sequences as dict of lists containing sequence and related data.
