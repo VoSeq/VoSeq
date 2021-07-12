@@ -21,6 +21,7 @@ class CreateFASTADatasetTest(TestCase):
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
 
+        Genes.objects.all().update(genetic_code=1)
         g1 = Genes.objects.get(gene_code='COI-begin')
         g2 = Genes.objects.get(gene_code='ef1a')
         self.cleaned_data = {
@@ -78,7 +79,7 @@ class CreateFASTADatasetTest(TestCase):
 
     def test_create_dataset__gaps(self):
         """Test that gaps have not been converted to underscores."""
-        seq = Sequences.objects.get(code="CP100-10", gene_code="COI-begin")
+        seq = Sequences.objects.get(code="CP100-10", gene__gene_code="COI-begin")
         this_seq = list(seq.sequences)
         this_seq[-3:] = '---'
         seq.sequences = "".join(this_seq)
@@ -207,7 +208,7 @@ class CreateFASTADatasetTest(TestCase):
 
     def test_fasta_with_seqs_of_different_sizes(self):
         """Test that an error message is shown to the users GUI."""
-        seq = Sequences.objects.get(code="CP100-10", gene_code="COI-begin")
+        seq = Sequences.objects.get(code="CP100-10", gene__gene_code="COI-begin")
         seq.sequences += 'AAAAAAAAAA'
         seq.save()
 
