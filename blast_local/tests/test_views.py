@@ -13,5 +13,5 @@ class TestViews(TestCase):
         call_command(cmd, *args, **opts)
 
     def test_index(self):
-        response = self.client.get('/blast_local/CP100-10/COI/')
+        response = self.client.get('/blast_local/CP100-10/COI/', follow=True)
         self.assertEqual(200, response.status_code)

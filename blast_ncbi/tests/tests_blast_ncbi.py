@@ -36,5 +36,5 @@ class TestNcbiBlast(TestCase):
 
     @patch("Bio.Blast.NCBIWWW.qblast", return_value=ncbi_return_handle2)
     def test_index(self, mock_blast):
-        response = self.client.get('/blast_ncbi/CP100-10/COI-begin/')
+        response = self.client.get('/blast_ncbi/CP100-10/COI-begin/', follow=True)
         self.assertEqual(200, response.status_code)
