@@ -29,5 +29,5 @@ class TestViews(TestCase):
         call_command('create_stats')
 
         c = Client()
-        response = c.get('/view_table/')
+        response = c.get('/view_table/', follow=True)
         self.assertEqual(200, response.status_code)

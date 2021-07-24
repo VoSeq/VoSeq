@@ -13,7 +13,7 @@ class TestBlastNew(TestCase):
         self.client = Client()
 
     def test_index(self):
-        response = self.client.get('/blast_new/')
+        response = self.client.get('/blast_new/', follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_result(self):
@@ -21,7 +21,7 @@ class TestBlastNew(TestCase):
             'name': 'aaaa',
             'sequence': 'ATCGATCGGCTA',
             'gene_codes': ['COI'],
-        })
+        }, follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_result_more_than_one_gene(self):
@@ -29,7 +29,7 @@ class TestBlastNew(TestCase):
             'name': 'aaaa',
             'sequence': 'ATCGATCGGCTA',
             'gene_codes': ['COI', 'wingless'],
-        })
+        }, follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_result_no_gene_code_given(self):
@@ -37,7 +37,7 @@ class TestBlastNew(TestCase):
             'name': 'aaaa',
             'sequence': 'ATCGATCGGCTA',
             'gene_codes': [],
-        })
+        }, follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_result_invalid_form(self):
@@ -45,7 +45,7 @@ class TestBlastNew(TestCase):
             'name': 'aaaa',
             'sequence': '123GATCGGCTA',
             'gene_codes': ['COI'],
-        })
+        }, follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_redirect(self):
