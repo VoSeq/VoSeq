@@ -147,17 +147,14 @@ class CreateDataset(object):
         idx = 0
         for gene_code in self.gene_codes:
             for voucher_code in self.voucher_codes:
-                idx += 1
                 sequence = all_seqs.filter(code_id=voucher_code, gene__gene_code=gene_code)
                 if idx % 100 == 0:
                     if self.dataset_obj_id:
                         DatasetModel.objects.filter(id=self.dataset_obj_id).update(
                             progress=f"{idx}/{all_seqs_count}"
                         )
-                    log.info(
-                        f'{idx}/{all_seqs_count} processing dataset {sequence["code_id"]} '
-                        f'{sequence["gene__gene_code"]}'
-                    )
+                    log.info(f'{idx}/{all_seqs_count} processing dataset')
+                idx += 1
 
                 if not sequence.exists():
                     seq_obj = self.build_seq_obj(
@@ -178,7 +175,7 @@ class CreateDataset(object):
                     )
 
                 if seq_obj is None:
-                    self.warnings += ['Could not find voucher {0}'.format(sequence['code_id'])]
+                    self.warnings += ['Could not find voucher {0}'.format(voucher_code)]
                     continue
                 if self.file_format == "GenBankFASTA" and seq_obj.accession_number:
                     log.debug("Skipping seq {} {} because it has accession number {}"

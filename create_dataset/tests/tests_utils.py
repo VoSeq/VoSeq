@@ -974,3 +974,14 @@ GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
         cleaned_data['voucher_codes'] = 'CP100-10\r\nCP100-11\r\nCP1000'
         dataset_creator = CreateDataset(cleaned_data)
         self.assertTrue('Could not find voucher CP1000' in dataset_creator.warnings)
+
+    def test_create_seq_objs(self):
+        g1 = Genes.objects.get(gene_code='COI-begin')
+        cleaned_data = self.cleaned_data
+        cleaned_data['gene_codes'] = [g1]
+        del cleaned_data['positions']
+        cleaned_data['positions'] = ['ALL', '1st']
+        cleaned_data['partition_by_positions'] = '1st-2nd, 3rd'
+
+        dataset_creator = CreateDataset(cleaned_data)
+        self.assertIn('>COI-begin_1st-2nd', dataset_creator.dataset_str)
