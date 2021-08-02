@@ -6,7 +6,7 @@ from create_dataset.models import Dataset
 from .utils import CreateDataset
 
 
-@app.task(time_limit=3700, soft_time_limit=3600)
+@app.task(time_limit=7200, soft_time_limit=7150)
 def create_dataset(
     taxonset_id, geneset_id, gene_codes_ids, voucher_codes, file_format,
     outgroup, positions, partition_by_positions, translations, aminoacids,

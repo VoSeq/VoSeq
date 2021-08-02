@@ -142,7 +142,10 @@ class CreateDataset(object):
         """Generate a list of SeqRecord-expanded objects"""
         our_taxon_names = self.get_taxon_names_for_taxa()
         all_seqs = self.get_all_sequences()
-        all_seqs_count = all_seqs.count()
+        try:
+            all_seqs_count = len(self.gene_codes) * len(self.voucher_codes)
+        except Exception:
+            all_seqs_count = '1000+'
 
         idx = 0
         for gene_code in self.gene_codes:
