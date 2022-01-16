@@ -1,6 +1,10 @@
 HISTORY
 -------
 
+2.6.0 (2022-12-16)
+++++++++++++++++++
+- Upgraded docker image to bullseye.
+
 2.5.1 (2021-04-12)
 ++++++++++++++++++
 - Fix error when creating datasets.
