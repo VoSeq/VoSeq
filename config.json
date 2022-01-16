@@ -1,9 +1,9 @@
 {
 "BASE_URL": "http://your.domain.com",
 "SECRET_KEY": "create_a_secret_key",
-"DB_USER": "carlosp420",
+"DB_USER": "postgres",
 "DB_PASS": "",
-"DB_NAME": "insdb",
+"DB_NAME": "voseq",
 "DB_PORT": "5432",
 "DB_HOST": "localhost",
 "GOOGLE_MAPS_API_KEY": "get_a_google_map_api_key",
