@@ -27,7 +27,7 @@ services:
       --timeout 120
       --max-requests 800
       --max-requests-jitter 50
-      --graceful-timeout 30
+      --graceful-timeout 60
       --worker-class aiohttp.worker.GunicornWebWorker
       --log-level debug
       --error-logfile=-
