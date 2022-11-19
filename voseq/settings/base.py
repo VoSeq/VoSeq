@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # replace with any name if you have more than one installation. This name will
 # be used to generate the log filenames
-APP_NAME = "voseq"
+APP_NAME = "insdb"
 
 DEBUG = True
 
@@ -29,7 +29,7 @@ ADMINS = ()
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app', 'insdb.lepdb.net', 'lepdb.net']
 
 # for testing in Travis CI
 TRAVIS = False
