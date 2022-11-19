@@ -7,7 +7,7 @@ services:
     build:
       context: ../../
       dockerfile: run/docker/postgres/Dockerfile
-    image: insdb/insdb_db
+    image: voseq/voseq_db
     volumes:
       - db_data:/srv/postgresql/data/
     expose:
@@ -19,7 +19,7 @@ services:
     build:
       context: ../../
       dockerfile: run/docker/app/Dockerfile
-    image: insdb/insdb_app
+    image: voseq/voseq_app
     command: |
       /wait_for_it.sh db:5432 -t 0 -- gunicorn
       --workers 5
@@ -46,7 +46,7 @@ services:
     build:
       context: ../../
       dockerfile: run/docker/nginx/Dockerfile
-    image: insdb/insdb_nginx
+    image: voseq/voseq_nginx
     volumes:
       - app_data:/data
     ports:
@@ -55,7 +55,7 @@ services:
     depends_on:
       - app
   celery_worker:
-    image: insdb/insdb_app
+    image: voseq/voseq_app
     command: /wait_for_it.sh redis:6379
       --timeout=0 --
       /wait_for_it.sh db:5432

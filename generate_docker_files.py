@@ -11,6 +11,7 @@ def open_file(app_name):
         sys.exit(f'{app_name} not found in available apps {list(data.keys())}')
 
     app_data = data[app_name]
+    print(app_data)
 
     files_and_data = [
         # file, data to replace, data to replace with
