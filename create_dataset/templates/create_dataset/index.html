@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block additional_css %}
-  {% load staticfiles %}
+  {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/tooltipster.css' %}" />
 {% endblock additional_css %}
 
@@ -166,7 +166,7 @@
 
 
 {% block additional_javascript_footer %}
-  {% load staticfiles %}
+  {% load static %}
     <script type="text/javascript" src="{% static 'js/jquery.tooltipster.min.js' %}"></script>
 <script>
 $(document).ready(function() {

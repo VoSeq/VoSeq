@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'registration',
-    'suit',
 
     'haystack',
     'crispy_forms',
