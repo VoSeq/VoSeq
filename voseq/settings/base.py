@@ -32,7 +32,7 @@ ADMINS = ()
 
 # insdb.lepdb.net
 # nymphalidae.lepdb.net
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app', 'nymphalidae.lepdb.net']
 
 # for testing in Travis CI
 TRAVIS = False
