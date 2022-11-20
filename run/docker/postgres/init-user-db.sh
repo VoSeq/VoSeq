@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DB_NAME="voseq"
+DB_NAME="insdb"
 POSTGRES_USER="postgres"
 
 echo "CREATING ${DB_NAME} DB for admin user ${POSTGRES_USER}"

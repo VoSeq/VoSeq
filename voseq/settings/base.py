@@ -20,7 +20,7 @@ CSRF_TRUSTED_ORIGINS = ["https://*.lepdb.net"]
 
 # replace with any name if you have more than one installation. This name will
 # be used to generate the log filenames
-APP_NAME = "voseq"
+APP_NAME = "insdb"
 
 DEBUG = True
 
@@ -32,7 +32,7 @@ ADMINS = ()
 
 # insdb.lepdb.net
 # nymphalidae.lepdb.net
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app', 'insdb.lepdb.net']
 
 # for testing in Travis CI
 TRAVIS = False
