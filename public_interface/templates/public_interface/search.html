@@ -6,7 +6,7 @@
 
 
 {% block additional_css %}
-  {% load staticfiles %}
+  {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.structure.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.theme.min.css' %}" />
@@ -250,7 +250,7 @@
 {% endblock content %}
 
 {% block additional_javascript_footer %}
-  {% load staticfiles %}
+  {% load static %}
   <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
 
   <script type="text/javascript">

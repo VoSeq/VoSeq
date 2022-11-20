@@ -85,7 +85,7 @@
       <ul class="pagination">
         {% if page.has_previous %}
         <li>
-          <a href="?{{ url_encoded_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+          <a href="?q={{ simple_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
@@ -98,14 +98,14 @@
             {% else %}
               <li>
             {% endif %}
-              <a href="?{{ url_encoded_query }}&amp;page={{ i }}">{{ i }}</a>
+              <a href="?q={{ simple_query }}&amp;page={{ i }}">{{ i }}</a>
             </li>
           {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
         <li>
-          <a href="?{{ url_encoded_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+          <a href="?q={{ simple_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
