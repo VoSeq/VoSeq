@@ -14,7 +14,7 @@ RUN apt-get install -y ncbi-blast+
 RUN apt-get autoremove -y
 RUN mkdir /pip_requirements
 ADD run/requirements.txt /pip_requirements.txt
-RUN pip install numpy==1.19.0
+RUN pip install numpy
 RUN pip install -r /pip_requirements.txt
 COPY config.json /code/config.json
 
