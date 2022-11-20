@@ -24,7 +24,7 @@ nose==1.3.7
 pep8==1.6.2
 psycopg2
 pyprind==2.9.3
-pytz==2020.1
+pytz==2022.6
 seqrecord-expanded==0.2.12
 typing
 aiohttp==1.3.5
