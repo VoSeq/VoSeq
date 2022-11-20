@@ -15,6 +15,8 @@ import platform
 from kombu import Exchange, Queue
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+CSRF_TRUSTED_ORIGINS = ["https://*.lepdb.net"]
 
 # replace with any name if you have more than one installation. This name will
 # be used to generate the log filenames
@@ -27,7 +29,6 @@ ADMINS = ()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
-
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app', 'lepidoptera.lepdb.net', 'lepdb.net']
 
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'registration',
-    'suit',
 
     'haystack',
     'crispy_forms',
@@ -312,3 +312,5 @@ CELERY_QUEUES = (
 CELERY_DEFAULT_QUEUE = 'default'
 CELERY_DEFAULT_EXCHANGE = 'default'
 CELERY_DEFAULT_ROUTING_KEY = 'default'
+
+ASYNC_MODE = True

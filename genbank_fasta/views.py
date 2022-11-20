@@ -1,7 +1,8 @@
 import logging
 import os
 
-from celery import chord, chain
+from celery import chord, chain, uuid
+from celery.result import AsyncResult
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
@@ -73,12 +74,14 @@ def schedule_genbank_fasta(cleaned_data, user) -> int:
     number_genes = ''
     introns = ''
 
+    task_id = uuid()
     nucleotide_dataset_obj = Dataset.objects.create(
-        user=user
+        user=user, task_uuid=task_id
     )
     aa_dataset_obj = Dataset.objects.create(
         user=user,
         sister_dataset_id=nucleotide_dataset_obj.id,
+        task_uuid=task_id,
     )
     dataset_tasks = chain(
         create_dataset.si(
@@ -122,7 +125,7 @@ def schedule_genbank_fasta(cleaned_data, user) -> int:
         header=dataset_tasks,
         body=notify_user.si(aa_dataset_obj.id, user.id)
     )
-    tasks.apply_async()
+    tasks.apply_async(task_id=task_id)
     return aa_dataset_obj.id
 
 
@@ -143,6 +146,10 @@ def results(request, dataset_id):
     except Dataset.DoesNotExist:
         raise Http404(f'such dataset {dataset_id} does not exist')
 
+    context['task_status'] = ''
+    if nucleotide_dataset.task_uuid:
+        task_results = AsyncResult(nucleotide_dataset.task_uuid)
+        context['task_status'] = task_results.state
     context['errors'] = list(nucleotide_dataset.errors or []) + list(aa_dataset.errors or [])
     context['warnings'] = list(nucleotide_dataset.warnings or []) + list(aa_dataset.warnings or [])
     context['nucleotide_dataset'] = nucleotide_dataset

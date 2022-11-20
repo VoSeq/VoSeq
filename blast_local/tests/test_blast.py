@@ -100,7 +100,7 @@ class BlastLocalTest(TestCase):
         b = Vouchers.objects.get(code='CP100-10')
 
         tomorrow = datetime.datetime.now() + datetime.timedelta(days=1)
-        Sequences.objects.filter(code=b, gene_code='COI').update(
+        Sequences.objects.filter(code=b, gene__gene_code='COI').update(
             time_edited=tomorrow
         )
         result = self.blast.is_blast_db_up_to_date()

@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 
 app_name = 'voucher_table'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^results/$', views.results, name='results'),
+    path('', views.index, name='index'),
+    path('results/', views.results, name='results'),
 ]

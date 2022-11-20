@@ -27,17 +27,17 @@ services:
       --timeout 120
       --max-requests 800
       --max-requests-jitter 50
-      --graceful-timeout 30
-      --worker-class aiohttp.worker.GunicornWebWorker
+      --graceful-timeout 60
+      --worker-class=voseq.gunicorn_worker.UvicornWorker
       --log-level debug
       --error-logfile=-
       --preload
-      -b 0.0.0.0:8000 voseq.wsgi
+      -b 0.0.0.0:8001 voseq.asgi
     volumes:
       - app_data:/data
       - /logs
     expose:
-      - "8000"
+      - "8001"
     depends_on:
       - db
     environment:

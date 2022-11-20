@@ -90,7 +90,7 @@ test_local:
 	python manage.py makemigrations --settings=voseq.settings.local_testing
 	python manage.py migrate --settings=voseq.settings.local_testing
 	rm -rf htmlcov .coverage
-	coverage run --source . manage.py test -k -v 2 blast_local blast_local_full blast_ncbi blast_new \
+	coverage run --source . manage.py test --failfast -k -v 2 blast_local blast_local_full blast_ncbi blast_new \
 	    core create_dataset genbank_fasta public_interface stats view_genes genbank_fasta gene_table \
 	    voucher_table gbif overview_table \
 	    --settings=voseq.settings.local_testing

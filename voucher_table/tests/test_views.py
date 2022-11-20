@@ -18,7 +18,7 @@ class TestViews(TestCase):
         self.maxDiff = None
 
     def test_index(self):
-        response = self.client.get('/create_voucher_table/')
+        response = self.client.get('/create_voucher_table/', follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_result_redirect(self):

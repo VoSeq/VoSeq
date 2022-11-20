@@ -27,7 +27,7 @@ class TestGenBankFasta(TestCase):
 
     def test_index(self):
         self.client.post('/accounts/login/', {'username': 'admin', 'password': 'pass'})
-        c = self.client.get('/genbank_fasta/')
+        c = self.client.get('/genbank_fasta/', follow=True)
         self.assertEqual(200, c.status_code)
 
     def test_results(self):
@@ -65,7 +65,7 @@ class TestGenBankFasta(TestCase):
                                  'gene_codes': [],
                                  'geneset': 1,
                                  'taxonset': 1,
-                             }
+                             }, follow=True
                              )
         self.assertEqual(200, c.status_code)
 

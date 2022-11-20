@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
-from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import JSONField
 
 
 class Dataset(models.Model):
@@ -15,3 +15,5 @@ class Dataset(models.Model):
     sister_dataset_id = models.IntegerField(null=True, blank=True)
     # eg. Phylip datasets require an extra part for the gene definitions
     charset_block = models.TextField(null=True)
+    task_uuid = models.TextField(null=True, blank=True)
+    progress = models.CharField(max_length=200, blank=True, null=True)

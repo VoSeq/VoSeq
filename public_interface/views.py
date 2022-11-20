@@ -57,53 +57,29 @@ def search(request):
     if query == '':
         return redirect('/')
 
-    form = SearchForm(request.GET)
     page = request.GET.get('page')
-    if settings.ELASTICSEARCH is True:
-        sqs = form.search()
-        sqs.spelling_suggestion()
-        results = ""
-        paginator = ""
-        if sqs:
-            paginator = Paginator(sqs, 25)
-            try:
-                results = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                results = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                results = paginator.page(paginator.num_pages)
 
-        context['page'] = results
-        context['paginator'] = paginator
-        context['results'] = results
-        context['voucher_code_list'] = get_voucher_code_list(sqs)
-        context['url_encoded_query'] = get_correct_url_query(request.GET.urlencode())
-        context['result_count'] = len(sqs)
-        return render(request, 'public_interface/search_results.html', context)
-    else:
-        sqs = Vouchers.objects.filter(
-            Q(orden__icontains=query) |
-            Q(genus__icontains=query) | Q(species__icontains=query) | Q(code__icontains=query),
-        )
-        results = ""
-        paginator = ""
-        if sqs:
-            paginator = Paginator(sqs, 25)
-            try:
-                results = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                results = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999), deliver last page of results.
-                results = paginator.page(paginator.num_pages)
-        context["result_count"] = sqs.count()
-        context['page'] = results
-        context['paginator'] = paginator
-        context['results'] = results
-        return render(request, 'public_interface/search_results.html', context)
+    sqs = Vouchers.objects.filter(
+        Q(orden__icontains=query) |
+        Q(genus__icontains=query) | Q(species__icontains=query) | Q(code__icontains=query),
+    )
+    results = ""
+    paginator = ""
+    if sqs:
+        paginator = Paginator(sqs, 25)
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            results = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            results = paginator.page(paginator.num_pages)
+    context["result_count"] = sqs.count()
+    context['page'] = results
+    context['paginator'] = paginator
+    context['results'] = results
+    return render(request, 'public_interface/search_results.html', context)
 
 
 def autocomplete(request):
