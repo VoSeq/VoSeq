@@ -46,7 +46,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        path('media/(<path>)', views.serve)
+        path('media/<path>', views.serve)
     ]
 
 if settings.DEBUG:
