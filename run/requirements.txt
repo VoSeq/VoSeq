@@ -5,6 +5,7 @@ Pillow
 Sphinx==1.4.8
 Unipath==1.1
 amas==0.2
+numpy
 biopython==1.69
 coverage==5.3
 coveralls==2.2.0
