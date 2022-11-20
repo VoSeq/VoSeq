@@ -5,6 +5,6 @@ from . import views
 
 app_name = 'gbif'
 urlpatterns = [
-    path(r'^$', views.index, name='index'),
-    path(r'^dump_data/$', views.dump_data, name='dump_data'),
+    path('', views.index, name='index'),
+    path('dump_data/', views.dump_data, name='dump_data'),
 ]

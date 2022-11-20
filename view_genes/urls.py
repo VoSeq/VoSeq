@@ -5,6 +5,6 @@ from . import views
 
 app_name = 'view_genes'
 urlpatterns = [
-    path(r'^$', views.index, name='index'),
-    path(r'^(?P<gene_code>.+)/$', views.gene, name='gene'),
+    path('', views.index, name='index'),
+    path('(<gene_code>)/', views.gene, name='gene'),
 ]
