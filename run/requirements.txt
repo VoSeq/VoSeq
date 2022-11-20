@@ -30,4 +30,4 @@ typing
 aiohttp==1.3.5
 future-fstrings==1.2.0
 elasticsearch==1.4.0
-celery[redis]==4.3.1
+celery[redis]==5.2.7
