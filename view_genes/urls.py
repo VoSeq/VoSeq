@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 
 app_name = 'view_genes'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^(?P<gene_code>.+)/$', views.gene, name='gene'),
+    path(r'^$', views.index, name='index'),
+    path(r'^(?P<gene_code>.+)/$', views.gene, name='gene'),
 ]

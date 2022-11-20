@@ -1,10 +1,10 @@
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 
 app_name = 'gene_table'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^results/$', views.results, name='results'),
+    path(r'^$', views.index, name='index'),
+    path(r'^results/$', views.results, name='results'),
 ]

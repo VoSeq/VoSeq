@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.urls import include, path
 from django.contrib import admin
 from django.contrib.staticfiles import views
@@ -19,23 +18,23 @@ from public_interface.urls import urlpatterns as public_interface_urls
 
 
 urlpatterns = [
-    url(r'^create_gene_table/', include(gene_table_urls)),
-    url(r'^create_voucher_table/', include(voucher_table_urls)),
-    url(r'^create_dataset/', include(create_dataset_urls)),
-    url(r'^genbank_fasta/', include(genbank_fasta_urls)),
-    url(r'^blast_local/', include(blast_local_urls)),
-    url(r'^blast_local_full/', include(blast_local_full_urls)),
-    url(r'^blast_ncbi/', include(blast_ncbi_urls)),
-    url(r'^blast_new/', include(blast_new_urls)),
-    url(r'^view_table/', include(overview_table_urls)),
-    url(r'^genes/', include(view_genes_urls)),
-    url(r'^share_data_gbif/', include(gbif_urls)),
-    url(r'^', include(public_interface_urls)),
+    path(r'^create_gene_table/', include(gene_table_urls)),
+    path(r'^create_voucher_table/', include(voucher_table_urls)),
+    path(r'^create_dataset/', include(create_dataset_urls)),
+    path(r'^genbank_fasta/', include(genbank_fasta_urls)),
+    path(r'^blast_local/', include(blast_local_urls)),
+    path(r'^blast_local_full/', include(blast_local_full_urls)),
+    path(r'^blast_ncbi/', include(blast_ncbi_urls)),
+    path(r'^blast_new/', include(blast_new_urls)),
+    path(r'^view_table/', include(overview_table_urls)),
+    path(r'^genes/', include(view_genes_urls)),
+    path(r'^share_data_gbif/', include(gbif_urls)),
+    path(r'^', include(public_interface_urls)),
 
     path('admin/', admin.site.urls),
 
     # user auth urls
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    path(r'^accounts/', include('registration.backends.default.urls')),
 ]
 # ] + static(
 #     settings.STATIC_URL,
@@ -47,11 +46,11 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^media/(?P<path>.*)$', views.serve)
+        path(r'^media/(?P<path>.*)$', views.serve)
     ]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
