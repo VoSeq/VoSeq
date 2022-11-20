@@ -20,6 +20,8 @@ class VoucherTableForm(BaseDatasetForm):
             ('author', 'Author'),
             ('hostorg', 'Host org.'),
             ('type_species', 'Type species'),
+            ('voucher_code', 'Alternative voucher code'),
+            ('notes', 'Notes'),
         ],
         widget=forms.CheckboxSelectMultiple(),
         initial=['code', 'genus', 'species'],

@@ -7,7 +7,7 @@ from django.core.management import call_command
 from django.contrib.auth.models import User
 
 from create_dataset.utils import CreateDataset
-from public_interface.models import GeneSets
+from public_interface.models import GeneSets, Genes
 from public_interface.models import Sequences
 from public_interface.models import TaxonSets
 from public_interface.models import Vouchers
@@ -19,6 +19,7 @@ class CreatePhylipDatasetTest(TestCase):
         opts = {'dumpfile': settings.MEDIA_ROOT + 'test_data.xml', 'verbosity': 0}
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
+        Genes.objects.all().update(genetic_code=1)
 
         gene_set = GeneSets.objects.get(geneset_name='all_genes')
         taxon_set = TaxonSets.objects.get(taxonset_name='all_taxa')
@@ -91,7 +92,7 @@ class CreatePhylipDatasetTest(TestCase):
     def test_stop_codon_warning(self):
         voucher = Vouchers.objects.get(code='CP100-10')
         sequence_with_stop_codon = 'NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNtaaTCTGTAGGCGATGCCTTGAAGGACGGCTTCGACGGAGCGTCGCGGGTCATGATGCCCAATACGGAGTTAGAAGCGCCTGCTCAGCGAAACGACGCCGCCCCGCACAGAGTCCCGCGACGAGACCGATACAGATTTCAACTTCGGCCGCACAATCCTGACCACAAAACACCCGGANTCAAGGACCTAGTGTACTTGGAATCATCGCCGGGTTTCTGCGAAAAGAACCCGCGGCTGGGCATTCCCGGCACGCACGGGCGTGCCTGCAACGACACGAGTATCGGCGTCGACGGCTGCGACCTCATGTGCTGCGGCCGTGGCTACCGGACCGAGACAATGTTCGTCGTGGAGCGATGCAAC'
-        seq = Sequences.objects.get(code=voucher, gene_code='wingless')
+        seq = Sequences.objects.get(code=voucher, gene__gene_code='wingless')
         seq.sequences = sequence_with_stop_codon
         seq.save()
 

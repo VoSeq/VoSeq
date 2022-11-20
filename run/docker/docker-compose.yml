@@ -27,7 +27,7 @@ services:
       --timeout 120
       --max-requests 800
       --max-requests-jitter 50
-      --graceful-timeout 30
+      --graceful-timeout 60
       --worker-class aiohttp.worker.GunicornWebWorker
       --log-level debug
       --error-logfile=-
@@ -50,8 +50,8 @@ services:
     volumes:
       - app_data:/data
     ports:
-      - "8081:80"
-      - "4431:443"
+      - "8082:80"
+      - "4432:443"
     depends_on:
       - app
   celery_worker:

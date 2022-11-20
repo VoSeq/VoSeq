@@ -28,7 +28,8 @@ ADMINS = ()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
-
+# insdb.lepdb.net
+# nymphalidae.lepdb.net
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'app', 'lepdb.net', 'nymphalidae.lepdb.net']
 
 # for testing in Travis CI
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'registration',
-    'suit',
 
     'haystack',
     'crispy_forms',

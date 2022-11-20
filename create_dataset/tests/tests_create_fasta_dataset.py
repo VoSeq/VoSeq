@@ -21,6 +21,7 @@ class CreateFASTADatasetTest(TestCase):
         cmd = 'migrate_db'
         call_command(cmd, *args, **opts)
 
+        Genes.objects.all().update(genetic_code=1)
         g1 = Genes.objects.get(gene_code='COI-begin')
         g2 = Genes.objects.get(gene_code='ef1a')
         self.cleaned_data = {
@@ -47,9 +48,38 @@ class CreateFASTADatasetTest(TestCase):
         self.dataset_creator = CreateDataset(self.cleaned_data)
         self.maxDiff = None
 
-    def test_create_dataset(self):
+    def test_create_dataset__balanced(self):
+        """Test that we fill in with question marks the sequence when it is
+        lacking for a voucher
+        """
+        seqs = Sequences.objects.filter(gene__gene_code='ef1a', code__code='CP100-10')
+        seqs.delete()
+        dataset_obj = Dataset.objects.create()
+
+        create_dataset(
+            taxonset_id=TaxonSets.objects.last().id,
+            geneset_id=GeneSets.objects.last().id,
+            gene_codes_ids=[],
+            voucher_codes="",
+            file_format='NEXUS',
+            outgroup='',
+            positions='ALL',
+            partition_by_positions='by gene',
+            translations=False,
+            aminoacids=False,
+            degen_translations='NORMAL',
+            special=False,
+            taxon_names=['CODE', 'GENUS', 'SPECIES'],
+            number_genes='',
+            introns='YES',
+            dataset_obj_id=dataset_obj.id,
+        )
+        dataset_obj.refresh_from_db()
+        self.assertIn("[ef1a]\nCP100_10_Aus_aus", dataset_obj.content)
+
+    def test_create_dataset__gaps(self):
         """Test that gaps have not been converted to underscores."""
-        seq = Sequences.objects.get(code="CP100-10", gene_code="COI-begin")
+        seq = Sequences.objects.get(code="CP100-10", gene__gene_code="COI-begin")
         this_seq = list(seq.sequences)
         this_seq[-3:] = '---'
         seq.sequences = "".join(this_seq)
@@ -178,7 +208,7 @@ class CreateFASTADatasetTest(TestCase):
 
     def test_fasta_with_seqs_of_different_sizes(self):
         """Test that an error message is shown to the users GUI."""
-        seq = Sequences.objects.get(code="CP100-10", gene_code="COI-begin")
+        seq = Sequences.objects.get(code="CP100-10", gene__gene_code="COI-begin")
         seq.sequences += 'AAAAAAAAAA'
         seq.save()
 

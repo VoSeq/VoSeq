@@ -13,7 +13,7 @@ class TestViews(TestCase):
         self.client = Client()
 
     def test_index(self):
-        response = self.client.get('/share_data_gbif/')
+        response = self.client.get('/share_data_gbif/', follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_dump_data_error(self):

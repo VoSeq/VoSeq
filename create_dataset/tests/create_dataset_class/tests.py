@@ -33,7 +33,8 @@ class TestCreateDataset(TestCase):
         for gene in genes:
             for taxon in taxa:
                 voucher = Vouchers.objects.get(code=taxon)
-                Sequences(code=voucher, gene_code=gene, sequences='ACTG',
+                gene_obj = Genes.objects.get(gene_code=gene)
+                Sequences(code=voucher, gene=gene_obj, sequences='ACTG',
                           genbank=False).save()
 
         self.cleaned_data = {

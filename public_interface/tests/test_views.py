@@ -24,7 +24,7 @@ class TestViews(TestCase):
         self.user.save()
 
     def test_index(self):
-        response = self.client.get('/')
+        response = self.client.get('/', follow=True)
         self.assertEqual(200, response.status_code)
 
     def test_browse(self):

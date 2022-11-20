@@ -1,11 +1,10 @@
-FROM python:3.6-stretch
+FROM python:3.6-bullseye
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update
 RUN apt-get install -y curl
 RUN apt-get install -y shellcheck
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" >> /etc/apt/sources.list
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main 12" | tee /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main" >> /etc/apt/sources.list
 RUN curl -L https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update
 RUN apt-get install -y gcc postgresql-client-12 libpq-dev musl-dev bash postgresql-12

@@ -37,6 +37,8 @@ class CreateNexusDatasetTest(TestCase):
             'outgroup': None,
         }
 
+        Genes.objects.all().update(genetic_code=1)
+
         self.c = Client()
         self.dataset_creator = CreateDataset(self.cleaned_data)
         self.maxDiff = None
