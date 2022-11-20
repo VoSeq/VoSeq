@@ -28,7 +28,7 @@ services:
       --max-requests 800
       --max-requests-jitter 50
       --graceful-timeout 60
-      --worker-class aiohttp.worker.GunicornWebWorker
+      --worker-class=voseq.gunicorn_worker.UvicornWorker
       --log-level debug
       --error-logfile=-
       --preload
