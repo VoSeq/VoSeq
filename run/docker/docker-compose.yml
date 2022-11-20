@@ -32,7 +32,7 @@ services:
       --log-level debug
       --error-logfile=-
       --preload
-      -b 0.0.0.0:8001 voseq.wsgi
+      -b 0.0.0.0:8001 voseq.asgi
     volumes:
       - app_data:/data
       - /logs
