@@ -120,6 +120,7 @@ def search_advanced(request):
     :return: response to html template.
     """
     context = get_context(request)
+    context["is_advanced_search"] = True
 
     if request.method == 'GET' and bool(request.GET) is not False:
         form = AdvancedSearchForm(request.GET)

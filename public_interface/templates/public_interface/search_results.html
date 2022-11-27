@@ -85,9 +85,15 @@
       <ul class="pagination">
         {% if page.has_previous %}
         <li>
-          <a href="?q={{ simple_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
+          {% if is_advanced_search %}
+            <a href="?{{ url_encoded_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          {% else %}
+            <a href="?q={{ simple_query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          {% endif %}
         </li>
         {% endif %}
 
@@ -98,16 +104,26 @@
             {% else %}
               <li>
             {% endif %}
-              <a href="?q={{ simple_query }}&amp;page={{ i }}">{{ i }}</a>
+              {% if is_advanced_search %}
+                <a href="?{{ url_encoded_query }}&amp;page={{ i }}">{{ i }}</a>
+              {% else %}
+                <a href="?q={{ simple_query }}&amp;page={{ i }}">{{ i }}</a>
+              {% endif %}
             </li>
           {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
         <li>
-          <a href="?q={{ simple_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
+          {% if is_advanced_search %}
+            <a href="?{{ url_encoded_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          {% else %}
+            <a href="?q={{ simple_query }}&amp;page={{ page.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          {% endif %}
         </li>
         {% endif %}
       </ul>
