@@ -81,7 +81,7 @@ class BatchImportSequencesResource(resources.ModelResource):
 
 # Customize what and the way you show it
 class VouchersAdmin(ImportExportModelAdmin):
-    import_template_name = 'admin/public_interface/vouchers/batch_import.html'
+    # import_template_name = 'admin/public_interface/vouchers/batch_import.html'
     list_display = ['code', 'genus', 'species', 'sex', 'voucher', 'country', 'collector']
     ordering = ['code']
     search_fields = ['code', 'genus', 'species']
@@ -138,7 +138,7 @@ class VouchersAdmin(ImportExportModelAdmin):
 
 
 class SequencesAdmin(ImportExportModelAdmin):
-    import_template_name = 'admin/public_interface/sequences/batch_import.html'
+    # import_template_name = 'admin/public_interface/sequences/batch_import.html'
     # TODO let users know that code and genecode keywords act as AND boolean search
     search_fields = ['code__code', 'gene__gene_code', 'accession']
     list_display = ['code', 'gene', 'genbank', 'accession', 'lab_person',
