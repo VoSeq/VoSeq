@@ -12,7 +12,7 @@ dataset-creator==0.5.0
 degenerate-dna==0.0.9
 django-crispy-forms==1.9.0
 django-debug-toolbar==3.7.0
-django-extensions==3.0.9
+django-extensions==3.2.1
 django-import-export==3.0.1
 django-registration-redux==2.11
 django-haystack
