@@ -40,7 +40,7 @@ class BatchImportVouchersResource(resources.ModelResource):
                   'date_extraction', 'published_in', 'notes',
                   )
 
-    def save_instance(self, instance, using_transactions, dry_run=False):
+    def save_instance(self, instance, new, using_transactions, dry_run=False):
         if dry_run:
             if instance.latitude and not coordinate_validated(instance.latitude):
                 raise Exception("Latitude is in wrong format: {!r}. "
