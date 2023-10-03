@@ -10,7 +10,7 @@ class OverviewTableMaker(object):
 
     def get_vouchers_with_sequences(self):
         unique_vouchers = self.get_unique()
-        sequences = Sequences.objects.all().values('code', 'gene_code', 'total_number_bp')
+        sequences = Sequences.objects.all().values('code', 'gene_id', 'total_number_bp')
         sequences = self.convert_to_dict(sequences)
 
         for voucher in unique_vouchers:
@@ -27,11 +27,15 @@ class OverviewTableMaker(object):
     def convert_to_dict(self, sequences):
         new_seqs = {}
         for i in sequences:
+            gene_id = i['gene_id']
+            gene = Genes.objects.get(id=gene_id)
+            gene_code = gene.gene_code
+
             code = i['code']
             if code not in new_seqs:
                 new_seqs[code] = {}
             del i['code']
-            new_seqs[code][i['gene_code']] = i['total_number_bp']
+            new_seqs[code][gene_code] = i['total_number_bp']
         return new_seqs
 
     def build_sequence_string(self, sequences):

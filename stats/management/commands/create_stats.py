@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 
 from overview_table.models import OverviewTable
 from overview_table.utils import OverviewTableMaker
-from public_interface.models import Vouchers
+from public_interface.models import Vouchers, Genes
 from public_interface.models import Sequences
 from stats.models import Stats
 from stats.models import VouchersPerGene
@@ -65,15 +65,19 @@ class Command(BaseCommand):
             self.make_overview_database_table()
 
     def count_vouchers_per_gene(self):
-        genes = Sequences.objects.all().values('gene_code').distinct()
+        gene_ids = Sequences.objects.all().values('gene__id').distinct('gene')
 
         model_objects = []
 
         pk_index = 1
-        for gene in genes:
-            voucher_count = Sequences.objects.filter(gene_code=gene['gene_code']).count()
-            gene['voucher_count'] = voucher_count
-            model_objects.append(VouchersPerGene(id=pk_index, **gene))
+        for gene_id in gene_ids:
+            voucher_count = Sequences.objects.filter(gene_id=gene_id['gene__id']).count()
+            gen = Genes.objects.get(id=gene_id['gene__id'])
+            model_objects.append(VouchersPerGene(
+                id=pk_index,
+                gene_code=gen.gene_code,
+                voucher_count=voucher_count,
+            ))
             pk_index += 1
 
         VouchersPerGene.objects.all().delete()
