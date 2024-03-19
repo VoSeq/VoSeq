@@ -21,6 +21,7 @@ class VoucherTableForm(BaseDatasetForm):
             ('hostorg', 'Host org.'),
             ('type_species', 'Type species'),
             ('voucher_code', 'Alternative voucher code'),
+            ('code_bold', 'Code in BOLD database'),
             ('notes', 'Notes'),
         ],
         widget=forms.CheckboxSelectMultiple(),

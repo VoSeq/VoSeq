@@ -1,6 +1,10 @@
 HISTORY
 -------
 
+2.6.X (202X
++++++++++++
+- Export alternative voucher code and BOLD code in the voucher table.
+
 2.6.0 (2022-12-16)
 ++++++++++++++++++
 - Upgraded docker image to bullseye.
