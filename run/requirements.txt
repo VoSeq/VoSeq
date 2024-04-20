@@ -1,7 +1,7 @@
 gunicorn
 uvicorn
 Django==5.0.3
-Pillow==10.2.0
+Pillow==10.3.0
 Sphinx==1.4.8
 Unipath==1.1
 amas==0.2
@@ -12,7 +12,7 @@ dataset-creator==0.5.0
 degenerate-dna==0.0.9
 django-crispy-forms==1.9.0
 django-debug-toolbar==3.7.0
-django-extensions==3.2.1
+django-extensions==3.2.3
 django-import-export==3.0.1
 django-registration-redux==2.11
 django-haystack
