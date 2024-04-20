@@ -681,7 +681,6 @@ class ParseXML(object):
         if not TESTING:
             print("\nUploading table `public_interface_vouchers`")
 
-        voucher_objs = []
         n = len(self.table_vouchers_items)
         if not TESTING:
             bar = pyprind.ProgBar(n, width=70)

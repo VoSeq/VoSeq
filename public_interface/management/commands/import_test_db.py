@@ -1,7 +1,7 @@
 """Import test database with sample data for testing or developing"""
 import codecs
 import os
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from ._migrate_db import ParseXML
 
