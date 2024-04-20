@@ -28,7 +28,7 @@ class BLASTNewForm(forms.Form):
         invalid_characters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         for i in invalid_characters:
             if i in data:
-                raise forms.ValidationError('Sequence contains invalid characters: {0}'.format(i))
+                raise forms.ValidationError(f'Sequence contains invalid characters: {i}')
 
         if data.strip() == '':
             raise forms.ValidationError('Sequence is empty')

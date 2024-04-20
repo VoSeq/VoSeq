@@ -24,6 +24,17 @@ class FlickImageInLine(admin.StackedInline):
     fields = ['image_file', 'voucher_image']
 
 
+class BatchImportGenesResource(resources.ModelResource):
+    class Meta:
+        model = Genes
+        import_id_fields = ('gene_code',)
+        fields = (
+            'gene_code', 'genetic_code', 'length', 'description',
+            'reading_frame', 'notes', 'aligned', 'intron',
+            'prot_code', 'gene_type',
+        )
+
+
 class BatchImportVouchersResource(resources.ModelResource):
     class Meta:
         model = Vouchers
@@ -157,10 +168,11 @@ class GeneSetsAdmin(admin.ModelAdmin):
     list_display = ['geneset_name', 'geneset_creator', 'geneset_description']
 
 
-class GenesAdmin(admin.ModelAdmin):
+class GenesAdmin(ImportExportModelAdmin):
     list_display = ['gene_code', 'description', 'genetic_code', 'length',
                     'reading_frame', 'aligned', 'intron', 'prot_code',
                     'gene_type', 'notes']
+    resource_classes = [BatchImportGenesResource]
 
 
 # Register your models here.

@@ -2,7 +2,6 @@ from django.core.management import call_command
 from django.db import connection
 from django.test import Client, TestCase
 from django.conf import settings
-from django.test.utils import override_settings
 
 
 class TestAdvancedSearch(TestCase):

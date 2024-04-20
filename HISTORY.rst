@@ -1,10 +1,14 @@
 HISTORY
 -------
 
-2.6.X (202X
-+++++++++++
+2.7.0 (2024-04-20)
+++++++++++++++++++
 - Export alternative voucher code and BOLD code in the voucher table.
 - Upgrade libraries.
+- Removed haystack and elasticsearch.
+- Fixed pagination in advanced search.
+- Fixed making stats for gene alignments.
+- Allow batch import of genes.
 
 2.6.0 (2022-12-16)
 ++++++++++++++++++

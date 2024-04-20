@@ -280,7 +280,7 @@ class Sequences(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.gene:
-            raise Exception(f'It is necessary to provide a value for column `gene`.')
+            raise Exception('It is necessary to provide a value for column `gene`.')
 
         ambiguous_seq_length = self.sequences.count('?') + self.sequences.count('-')
         ambiguous_seq_length += self.sequences.count('N') + self.sequences.count('n')

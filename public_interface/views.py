@@ -10,7 +10,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.conf import settings
 
-from haystack.forms import SearchForm
 from haystack.query import ValuesSearchQuerySet
 
 from core.utils import get_context

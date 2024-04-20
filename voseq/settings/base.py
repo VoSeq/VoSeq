@@ -48,10 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_extensions',
-    'registration',
 
+    'registration',
     'haystack',
     'crispy_forms',
+    'easy_thumbnails',
+    'import_export',
 
     # my apps
     'core',
@@ -68,9 +70,6 @@ INSTALLED_APPS = [
     'voucher_table',
     'gbif',
     'overview_table',
-
-    'easy_thumbnails',
-    'import_export',
 ]
 
 MIDDLEWARE = [
