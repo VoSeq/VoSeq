@@ -101,7 +101,6 @@ def serve_file(request, dataset_id):
 
 
 def schedule_dataset(cleaned_data, user) -> int:
-    print(cleaned_data)
     if cleaned_data['taxonset']:
         taxonset_id = cleaned_data['taxonset'].id
     else:

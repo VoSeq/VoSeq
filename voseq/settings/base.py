@@ -16,7 +16,12 @@ from kombu import Exchange, Queue
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-CSRF_TRUSTED_ORIGINS = ["https://*.lepdb.net"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.lepdb.net",
+    "http://localhost:8000",
+    "http://localhost:8081",
+    "http://localhost:8082",
+]
 
 # replace with any name if you have more than one installation. This name will
 # be used to generate the log filenames
