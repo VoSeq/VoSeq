@@ -13,7 +13,6 @@ from urllib import parse
 import sys
 import xml.etree.ElementTree as ET
 
-from Bio.Alphabet import IUPAC
 import pyprind
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -887,7 +886,7 @@ def parse_type_species(value):
 def validate_sequence(value):
     Validation = namedtuple('Validation', ['is_valid', 'invalid_character'])
 
-    valid_letters = set(IUPAC.ambiguous_dna.letters.upper() + 'N?-')
+    valid_letters = set('GATCRYWSMKHBVDN' + 'N?-')
     sequence = value
     if sequence is None:
         validation = Validation(False, 'Empty sequence')

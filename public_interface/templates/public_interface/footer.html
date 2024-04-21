@@ -5,14 +5,12 @@
 
     <p class="text-center">
       <small>
-        2020 {{ app_name }}
+        2024 {{ app_name }}
         <a href="https://github.com/carlosp420/VoSeq"> {{ version }}</a>.
-        {% if username != 'Guest' %}
+        {% if request.user.is_authenticated %}
           Logged in as: <b>{{ username }}</b>.
-          <a href="/accounts/logout/">Logout.</a><br />
         {% else %}
-          As Guest.
-          <a href="/accounts/login/">Login.</a><br />
+          As guest.
         {% endif %}
 
         Now with {{ stats.vouchers|intcomma }} vouchers,

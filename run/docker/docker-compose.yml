@@ -50,7 +50,7 @@ services:
     volumes:
       - app_data:/data
     ports:
-      - "8081:80"
+      - "8082:80"
       - "4431:443"
     depends_on:
       - app
@@ -76,9 +76,10 @@ services:
     volumes:
       - app_data:/data
   redis:
-    image: redis
-    command: redis-server --appendonly yes
+    image: docker.io/redis:7.0.10
+    command: redis-server --appendonly no --save ""
     volumes:
       - app_data:/data
     expose:
       - '6379'
+    restart: always

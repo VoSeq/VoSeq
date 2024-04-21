@@ -16,7 +16,12 @@ from kombu import Exchange, Queue
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-CSRF_TRUSTED_ORIGINS = ["https://*.lepdb.net"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.lepdb.net",
+    "http://localhost:8000",
+    "http://localhost:8081",
+    "http://localhost:8082",
+]
 
 # replace with any name if you have more than one installation. This name will
 # be used to generate the log filenames
@@ -41,6 +46,7 @@ TRAVIS = False
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -49,9 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
 
-    'registration',
     'haystack',
     'crispy_forms',
+    "crispy_bootstrap4",
     'easy_thumbnails',
     'import_export',
 
@@ -87,7 +93,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'public_interface/templates/registration',
+            'public_interface/templates',
             'core/templates',
             'public_interface/templates/public_interface',
         ],
@@ -247,7 +253,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -293,6 +300,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/browse/'
+LOGOUT_REDIRECT_URL = '/browse/'
 
 # Change this after obtaining VoSeq and before deployments to production server
 SECRET_KEY = 'test_key'

@@ -46,6 +46,12 @@ email: mycalesis@gmail.com
     #toolbox {
       padding-top: 8px;
     }
+    .pt-8 {
+      padding-top: 8px;
+    }
+    .mr-4 {
+      margin-right: 4px;
+    }
   </style>
 
     <!-- Custom styles for this template -->
@@ -111,7 +117,7 @@ email: mycalesis@gmail.com
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <li>
+            <li class="nav-item mr-4">
               <div class="btn-group" id="toolbox">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         id="tools">
@@ -129,18 +135,31 @@ email: mycalesis@gmail.com
                 </ul>
               </div>
             </li>
-            <li>
-              <form action="#" class="navbar-form form-inline">
-                <div class="form-group">
-                  {% if request.user.is_authenticated %}
-                    <a class="btn btn-info" href="/admin/">Admin</a>
-                    <a class="btn btn-danger" href="{% url 'auth_logout' %}">Logout</a>
-                  {% else %}
-                    <a class="btn btn-success" href="{% url 'auth_login' %}">Login</a>
-                  {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item mr-4">
+              <div class="btn-group pt-8">
+                <a class="btn btn-info" href="/admin/">Admin</a>
+              </div>
+            </li>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <div class="btn-group pt-8">
+                  <button class="btn btn-danger" type="submit">Logout</button>
                 </div>
               </form>
             </li>
+            {% else %}
+            <li class="nav-item">
+              <div class="btn-group pt-8">
+                <a class="btn btn-success" href="{% url 'auth_login' %}">Login</a>
+              </div>
+            </li>
+            {% endif %}
           </ul>
 
 

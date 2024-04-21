@@ -5,7 +5,6 @@ from typing import Dict, Tuple
 from django import forms
 from haystack.forms import ModelSearchForm
 from haystack.query import SearchQuerySet
-from Bio.Alphabet import IUPAC
 
 from public_interface.models import Genes, Vouchers, Sequences
 
@@ -16,7 +15,7 @@ DateInput = partial(forms.DateInput, {'class': 'datepicker form-control',
 
 class SequencesAdminForm(forms.ModelForm):
     def clean_sequences(self) -> str:
-        valid_letters = set(IUPAC.ambiguous_dna.letters.upper() + 'N?-')
+        valid_letters = set('GATCRYWSMKHBVDN' + 'N?-')
         sequence = str(self.cleaned_data['sequences'])
         for nucleotide in sequence:
             if nucleotide == ' ':
