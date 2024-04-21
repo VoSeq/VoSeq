@@ -50,7 +50,7 @@ services:
     volumes:
       - app_data:/data
     ports:
-      - "8081:80"
+      - "8082:80"
       - "4431:443"
     depends_on:
       - app

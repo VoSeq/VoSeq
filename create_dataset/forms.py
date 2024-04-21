@@ -99,6 +99,8 @@ class CreateDatasetForm(BaseDatasetForm):
             ('AUTHOR', 'Author'),
             ('HOSTORG', 'Host org.'),
             ('GENECODE', 'Gene code'),
+            ('COUNTRY', 'Country'),
+            ('SPECIFIC_LOCALITY', 'Specific Locality'),
         ],
         widget=forms.CheckboxSelectMultiple(),
         initial=['CODE', 'GENUS', 'SPECIES'],
