@@ -41,6 +41,7 @@ TRAVIS = False
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -49,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
 
-    'registration',
     'haystack',
     'crispy_forms',
+    "crispy_bootstrap4",
     'easy_thumbnails',
     'import_export',
 
@@ -87,7 +88,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'public_interface/templates/registration',
+            'public_interface/templates',
             'core/templates',
             'public_interface/templates/public_interface',
         ],
@@ -247,7 +248,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-CRISPY_TEMPLATE_PACK = 'uni_form'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 # Static files (CSS, JavaScript, Images)

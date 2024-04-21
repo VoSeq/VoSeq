@@ -10,7 +10,8 @@ coverage==5.3
 coveralls==2.2.0
 dataset-creator==0.5.0
 degenerate-dna==0.0.9
-django-crispy-forms==1.9.0
+django-crispy-forms
+crispy-bootstrap4
 django-debug-toolbar==3.7.0
 django-extensions==3.2.3
 django-import-export==3.0.1
