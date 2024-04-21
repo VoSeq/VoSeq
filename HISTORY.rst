@@ -1,6 +1,11 @@
 HISTORY
 -------
 
+2.8.0 (2024-04-21)
+++++++++++++++++++
+- Support country and specific locality when creating datasets.
+- Fixed layout for login pages
+
 2.7.0 (2024-04-20)
 ++++++++++++++++++
 - Export alternative voucher code and BOLD code in the voucher table.
