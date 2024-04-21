@@ -293,6 +293,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/browse/'
+LOGOUT_REDIRECT_URL = '/browse/'
 
 # Change this after obtaining VoSeq and before deployments to production server
 SECRET_KEY = 'test_key'

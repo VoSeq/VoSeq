@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.contrib import admin
 from django.contrib.staticfiles import views
@@ -34,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # user auth urls
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('accounts/', include('registration.backends.default.urls')),
 ]
 # ] + static(
