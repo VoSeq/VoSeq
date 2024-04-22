@@ -16,7 +16,7 @@ if 'TRAVIS' in os.environ:
         'default': {
             'ENGINE':   'django.db.backends.postgresql_psycopg2',
             'NAME':     'travis_ci_test',
-            'USER':     'postgres',
+            'USER':     'carlosp420',
             'PASSWORD': '',
             'HOST':     'localhost',
             'PORT':     '5432',

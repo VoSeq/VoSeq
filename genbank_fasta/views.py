@@ -3,6 +3,7 @@ import os
 
 from celery import chord, chain, uuid
 from celery.result import AsyncResult
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404

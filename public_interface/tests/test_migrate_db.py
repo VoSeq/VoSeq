@@ -86,7 +86,7 @@ class TestCustomCommand(TestCase):
         self.assertEqual('Melitaea?', b.genus)
 
     def test_accession(self):
-        b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
+        b = Sequences.objects.get(code='CP100-10', gene__gene_code='EF1a')
         self.assertEqual('AY218269', b.accession)
 
     def test_max_altitude_null_as_str(self):
@@ -240,14 +240,14 @@ class TestCustomCommand(TestCase):
         self.assertEqual(expected, b.sex)
 
     def test_primers(self):
-        b = Sequences.objects.get(code='CP100-10', gene_code='EF1a')
+        b = Sequences.objects.get(code='CP100-10', gene__gene_code='EF1a')
         c = Primers.objects.filter(for_sequence=b)
 
         primers_f = [i.primer_f for i in c]
         self.assertTrue('Cho', primers_f)
 
     def test_primers_some_none(self):
-        b = Sequences.objects.get(code='CP100-10', gene_code='wingless')
+        b = Sequences.objects.get(code='CP100-10', gene__gene_code='wingless')
         c = Primers.objects.filter(for_sequence=b)
 
         primers_f = [i.primer_f for i in c]
@@ -369,7 +369,7 @@ class TestCustomCommand(TestCase):
 
     def test_avoid_importing_invalid_sequences(self):
         self.assertRaises(Sequences.DoesNotExist,
-                          Sequences.objects.get, code='CP100-15', gene_code='COII')
+                          Sequences.objects.get, code='CP100-15', gene__gene_code='COII')
 
     def test_validate_sequence_true(self):
         sequence = 'ATCAGAN?-'

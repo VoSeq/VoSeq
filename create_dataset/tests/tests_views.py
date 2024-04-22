@@ -112,7 +112,7 @@ class CreateDatasetViewsTest(TestCase):
         """Test when trying to translate 'N--' codon. Should translate to X"""
         dataset_obj = Dataset.objects.create()
         v = Vouchers.objects.get(code="CP100-10")
-        seq = Sequences.objects.get(code=v, gene_code="COI-begin")
+        seq = Sequences.objects.get(code=v, gene__gene_code="COI-begin")
         seq.sequences = "TCAN--CGTCCC"
         seq.save()
 
