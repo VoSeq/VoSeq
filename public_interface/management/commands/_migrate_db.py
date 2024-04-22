@@ -515,6 +515,8 @@ class ParseXML(object):
             gene.reading_frame = item['reading_frame']
             gene.aligned = item['aligned']
             gene.prot_code = item['prot_code']
+            gene.gene_type = item['gene_type']
+            gene.genetic_code = item['genetic_code']
             gene.save()
 
     def save_table_genesets_to_db(self):
