@@ -1,6 +1,14 @@
 HISTORY
 -------
 
+2.8.1 (2024-04-22)
+++++++++++++++++++
+- Fixed tests.
+- Ensure django-haystack supports Django 5.
+- Fixed bug that did not use the minimum number of genes parameter when creating
+  datasets. If vouchers do not have the minimum number of genes, they will not be
+  added to the dataset.
+
 2.8.0 (2024-04-21)
 ++++++++++++++++++
 - Support country and specific locality when creating datasets.

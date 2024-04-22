@@ -23,7 +23,7 @@ requirements = [
     'django-registration-redux==1.2',
     'django-debug-toolbar>=1.3.2',
     'django-suit>=0.2.13',
-    'django-haystack==2.4.0',
+    'git+https://github.com/django-haystack/django-haystack.git',
     'easy-thumbnails==2.2',
     'flickrapi==2.0',
     'dataset-creator==0.6.0',
