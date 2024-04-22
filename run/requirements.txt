@@ -16,7 +16,7 @@ django-debug-toolbar==3.7.0
 django-extensions==3.2.3
 django-import-export==3.0.1
 django-registration-redux==2.11
-django-haystack
+git+https://github.com/django-haystack/django-haystack.git
 easy-thumbnails==2.8.3
 flickrapi==2.4.0
 ipython
