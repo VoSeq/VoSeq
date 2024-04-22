@@ -26,7 +26,7 @@ class TestCustomCommand(TestCase):
         for code in ['CP100-11', 'CP100-12', 'CP100-13', 'CP100-14', 'CP100-15',
                      'CP100-16', 'CP100-17', 'CP100-18', 'CP100-19']:
             v = Vouchers.objects.get(code=code)
-            s = Sequences.objects.get(code=v, gene_code="wingless")
+            s = Sequences.objects.get(code=v, gene__gene_code="wingless")
             s.delete()
         call_command('create_stats')
         res = VouchersPerGene.objects.get(gene_code="wingless")

@@ -19,13 +19,13 @@ class TestViews(TestCase):
     def test_save_sequences_ambiguous_characters(self):
         sequence_model = Sequences.objects.get(
             code=self.voucher_model,
-            gene_code='COI',
+            gene__gene_code='COI',
         )
         sequence_model.sequences = '???---NNNATCTACTA'
         sequence_model.save()
 
         sequence_model = Sequences.objects.get(
             code=self.voucher_model,
-            gene_code='COI',
+            gene__gene_code='COI',
         )
         self.assertEqual(sequence_model.number_ambiguous_bp, 9)

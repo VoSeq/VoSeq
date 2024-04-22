@@ -985,3 +985,24 @@ GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 
         dataset_creator = CreateDataset(cleaned_data)
         self.assertIn('>COI-begin_1st-2nd', dataset_creator.dataset_str)
+
+    def test_create_seq_objs__minimum_number_of_genes__30(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data['number_genes'] = 30
+        cleaned_data['voucher_codes'] = 'CP100-10\r\n--CP100-11\r\nCP100-12'
+        del cleaned_data['positions']
+        cleaned_data['positions'] = ['ALL', '1st']
+
+        dataset_creator = CreateDataset(cleaned_data)
+        self.assertEqual('', dataset_creator.dataset_str)
+
+    def test_create_seq_objs__minimum_number_of_genes__1(self):
+        cleaned_data = self.cleaned_data
+        cleaned_data['number_genes'] = 1
+        cleaned_data['voucher_codes'] = 'CP100-10\r\n--CP100-11\r\nCP100-12'
+        del cleaned_data['positions']
+        cleaned_data['positions'] = ['ALL', '1st']
+
+        dataset_creator = CreateDataset(cleaned_data)
+        self.assertIn('>CP100_10_Papilionoidea_Aus_aus', dataset_creator.dataset_str)
+

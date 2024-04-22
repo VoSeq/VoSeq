@@ -4,7 +4,7 @@ import logging
 import os
 import re
 import subprocess
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 import uuid
 
 from django.conf import settings
@@ -24,7 +24,7 @@ from public_interface.models import Sequences
 log = logging.getLogger(__name__)
 
 
-def get_voucher_codes(cleaned_data):
+def get_voucher_codes(cleaned_data) -> Tuple[str]:
     """Processes list of voucher codes entered by users.
 
     It receives data from a **Form class** (`cleaned_data`) and makes sure that
@@ -44,29 +44,26 @@ def get_voucher_codes(cleaned_data):
     if cleaned_data['voucher_codes'] != '':
         voucher_codes += tuple(cleaned_data['voucher_codes'].splitlines())
 
-    voucher_codes_clean = tuple()
+    voucher_codes_clean = set()
     for i in voucher_codes:
-        if re.search('^--', i):
-            i_clean = re.sub('^--', '', i)
-            voucher_codes_clean += (i_clean,)
+        if re.search(r'^--', i):
+            i_clean = re.sub(r'^--', '', i)
+            voucher_codes_clean.add(i_clean)
         else:
-            voucher_codes_clean += (i,)
+            voucher_codes_clean.add(i)
 
-    voucher_codes_set = tuple()
-    for i in voucher_codes_clean:
-        if i not in voucher_codes_set and i.strip() != '':
-            voucher_codes_set += (i,)
+    voucher_codes_set = set([i for i in voucher_codes_clean if i.strip()])
 
     vouchers_to_drop = []
     for i in voucher_codes:
-        if re.search('^--', i):
-            vouchers_to_drop.append(re.sub('^--', '', i))
+        if re.search(r'^--', i):
+            vouchers_to_drop.append(re.sub(r'^--', '', i))
 
     voucher_codes_filtered = tuple()
     for i in voucher_codes_set:
         if i not in vouchers_to_drop:
             voucher_codes_filtered += (i,)
-    return voucher_codes_filtered
+    return tuple(sorted(voucher_codes_filtered))
 
 
 def get_gene_codes(cleaned_data):

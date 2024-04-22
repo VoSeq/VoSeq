@@ -4,6 +4,8 @@ import re
 from seqrecord_expanded import SeqRecordExpanded
 from seqrecord_expanded.exceptions import MissingParameterError, TranslationErrorMixedGappedSeq
 from dataset_creator import Dataset
+from typing import Dict
+
 from create_dataset.models import Dataset as DatasetModel
 from Bio.Nexus.Nexus import NexusError
 
@@ -104,6 +106,8 @@ class CreateDataset(object):
         self.voucher_codes = get_voucher_codes(self.cleaned_data)
         self.gene_codes = get_gene_codes(self.cleaned_data)
         self.create_seq_objs()
+        if not self.seq_objs:
+            return ''
 
         supported_formats = [
             'NEXUS', 'GenBankFASTA', 'FASTA', 'MEGA', 'TNT', 'PHYLIP', 'Bankit'
@@ -148,9 +152,9 @@ class CreateDataset(object):
             all_seqs_count = '1000+'
 
         idx = 0
+        counter = {}  # count how many genes each voucher has
         for gene_code in self.gene_codes:
             for voucher_code in self.voucher_codes:
-                sequence = all_seqs.filter(code_id=voucher_code, gene__gene_code=gene_code)
                 if idx % 100 == 0:
                     if self.dataset_obj_id:
                         DatasetModel.objects.filter(id=self.dataset_obj_id).update(
@@ -159,6 +163,7 @@ class CreateDataset(object):
                     log.info(f'{idx}/{all_seqs_count} processing dataset')
                 idx += 1
 
+                sequence = all_seqs.filter(code_id=voucher_code, gene__gene_code=gene_code)
                 if not sequence.exists():
                     seq_obj = self.build_seq_obj(
                         voucher_code,
@@ -168,6 +173,7 @@ class CreateDataset(object):
                         all_seqs=all_seqs,
                     )
                 else:
+                    counter[voucher_code] = counter.get(voucher_code, 0) + 1
                     sequence = sequence.first()
                     seq_obj = self.build_seq_obj(
                         sequence['code_id'],
@@ -191,6 +197,21 @@ class CreateDataset(object):
                     })
                 else:
                     self.seq_objs.append(seq_obj)
+        self.remove_vouchers_with_few_genes(counter)
+
+    def remove_vouchers_with_few_genes(self, counter: Dict[str, int]) -> None:
+        """Vouchers that have fewer genes than the minimum number of genes are removed."""
+        if not self.minimum_number_of_genes:
+            return
+        vouchers_to_remove = [
+            key for key, value in counter.items() if value < self.minimum_number_of_genes
+        ]
+        clean_seq_objs = []
+        for seq_obj in self.seq_objs:
+            if seq_obj.voucher_code not in vouchers_to_remove:
+                clean_seq_objs.append(seq_obj)
+        self.seq_objs = clean_seq_objs
+        print("")
 
     def get_all_sequences(self):
         """Return sequences as dict of lists containing sequence and related data.
